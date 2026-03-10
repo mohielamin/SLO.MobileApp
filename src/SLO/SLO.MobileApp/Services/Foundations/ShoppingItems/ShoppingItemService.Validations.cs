@@ -82,7 +82,7 @@ internal sealed partial class ShoppingItemService
         new
         {
             Condition = firstId != secondId,
-            Message = $"Id not same as {secondIdName}."
+            Message = $"Id is not same as {secondIdName}."
         };
 
     private static dynamic NotSameAs(
