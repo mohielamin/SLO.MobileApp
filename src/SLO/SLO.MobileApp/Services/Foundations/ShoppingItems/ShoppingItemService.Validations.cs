@@ -28,7 +28,13 @@ internal sealed partial class ShoppingItemService
             Parameter: nameof(ShoppingItem.CreatedAt)),
 
             (Rule: Invalid(shoppingItem.UpdatedAt),
-            Parameter: nameof(ShoppingItem.UpdatedAt)));
+            Parameter: nameof(ShoppingItem.UpdatedAt)),
+
+            (Rule: NotSameAs(
+                firstId: shoppingItem.UpdatedBy,
+                secondId: shoppingItem.CreatedBy,
+                secondIdName: nameof(ShoppingItem.CreatedBy)),
+            Parameter: nameof(ShoppingItem.UpdatedBy)));
     }
 
     private static void ValidateShoppingItem(
@@ -60,6 +66,16 @@ internal sealed partial class ShoppingItemService
         {
             Condition = string.IsNullOrWhiteSpace(text),
             Message = "Text is required."
+        };
+
+    private static dynamic NotSameAs(
+        Guid firstId,
+        Guid secondId,
+        string secondIdName) =>
+        new
+        {
+            Condition = firstId != secondId,
+            Message = $"Id not same as {secondIdName}."
         };
 
     private static void Validate(

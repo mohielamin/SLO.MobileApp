@@ -19,6 +19,9 @@ public partial class ShoppingItemServiceTests
         ShoppingItem inputShoppingItem =
             randomShoppingItem;
 
+        inputShoppingItem.UpdatedBy =
+            inputShoppingItem.CreatedBy;
+
         ShoppingItem storageShoppingItem =
             inputShoppingItem.DeepClone();
 
