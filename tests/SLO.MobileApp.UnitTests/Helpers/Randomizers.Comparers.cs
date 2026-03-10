@@ -9,10 +9,21 @@ internal static partial class Randomizers
     public static void AreEquivalent(object actual, object expected) =>
         CompareObjects(actual, expected);
 
-    public static Expression<Func<Exception, bool>> SameExceptionAs(
+    internal static Expression<Func<Exception, bool>> SameExceptionAs(
         Exception expectedException) =>
         actualException =>
-        CompareObjects(actualException, expectedException);
+        AreEqual(actualException, expectedException);
+
+    private static bool AreEqual(Exception actualException,
+        Exception expectedException)
+    {
+        actualException.Message.Should().BeEquivalentTo(expectedException.Message);
+
+        actualException.InnerException.Message.Should().BeEquivalentTo(
+            expectedException.InnerException.Message);
+
+        return true;
+    }
 
     private static bool CompareObjects(object actual, object expected)
     {

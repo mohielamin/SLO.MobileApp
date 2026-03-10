@@ -22,7 +22,7 @@ public partial class ShoppingItemServiceTests
         var expectedShoppingItemValidationException =
             new ShoppingItemValidationException(
                 exceptionMessage: "Shopping item validation error occurred, " +
-                "fix the error and try again please!",
+                "fix the errors and try again please!",
                 innerException: nullShoppingItemException);
 
         // when
