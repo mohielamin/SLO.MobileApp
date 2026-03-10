@@ -143,7 +143,7 @@ public partial class ShoppingItemServiceTests
 
         invalidShoppingItemException.AddData(
             key: nameof(ShoppingItem.UpdatedBy),
-            values: $"Id not same as {nameof(ShoppingItem.CreatedBy)}.");
+            values: $"Id is not same as {nameof(ShoppingItem.CreatedBy)}.");
 
         var expectedShoppingItemValidationException =
             new ShoppingItemValidationException(
