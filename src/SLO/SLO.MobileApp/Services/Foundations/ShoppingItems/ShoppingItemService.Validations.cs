@@ -28,13 +28,20 @@ internal sealed partial class ShoppingItemService
             Parameter: nameof(ShoppingItem.CreatedAt)),
 
             (Rule: Invalid(shoppingItem.UpdatedAt),
-            Parameter: nameof(ShoppingItem.UpdatedAt)),
+            Parameter: nameof(ShoppingItem.UpdatedAt)));
 
+        Validate(
             (Rule: NotSameAs(
                 firstId: shoppingItem.UpdatedBy,
                 secondId: shoppingItem.CreatedBy,
                 secondIdName: nameof(ShoppingItem.CreatedBy)),
-            Parameter: nameof(ShoppingItem.UpdatedBy)));
+            Parameter: nameof(ShoppingItem.UpdatedBy)),
+
+            (Rule: NotSameAs(
+                firstDate: shoppingItem.UpdatedAt,
+                secondDate: shoppingItem.CreatedAt,
+                secondDateName: nameof(ShoppingItem.CreatedAt)),
+            Parameter: nameof(ShoppingItem.UpdatedAt)));
     }
 
     private static void ValidateShoppingItem(
@@ -76,6 +83,16 @@ internal sealed partial class ShoppingItemService
         {
             Condition = firstId != secondId,
             Message = $"Id not same as {secondIdName}."
+        };
+
+    private static dynamic NotSameAs(
+        DateTimeOffset firstDate,
+        DateTimeOffset secondDate,
+        string secondDateName) =>
+        new
+        {
+            Condition = firstDate != secondDate,
+            Message = $"Date is not same as {secondDateName}."
         };
 
     private static void Validate(
