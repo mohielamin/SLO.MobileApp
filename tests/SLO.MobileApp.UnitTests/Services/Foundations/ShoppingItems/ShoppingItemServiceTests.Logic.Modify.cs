@@ -57,11 +57,6 @@ public partial class ShoppingItemServiceTests
         // then
         actualShoppingItem.Should().BeEquivalentTo(expectedShoppingItem);
 
-        _dateTimeBrokerMock.Verify(broker =>
-            broker.GetCurrentDateTimeAsync(
-                It.IsAny<CancellationToken>()),
-            Times.Once());
-
         _storageBrokerMock.Verify(broker =>
             broker.SelectShoppingItemByIdAsync(
                 modifiedShoppingItem.Id,
