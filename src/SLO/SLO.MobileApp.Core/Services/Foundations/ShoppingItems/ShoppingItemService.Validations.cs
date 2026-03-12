@@ -102,6 +102,18 @@ internal sealed partial class ShoppingItemService
         }
     }
 
+    private static void ValidateStorageShoppingItem(
+        ShoppingItem storageShoppingItem,
+        Guid shoppingItemId)
+    {
+        if (storageShoppingItem is null)
+        {
+            throw new NotFoundShoppingItemException(
+                exceptionMessage: $"A shopping item with Id: {shoppingItemId}, " +
+                $"could not be found.");
+        }
+    }
+
     private static dynamic Invalid(Guid id) =>
         new
         {

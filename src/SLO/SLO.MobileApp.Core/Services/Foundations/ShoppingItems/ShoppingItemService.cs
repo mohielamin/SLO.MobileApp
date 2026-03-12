@@ -48,6 +48,10 @@ internal sealed partial class ShoppingItemService : IShoppingItemService
                     shoppingItemId: shoppingItem.Id,
                     cancellationToken);
 
+            ValidateStorageShoppingItem(
+                storageShoppingItem,
+                shoppingItemId: shoppingItem.Id);
+
             return await _storageBroker.UpdateShoppingItemAsync(
                 shoppingItem, cancellationToken);
         });

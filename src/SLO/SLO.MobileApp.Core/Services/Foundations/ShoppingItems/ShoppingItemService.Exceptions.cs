@@ -27,6 +27,10 @@ internal sealed partial class ShoppingItemService
         {
             throw await CreateValidationErrorAsync(ex);
         }
+        catch (NotFoundShoppingItemException ex)
+        {
+            throw await CreateValidationErrorAsync(ex);
+        }
         catch (DuplicateKeyException ex)
         {
             var alreadyExistsShoppingItemException =
