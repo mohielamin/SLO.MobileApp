@@ -8,4 +8,7 @@ public interface ILoggingBroker
 {
     ValueTask LogErrorAsync(Exception exception,
         CancellationToken cancellationToken = default);
+
+    ValueTask LogCriticalAsync(Exception exception,
+        CancellationToken cancellationToken = default);
 }

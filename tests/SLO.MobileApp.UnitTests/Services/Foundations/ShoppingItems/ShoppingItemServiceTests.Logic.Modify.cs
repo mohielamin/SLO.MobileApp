@@ -7,7 +7,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SLO.MobileApp.UnitTests.Core.Services.Foundations.ShoppingItems;
+namespace SLO.MobileApp.Core.UnitTests.Services.Foundations.ShoppingItems;
 
 public partial class ShoppingItemServiceTests
 {

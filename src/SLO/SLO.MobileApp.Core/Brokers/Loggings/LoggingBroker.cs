@@ -9,4 +9,8 @@ internal sealed class LoggingBroker : ILoggingBroker
     public async ValueTask LogErrorAsync(Exception exception,
         CancellationToken cancellationToken = default) =>
         throw new NotImplementedException();
+
+    public async ValueTask LogCriticalAsync(Exception exception,
+        CancellationToken cancellationToken = default) =>
+        throw new NotImplementedException();
 }

@@ -8,7 +8,7 @@ using SLO.MobileApp.Core.UnitTests.Helpers;
 using System;
 using Tynamix.ObjectFiller;
 
-namespace SLO.MobileApp.UnitTests.Core.Services.Foundations.ShoppingItems;
+namespace SLO.MobileApp.Core.UnitTests.Services.Foundations.ShoppingItems;
 
 public partial class ShoppingItemServiceTests
 {
