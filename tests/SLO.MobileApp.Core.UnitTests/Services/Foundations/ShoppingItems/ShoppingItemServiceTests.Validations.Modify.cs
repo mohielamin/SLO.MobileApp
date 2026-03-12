@@ -188,4 +188,78 @@ public partial class ShoppingItemServiceTests
 
         VerifyNoOtherDependencyCalls();
     }
+
+    [Theory]
+    [MemberData(nameof(InvalidMoreThanOneMinuteCases))]
+    public async Task ShouldThrowValidationExceptionOnModifyIfUpdatedAtIsNotRecentAndLogItAsync(
+        int invalidMoreThanOneMinuteCase)
+    {
+        // given
+        DateTimeOffset currentDateTime = Randomizers.GetRandomDateTime();
+
+        ShoppingItem invalidShoppingItem =
+            CreateRandomShoppingItem(currentDateTime);
+
+        invalidShoppingItem.UpdatedAt =
+            invalidShoppingItem.UpdatedAt.AddMinutes(
+                invalidMoreThanOneMinuteCase);
+
+        var invalidShoppingItemException =
+            new InvalidShoppingItemException(
+                exceptionMessage: "Invalid shopping item error occurred, " +
+                "fix the errors and try again please!");
+
+        invalidShoppingItemException.AddData(
+            key: nameof(ShoppingItem.UpdatedAt),
+            values: "Date is not recent.");
+
+        var expectedShoppingItemValidationException =
+            new ShoppingItemValidationException(
+                exceptionMessage: "Shopping item validation error occurred, " +
+                "fix the errors and try again please!",
+                innerException: invalidShoppingItemException);
+
+        _dateTimeBrokerMock.Setup(broker =>
+            broker.GetCurrentDateTimeAsync(
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(currentDateTime);
+
+        // when
+
+        ValueTask<ShoppingItem> modifyShoppingItemTask =
+            _shoppingItemService.ModifyShoppingItemAsync(
+                invalidShoppingItem,
+                It.IsAny<CancellationToken>());
+
+        await Assert.ThrowsAsync<ShoppingItemValidationException>(
+            modifyShoppingItemTask.AsTask);
+
+        // then
+
+        _dateTimeBrokerMock.Verify(broker =>
+            broker.GetCurrentDateTimeAsync(
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        _storageBrokerMock.Verify(broker =>
+            broker.SelectShoppingItemByIdAsync(
+                It.IsAny<Guid>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _storageBrokerMock.Verify(broker =>
+            broker.UpdateShoppingItemAsync(
+                It.IsAny<ShoppingItem>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogErrorAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    expectedShoppingItemValidationException))),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
+
 }
