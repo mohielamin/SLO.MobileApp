@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using EFxceptions.Models.Exceptions;
+using Microsoft.Data.SqlClient;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingItems.Exceptions;
 using System;
@@ -24,6 +25,17 @@ internal sealed partial class ShoppingItemService
         catch (InvalidShoppingItemException ex)
         {
             throw await CreateValidationErrorAsync(ex);
+        }
+        catch (DuplicateKeyException ex)
+        {
+            var alreadyExistsShoppingItemException =
+                new AlreadyExistsShoppingItemException(
+                    exceptionMessage: "A shopping item with the same Id, " +
+                    "already exists.",
+                    innerException: ex);
+
+            throw await CreateDependencyValidationErrorAsync(
+                alreadyExistsShoppingItemException);
         }
         catch (SqlException ex)
         {
@@ -62,6 +74,21 @@ internal sealed partial class ShoppingItemService
             shoppingItemValidationException);
 
         return shoppingItemValidationException;
+    }
+
+    private async ValueTask<ShoppingItemDependencyValidationException> CreateDependencyValidationErrorAsync(
+        Exception exception)
+    {
+        var shoppingItemDependencyValidationException =
+            new ShoppingItemDependencyValidationException(
+                exceptionMessage: "Shopping item dependency validation error occurred, " +
+                "try again please!",
+                innerException: exception);
+
+        await _loggingBroker.LogErrorAsync(
+            shoppingItemDependencyValidationException);
+
+        return shoppingItemDependencyValidationException;
     }
 
     private async ValueTask<ShoppingItemDependencyException> CreateCriticalDependencyErrorAsync(
