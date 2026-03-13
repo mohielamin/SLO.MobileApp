@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Tests/">
-    <Project Path="SLO.MobileApp.UnitTests/SLO.MobileApp.UnitTests.csproj" />
+    <Project Path="../../tests/SLO.MobileApp.Core.UnitTests/SLO.MobileApp.Core.UnitTests.csproj" />
   </Folder>
+  <Project Path="SLO.MobileApp.Core/SLO.MobileApp.Core.csproj" Id="87720034-b2d1-4324-bff2-93ddfe2f7333" />
   <Project Path="SLO.MobileApp/SLO.MobileApp.csproj" />
 </Solution>
