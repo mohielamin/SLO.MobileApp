@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingItems.Exceptions;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SLO.MobileApp.Core.Services.Foundations.ShoppingItems;
@@ -11,6 +12,7 @@ namespace SLO.MobileApp.Core.Services.Foundations.ShoppingItems;
 internal sealed partial class ShoppingItemService
 {
     private delegate ValueTask<ShoppingItem> ReturningShoppingItemFunctions();
+    private delegate ValueTask<IQueryable<ShoppingItem>> ReturningShoppingItemIQueryableFunctions();
 
     private async ValueTask<ShoppingItem> TryCatch(
         ReturningShoppingItemFunctions returningShoppingItemFunctions)
@@ -85,6 +87,26 @@ internal sealed partial class ShoppingItemService
 
             throw await CreateServiceErrorAsync(
                 failedShoppingItemServiceException);
+        }
+    }
+
+    private async ValueTask<IQueryable<ShoppingItem>> TryCatch(
+        ReturningShoppingItemIQueryableFunctions returningShoppingItemIQueryableFunctions)
+    {
+        try
+        {
+            return await returningShoppingItemIQueryableFunctions();
+        }
+        catch (SqlException ex)
+        {
+            var failedShoppingItemStorageException =
+                new FailedShoppingItemStorageException(
+                    exceptionMessage: "Failed shopping item storage error occurred, " +
+                    "please contact support.",
+                    innerException: ex);
+
+            throw await CreateCriticalDependencyErrorAsync(
+                failedShoppingItemStorageException);
         }
     }
 

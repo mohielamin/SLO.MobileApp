@@ -38,8 +38,9 @@ internal sealed partial class ShoppingItemService : IShoppingItemService
 
     public async ValueTask<IQueryable<ShoppingItem>> RetrieveAllShoppingItemsAsync(
         CancellationToken cancellationToken) =>
+        await TryCatch(async () =>
         await _storageBroker.SelectAllShoppingItemsAsync(
-            cancellationToken);
+            cancellationToken));
 
     public async ValueTask<ShoppingItem> ModifyShoppingItemAsync(
         ShoppingItem shoppingItem,
