@@ -23,4 +23,8 @@ internal sealed partial class StorageBroker : IStorageBroker
     private async ValueTask<T> UpdateAsync<T>(
         T item, CancellationToken cancellationToken) =>
         throw new NotImplementedException();
+
+    private async ValueTask<T> DeleteAsync<T>(
+        T item, CancellationToken cancellationToken) =>
+        throw new NotImplementedException();
 }

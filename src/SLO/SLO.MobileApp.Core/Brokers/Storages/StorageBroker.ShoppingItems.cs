@@ -26,4 +26,8 @@ internal sealed partial class StorageBroker
     public async ValueTask<ShoppingItem> UpdateShoppingItemAsync(
         ShoppingItem shoppingItem, CancellationToken cancellationToken) =>
         await UpdateAsync(item: shoppingItem, cancellationToken);
+
+    public async ValueTask<ShoppingItem> DeleteShoppingItemAsync(
+        ShoppingItem shoppingItem, CancellationToken cancellationToken) =>
+        await DeleteAsync(item: shoppingItem, cancellationToken);
 }

@@ -19,4 +19,7 @@ internal interface IShoppingItemService
 
     ValueTask<ShoppingItem> ModifyShoppingItemAsync(
         ShoppingItem shoppingItem, CancellationToken cancellationToken);
+
+    ValueTask<ShoppingItem> RemoveShoppingItemByIdAsync(
+        Guid shoppingItemId, CancellationToken cancellationToken);
 }
