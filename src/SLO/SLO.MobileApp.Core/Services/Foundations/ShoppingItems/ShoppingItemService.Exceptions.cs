@@ -42,6 +42,17 @@ internal sealed partial class ShoppingItemService
             throw await CreateDependencyValidationErrorAsync(
                 alreadyExistsShoppingItemException);
         }
+        catch (DbUpdateConcurrencyException ex)
+        {
+            var lockedShoppingItemException =
+                new LockedShoppingItemException(
+                    exceptionMessage: "Locked shopping item error occurred, " +
+                    "try again please!",
+                    innerException: ex);
+
+            throw await CreateDependencyValidationErrorAsync(
+                lockedShoppingItemException);
+        }
         catch (DbUpdateException ex)
         {
             var failedShoppingItemStorageException =
