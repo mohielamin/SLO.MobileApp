@@ -46,7 +46,8 @@ internal sealed partial class ShoppingItemService : IShoppingItemService
     public async ValueTask<ShoppingItem> RetrieveShoppingItemByIdAsync(
         Guid shoppingItemId,
         CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
+        await _storageBroker.SelectShoppingItemByIdAsync(
+            shoppingItemId, cancellationToken);
 
     public async ValueTask<ShoppingItem> ModifyShoppingItemAsync(
         ShoppingItem shoppingItem,
