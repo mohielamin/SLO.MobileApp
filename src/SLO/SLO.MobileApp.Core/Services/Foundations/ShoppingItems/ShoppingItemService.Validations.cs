@@ -101,7 +101,13 @@ internal sealed partial class ShoppingItemService
                 firstId: shoppingItem.CreatedBy,
                 secondId: storageShoppingItem.CreatedBy,
                 secondIdName: nameof(ShoppingItem.CreatedBy)),
-            Parameter: nameof(ShoppingItem.CreatedBy)));
+            Parameter: nameof(ShoppingItem.CreatedBy)),
+
+            (Rule: NotSameAs(
+                firstDate: shoppingItem.CreatedAt,
+                secondDate: storageShoppingItem.CreatedAt,
+                secondDateName: nameof(ShoppingItem.CreatedAt)),
+            Parameter: nameof(ShoppingItem.CreatedAt)));
     }
 
     private static void ValidateShoppingItem(

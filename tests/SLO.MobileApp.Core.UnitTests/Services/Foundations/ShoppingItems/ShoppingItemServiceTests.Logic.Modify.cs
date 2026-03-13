@@ -25,8 +25,8 @@ public partial class ShoppingItemServiceTests
         ShoppingItem modifiedShoppingItem =
             storageShoppingItem.DeepClone();
 
-        modifiedShoppingItem.CreatedAt =
-            modifiedShoppingItem.CreatedAt.AddMinutes(1);
+        modifiedShoppingItem.UpdatedAt =
+            modifiedShoppingItem.UpdatedAt.AddMinutes(1);
 
         ShoppingItem updatedShoppingItem = modifiedShoppingItem;
         ShoppingItem expectedShoppingItem = updatedShoppingItem;
