@@ -1,4 +1,5 @@
 ﻿using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +13,9 @@ internal interface IShoppingItemService
 
     ValueTask<IQueryable<ShoppingItem>> RetrieveAllShoppingItemsAsync(
         CancellationToken cancellationToken);
+
+    ValueTask<ShoppingItem> RetrieveShoppingItemByIdAsync(
+        Guid shoppingItemId, CancellationToken cancellationToken);
 
     ValueTask<ShoppingItem> ModifyShoppingItemAsync(
         ShoppingItem shoppingItem, CancellationToken cancellationToken);
