@@ -30,6 +30,11 @@ The Base Views/Controls exist to abstract away the underlying UI framework’s i
 Each Base View/Control will expose three main characteristics: Properties, Capabilities, and Styles.
 This is done in accordance with the Tri‑Nature pattern as demonstrated by The Standard in the Theory Section under the 0.0.4 Fractal Theory.
 
+The Below illustration reflects abstraction, structure, and UI independence.
+
+![SLO MobileApp Components-Base Views-Controls](https://github.com/user-attachments/assets/0364e468-5801-4661-ad9f-46017c5b41b5)
+
+
 ## View Models
 
 ## Views
