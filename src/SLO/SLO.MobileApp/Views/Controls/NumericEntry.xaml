@@ -12,6 +12,7 @@
             <bases:EntryBase
                 FontAttributes="{TemplateBinding FontAttribute}"
                 FontSize="{TemplateBinding FontSize}"
+                IsFullTextSelectionEnabled="True"
                 Keyboard="Numeric"
                 Placeholder="{TemplateBinding Placeholder}"
                 Text="{TemplateBinding Value}"
