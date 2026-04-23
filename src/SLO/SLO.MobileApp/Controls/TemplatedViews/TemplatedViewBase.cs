@@ -9,8 +9,9 @@ public abstract partial class TemplatedViewBase : TemplatedView
         object defaultValue = null,
         BindingMode defaultBindingMode = BindingMode.OneWay,
         BindableProperty.BindingPropertyChangedDelegate propertyChangedDelegate = null,
-        BindableProperty.BindingPropertyChangingDelegate propertyChangingDelegate = null) =>
-        BindableProperty.Create(
+        BindableProperty.BindingPropertyChangingDelegate propertyChangingDelegate = null)
+    {
+        return BindableProperty.Create(
             propertyName,
             returnType: typeof(PropertyType),
             declaringType: typeof(DeclaringType),
@@ -18,13 +19,16 @@ public abstract partial class TemplatedViewBase : TemplatedView
             defaultBindingMode,
             propertyChanged: propertyChangedDelegate,
             propertyChanging: propertyChangingDelegate);
+    }
 
     internal static BindablePropertyKey CreateReadOnlyProperty<PropertyType, DeclaringType>(
         string propertyName,
-        object defaultValue = null) =>
-        BindableProperty.CreateReadOnly(
+        object defaultValue = null)
+    {
+        return BindableProperty.CreateReadOnly(
             propertyName,
             returnType: typeof(PropertyType),
-            declaringType: typeof(DeclaringType),
-            defaultValue);
+                declaringType: typeof(DeclaringType),
+                defaultValue);
+    }
 }
