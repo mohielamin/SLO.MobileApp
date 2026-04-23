@@ -99,9 +99,6 @@
     <MauiXaml Update="Features\ShoppingLists\Views\ShoppingListItemView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
-    <MauiXaml Update="Views\Controls\CircleButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
     <MauiXaml Update="Views\Controls\NumericEntry.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>

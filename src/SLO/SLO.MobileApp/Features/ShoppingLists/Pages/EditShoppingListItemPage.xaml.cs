@@ -1,4 +1,5 @@
 using Microsoft.Maui.Controls;
+using SLO.MobileApp.Controls.Buttons;
 using System;
 using System.Runtime.CompilerServices;
 
@@ -97,12 +98,7 @@ public partial class EditShoppingListItemPage : ContentPage
 
     private async void ClosePageClicked(object sender, EventArgs e)
     {
-        if (sender is not Button button)
-        {
-            return;
-        }
-
-        if (button.Text.Equals(DiscardButton.Text))
+        if (sender is SecondaryButton)
         {
             Discarded = true;
         }
