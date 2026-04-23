@@ -78,6 +78,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <MauiXaml Update="Controls\Buttons\CircularButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Controls\Buttons\PrimaryButton.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
