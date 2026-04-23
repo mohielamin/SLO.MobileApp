@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" pages="3">
   <diagram id="QxFtEKi79w-1nPWG2ptU" name="High-Level Design">
-    <mxGraphModel dx="3442" dy="1371" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="2632" dy="1112" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -61,7 +61,7 @@
         <mxCell id="Av31kqSjKkCGUxwuhlou-18" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#008a00;fontColor=#ffffff;strokeColor=#005700;" value="Button" vertex="1">
           <mxGeometry height="60" width="120" x="-1038" y="-69" as="geometry" />
         </mxCell>
-        <mxCell id="Av31kqSjKkCGUxwuhlou-20" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f0a30a;fontColor=#000000;strokeColor=#BD7000;" value="Primary Button" vertex="1">
+        <mxCell id="Av31kqSjKkCGUxwuhlou-20" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#008a00;fontColor=#ffffff;strokeColor=#005700;" value="Primary Button" vertex="1">
           <mxGeometry height="60" width="120" x="-816" y="291" as="geometry" />
         </mxCell>
         <mxCell id="Av31kqSjKkCGUxwuhlou-26" edge="1" parent="1" source="Av31kqSjKkCGUxwuhlou-22" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;startSize=8;endArrow=classic;endSize=8;" target="Av31kqSjKkCGUxwuhlou-20" value="">
@@ -86,7 +86,7 @@
         <mxCell id="Av31kqSjKkCGUxwuhlou-22" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#008a00;fontColor=#ffffff;strokeColor=#005700;" value="Templated Button View" vertex="1">
           <mxGeometry height="60" width="120" x="-816" y="113" as="geometry" />
         </mxCell>
-        <mxCell id="Av31kqSjKkCGUxwuhlou-25" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Secondary Button" vertex="1">
+        <mxCell id="Av31kqSjKkCGUxwuhlou-25" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#008a00;fontColor=#ffffff;strokeColor=#005700;" value="Secondary Button" vertex="1">
           <mxGeometry height="60" width="120" x="-1038" y="291" as="geometry" />
         </mxCell>
         <mxCell id="Av31kqSjKkCGUxwuhlou-32" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Entry" vertex="1">

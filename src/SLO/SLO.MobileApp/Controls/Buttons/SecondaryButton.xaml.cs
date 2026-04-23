@@ -5,14 +5,14 @@ using System;
 
 namespace SLO.MobileApp.Controls.Buttons;
 
-public partial class PrimaryButton : TemplatedButtonView
+public partial class SecondaryButton : TemplatedButtonView
 {
     public new Color ButtonColor
     {
         get => (Color)GetValue(ButtonColorProperty);
     }
 
-    public PrimaryButton()
+    public SecondaryButton()
     {
         InitializeComponent();
     }
@@ -21,7 +21,7 @@ public partial class PrimaryButton : TemplatedButtonView
 
     protected override void OnApplyTemplate()
     {
-        SetValue(ButtonColorProperty, Colors.SeaGreen);
+        SetValue(ButtonColorProperty, Colors.Gray);
     }
 
     private static new readonly BindableProperty ButtonColorProperty =
