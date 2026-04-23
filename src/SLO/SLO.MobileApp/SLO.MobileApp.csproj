@@ -78,6 +78,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <MauiXaml Update="Controls\Buttons\CircularButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Controls\Buttons\PrimaryButton.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
@@ -94,9 +97,6 @@
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Features\ShoppingLists\Views\ShoppingListItemView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Views\Controls\CircleButton.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\Controls\NumericEntry.xaml">

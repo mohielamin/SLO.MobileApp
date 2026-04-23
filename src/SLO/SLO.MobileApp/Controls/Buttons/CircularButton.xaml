@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<TemplatedView
-    x:Class="SLO.MobileApp.Views.Controls.CircleButton"
+<templatedViews:TemplatedButtonView
+    x:Class="SLO.MobileApp.Controls.Buttons.CircularButton"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:bases="clr-namespace:SLO.MobileApp.Views.Bases">
+    xmlns:bases="clr-namespace:SLO.MobileApp.Controls.Bases"
+    xmlns:templatedViews="clr-namespace:SLO.MobileApp.Controls.TemplatedViews">
 
-    <TemplatedView.ControlTemplate>
+    <templatedViews:TemplatedButtonView.ControlTemplate>
         <ControlTemplate>
 
             <bases:ButtonBase
@@ -17,11 +18,12 @@
                 FontAttributes="{TemplateBinding FontAttributes}"
                 FontAutoScalingEnabled="True"
                 FontSize="{TemplateBinding FontSize}"
-                HeightRequest="{TemplateBinding BaseButtonDimensions}"
+                HeightRequest="{TemplateBinding ButtonDimensions}"
                 Text="{TemplateBinding Text}"
                 TextColor="{TemplateBinding TextColor}"
-                WidthRequest="{TemplateBinding BaseButtonDimensions}" />
+                WidthRequest="{TemplateBinding ButtonDimensions}" />
 
         </ControlTemplate>
-    </TemplatedView.ControlTemplate>
-</TemplatedView>
+    </templatedViews:TemplatedButtonView.ControlTemplate>
+
+</templatedViews:TemplatedButtonView>

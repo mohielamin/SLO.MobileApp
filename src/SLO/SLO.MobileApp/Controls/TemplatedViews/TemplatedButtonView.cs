@@ -12,6 +12,12 @@ public abstract partial class TemplatedButtonView : TemplatedViewBase
         set => SetValue(TextProperty, value);
     }
 
+    public Color TextColor
+    {
+        get => (Color)GetValue(TextColorProperty);
+        set => SetValue(TextColorProperty, value);
+    }
+
     public double FontSize
     {
         get => (double)GetValue(FontSizeProperty);
@@ -46,6 +52,10 @@ public abstract partial class TemplatedButtonView : TemplatedViewBase
         CreateProperty<string, TemplatedButtonView>(
             propertyName: nameof(Text),
             defaultValue: string.Empty);
+
+    public static readonly BindableProperty TextColorProperty =
+        CreateProperty<Color, TemplatedButtonView>(
+            propertyName: nameof(TextColor));
 
     public static readonly BindableProperty FontSizeProperty =
         CreateProperty<double, TemplatedButtonView>(

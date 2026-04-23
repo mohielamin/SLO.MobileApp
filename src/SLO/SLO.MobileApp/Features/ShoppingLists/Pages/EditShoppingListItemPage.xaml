@@ -3,7 +3,7 @@
     x:Class="SLO.MobileApp.Features.ShoppingLists.Pages.EditShoppingListItemPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:bases="clr-namespace:SLO.MobileApp.Views.Bases"
+    xmlns:buttons="clr-namespace:SLO.MobileApp.Controls.Buttons"
     xmlns:controls="clr-namespace:SLO.MobileApp.Views.Controls"
     xmlns:local="clr-namespace:SLO.MobileApp.Features.ShoppingLists.Pages"
     x:DataType="local:EditShoppingListItemPage"
@@ -39,14 +39,13 @@
             Placeholder="Item Description"
             Text="{Binding Description, Mode=TwoWay}" />
 
-        <bases:ButtonBase
-            x:Name="DiscardButton"
+        <buttons:SecondaryButton
             Grid.Row="2"
             Grid.Column="2"
             Clicked="ClosePageClicked"
             Text="Discard" />
 
-        <bases:ButtonBase
+        <buttons:PrimaryButton
             Grid.Row="2"
             Grid.Column="3"
             Clicked="ClosePageClicked"
