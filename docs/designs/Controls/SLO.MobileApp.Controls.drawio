@@ -1,6 +1,6 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" pages="3">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36">
   <diagram id="QxFtEKi79w-1nPWG2ptU" name="High-Level Design">
-    <mxGraphModel dx="2632" dy="1112" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="3200" dy="946" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -50,14 +50,6 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="ikgrAq_0bOWl7dWyrVKD-26" edge="1" parent="1" source="Av31kqSjKkCGUxwuhlou-18" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;startSize=8;endArrow=classic;endSize=8;dashed=1;dashPattern=1 4;" target="Av31kqSjKkCGUxwuhlou-22">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="-856" y="-39" />
-              <mxPoint x="-856" y="143" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
         <mxCell id="Av31kqSjKkCGUxwuhlou-18" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#008a00;fontColor=#ffffff;strokeColor=#005700;" value="Button" vertex="1">
           <mxGeometry height="60" width="120" x="-1038" y="-69" as="geometry" />
         </mxCell>
@@ -89,13 +81,24 @@
         <mxCell id="Av31kqSjKkCGUxwuhlou-25" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#008a00;fontColor=#ffffff;strokeColor=#005700;" value="Secondary Button" vertex="1">
           <mxGeometry height="60" width="120" x="-1038" y="291" as="geometry" />
         </mxCell>
-        <mxCell id="Av31kqSjKkCGUxwuhlou-32" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Entry" vertex="1">
-          <mxGeometry height="60" width="120" x="-347" y="-69" as="geometry" />
+        <mxCell id="clfu92sf6pdHbWzI-wJO-11" edge="1" parent="1" source="Av31kqSjKkCGUxwuhlou-32" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;startSize=8;endArrow=classic;endSize=8;" target="EzP_NprT2fmnshitabv4-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-93" y="221" />
+              <mxPoint x="-314" y="221" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="clfu92sf6pdHbWzI-wJO-12" edge="1" parent="1" source="Av31kqSjKkCGUxwuhlou-32" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;startSize=8;endArrow=classic;endSize=8;" target="EzP_NprT2fmnshitabv4-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Av31kqSjKkCGUxwuhlou-32" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f0a30a;fontColor=#000000;strokeColor=#BD7000;" value="Templated Entry View" vertex="1">
+          <mxGeometry height="60" width="120" x="-153" y="113" as="geometry" />
         </mxCell>
         <mxCell id="Av31kqSjKkCGUxwuhlou-34" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Label" vertex="1">
-          <mxGeometry height="60" width="120" x="-107" y="-69" as="geometry" />
+          <mxGeometry height="60" width="120" x="153" y="-69" as="geometry" />
         </mxCell>
-        <mxCell id="Av31kqSjKkCGUxwuhlou-37" parent="1" style="whiteSpace=wrap;html=1;rounded=0;" value="Circle Button" vertex="1">
+        <mxCell id="Av31kqSjKkCGUxwuhlou-37" parent="1" style="whiteSpace=wrap;html=1;rounded=0;fillColor=#008a00;fontColor=#ffffff;strokeColor=#005700;" value="Circular Button" vertex="1">
           <mxGeometry height="60" width="120" x="-595" y="291" as="geometry" />
         </mxCell>
         <mxCell id="Av31kqSjKkCGUxwuhlou-41" edge="1" parent="1" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;strokeColor=#005700;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;startSize=8;endSize=8;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fillColor=#008a00;sketch=1;curveFitting=1;jiggle=2;" value="">
@@ -104,14 +107,10 @@
             <mxPoint x="-1066" y="140.74" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ikgrAq_0bOWl7dWyrVKD-11" edge="1" parent="1" source="ikgrAq_0bOWl7dWyrVKD-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;" target="Av31kqSjKkCGUxwuhlou-22">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="ikgrAq_0bOWl7dWyrVKD-10" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#008a00;fontColor=#ffffff;strokeColor=#005700;" value="Templated View Base" vertex="1">
-          <mxGeometry height="60" width="120" x="-816" y="-67" as="geometry" />
-        </mxCell>
-        <mxCell id="ikgrAq_0bOWl7dWyrVKD-34" edge="1" parent="1" source="ikgrAq_0bOWl7dWyrVKD-29" style="shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#006EAF;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=16;fontColor=#ffffff;labelBackgroundColor=none;sketch=1;jiggle=2;curveFitting=1;fontStyle=1;fillColor=#1ba1e2;gradientColor=none;" target="ikgrAq_0bOWl7dWyrVKD-10" value="">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="ikgrAq_0bOWl7dWyrVKD-34" edge="1" parent="1" source="ikgrAq_0bOWl7dWyrVKD-29" style="shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#006EAF;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=16;fontColor=#ffffff;labelBackgroundColor=none;sketch=1;jiggle=2;curveFitting=1;fontStyle=1;fillColor=#1ba1e2;gradientColor=none;edgeStyle=orthogonalEdgeStyle;" target="Av31kqSjKkCGUxwuhlou-22" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-730" y="68" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="ikgrAq_0bOWl7dWyrVKD-29" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#006EAF;fillColor=#1ba1e2;align=center;verticalAlign=middle;rounded=0;fontSize=16;fontFamily=Helvetica;fontColor=#ffffff;labelBackgroundColor=none;sketch=1;curveFitting=1;jiggle=2;fontStyle=1" value="Properties" vertex="1">
           <mxGeometry height="30" width="104" x="-808" y="-158" as="geometry" />
@@ -122,63 +121,97 @@
         <mxCell id="ikgrAq_0bOWl7dWyrVKD-32" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#006EAF;fillColor=#1ba1e2;align=center;verticalAlign=middle;rounded=0;fontSize=16;fontFamily=Helvetica;fontColor=#ffffff;labelBackgroundColor=none;sketch=1;curveFitting=1;jiggle=2;fontStyle=1" value="UI" vertex="1">
           <mxGeometry height="30" width="104" x="-1030" y="-158" as="geometry" />
         </mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
-  <diagram id="yefgWaKZ2og2me5__0fi" name="Circle Button View">
-    <mxGraphModel dx="774" dy="534" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        <mxCell id="q2lLsWw98lYyTqqF5HqH-1" edge="1" parent="1" source="Mbg7TxRmz3lNXOB3aTdQ-1" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;startSize=8;endArrow=classic;endSize=8;" target="88jhc4-fuaJuMkf2iECu-1" value="">
+        <mxCell id="EzP_NprT2fmnshitabv4-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Numeric Entry" vertex="1">
+          <mxGeometry height="60" width="120" x="-374" y="291" as="geometry" />
+        </mxCell>
+        <mxCell id="EzP_NprT2fmnshitabv4-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Text Entry" vertex="1">
+          <mxGeometry height="60" width="120" x="-153" y="291" as="geometry" />
+        </mxCell>
+        <mxCell id="clfu92sf6pdHbWzI-wJO-13" edge="1" parent="1" source="EzP_NprT2fmnshitabv4-5" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;startSize=8;endArrow=classic;endSize=8;dashed=1;dashPattern=1 4;" target="EzP_NprT2fmnshitabv4-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-234" y="-39" />
+              <mxPoint x="-234" y="321" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="clfu92sf6pdHbWzI-wJO-14" edge="1" parent="1" source="EzP_NprT2fmnshitabv4-5" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;startSize=8;endArrow=classic;endSize=8;dashed=1;dashPattern=1 4;" target="EzP_NprT2fmnshitabv4-2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Mbg7TxRmz3lNXOB3aTdQ-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=28;fontStyle=1;fillColor=#4D4D4D;" value="+" vertex="1">
-          <mxGeometry height="45" width="45" x="41" y="187" as="geometry" />
+        <mxCell id="EzP_NprT2fmnshitabv4-5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#008a00;fontColor=#ffffff;strokeColor=#005700;" value="Entry" vertex="1">
+          <mxGeometry height="60" width="120" x="-374" y="-69" as="geometry" />
         </mxCell>
-        <mxCell id="88jhc4-fuaJuMkf2iECu-1" parent="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;rounded=0;fontSize=16;" value="Button Base" vertex="1">
-          <mxGeometry height="30" width="98" x="145" y="194.5" as="geometry" />
+        <mxCell id="clfu92sf6pdHbWzI-wJO-1" parent="1" style="html=1;shape=mxgraph.basic.isocube;isoAngle=15;" value="" vertex="1">
+          <mxGeometry height="118" width="111" x="-2041" y="-161" as="geometry" />
         </mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
-  <diagram id="Oi7ipF1vi78FALljP_BK" name="Base Views-Controls">
-    <mxGraphModel dx="1432" dy="712" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        <mxCell id="e2YKUBdYqAEWy2go2X0a-1" parent="1" style="html=1;shape=mxgraph.basic.isocube;isoAngle=14.22;" value="" vertex="1">
-          <mxGeometry height="169" width="205" x="15" y="115" as="geometry" />
+        <mxCell id="clfu92sf6pdHbWzI-wJO-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontFamily=Helvetica;fontSize=12;fontColor=#ffffff;labelBackgroundColor=default;fillColor=#1ba1e2;strokeColor=#006EAF;" value="" vertex="1">
+          <mxGeometry height="17" width="17" x="-2022" y="-95" as="geometry" />
         </mxCell>
-        <mxCell id="e2YKUBdYqAEWy2go2X0a-3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=-25;" value="Properties" vertex="1">
-          <mxGeometry height="30" width="60" x="87.5" y="150" as="geometry" />
+        <mxCell id="clfu92sf6pdHbWzI-wJO-2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;" value="Native UI" vertex="1">
+          <mxGeometry height="30" width="60" x="-2082" y="-100" as="geometry" />
         </mxCell>
-        <mxCell id="e2YKUBdYqAEWy2go2X0a-4" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=25;" value="Capabilities" vertex="1">
-          <mxGeometry height="30" width="60" x="36" y="206" as="geometry" />
+        <mxCell id="clfu92sf6pdHbWzI-wJO-7" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontFamily=Helvetica;fontSize=12;fontColor=#ffffff;labelBackgroundColor=default;fillColor=#d80073;strokeColor=#A50040;" value="" vertex="1">
+          <mxGeometry height="17" width="17" x="-1994" y="-142" as="geometry" />
         </mxCell>
-        <mxCell id="e2YKUBdYqAEWy2go2X0a-5" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=-25;" value="Styles" vertex="1">
-          <mxGeometry height="30" width="60" x="139" y="209" as="geometry" />
+        <mxCell id="clfu92sf6pdHbWzI-wJO-3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;" value="Templated View" vertex="1">
+          <mxGeometry height="30" width="87" x="-1975" y="-155" as="geometry" />
         </mxCell>
-        <mxCell id="e2YKUBdYqAEWy2go2X0a-6" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Base View/Controls&lt;/h1&gt;&lt;p&gt;Each Base View/Control will expose three main characteristics which are Properties, Capabilities, and Styles, this done in accordance to the Tri-Nature pattern as demonstrated by The Standards in the Theory Section under the 0.0.4 Fractal Theory.&lt;/p&gt;" vertex="1">
-          <mxGeometry height="161" width="230" x="-232" y="123" as="geometry" />
+        <mxCell id="clfu92sf6pdHbWzI-wJO-8" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontFamily=Helvetica;fontSize=12;fontColor=#000000;labelBackgroundColor=default;fillColor=#f0a30a;strokeColor=#BD7000;" value="" vertex="1">
+          <mxGeometry height="17" width="17" x="-1965" y="-93.5" as="geometry" />
         </mxCell>
-        <mxCell id="e2YKUBdYqAEWy2go2X0a-12" edge="1" parent="1" source="e2YKUBdYqAEWy2go2X0a-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;endArrow=diamond;endFill=1;" target="e2YKUBdYqAEWy2go2X0a-3">
+        <mxCell id="clfu92sf6pdHbWzI-wJO-4" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;" value="Custom Implementation" vertex="1">
+          <mxGeometry height="30" width="136" x="-1965" y="-83" as="geometry" />
+        </mxCell>
+        <mxCell id="clfu92sf6pdHbWzI-wJO-15" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Custom Control Anatomy&lt;/h1&gt;&lt;p&gt;The custom control is constructed using:&lt;/p&gt;&lt;p&gt;1. Templated [CONTROL] View: That contains shared properties, events, ... etc.&amp;nbsp;&lt;/p&gt;&lt;p&gt;2. Native MAUI Control: That will influence the look and feel of the control.&lt;/p&gt;&lt;p&gt;3. [CONTROL]: The implementation of the custom control which will make use both the Templated[CONTROL]View and Native MAUI Control/s to achieve the&amp;nbsp;&amp;nbsp;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="218" width="463" x="-1819" y="-223" as="geometry" />
+        </mxCell>
+        <mxCell id="cY5WBj5PIOhFgkrijU2g-1" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;dashed=1;dashPattern=12 12;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="-1349" y="490" as="sourcePoint" />
+            <mxPoint x="-1349" y="-254" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m_cGyEXt0wAStJiEPtur-1" parent="1" style="html=1;shape=mxgraph.basic.isocube;isoAngle=14.22;" value="" vertex="1">
+          <mxGeometry height="169" width="205" x="-2095" y="177" as="geometry" />
+        </mxCell>
+        <mxCell id="m_cGyEXt0wAStJiEPtur-2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=-25;" value="Properties" vertex="1">
+          <mxGeometry height="30" width="60" x="-2022.5" y="212" as="geometry" />
+        </mxCell>
+        <mxCell id="m_cGyEXt0wAStJiEPtur-3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=25;" value="Capabilities" vertex="1">
+          <mxGeometry height="30" width="60" x="-2074" y="268" as="geometry" />
+        </mxCell>
+        <mxCell id="m_cGyEXt0wAStJiEPtur-4" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;rotation=-25;" value="Styles" vertex="1">
+          <mxGeometry height="30" width="60" x="-1971" y="271" as="geometry" />
+        </mxCell>
+        <mxCell id="m_cGyEXt0wAStJiEPtur-5" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Base View/Controls&lt;/h1&gt;&lt;p&gt;Each Base View/Control will expose three main characteristics which are Properties, Capabilities, and Styles, this done in accordance to the Tri-Nature pattern as demonstrated by The Standards in the Theory Section under the 0.0.4 Fractal Theory.&lt;/p&gt;" vertex="1">
+          <mxGeometry height="99" width="702.5" x="-2074" y="52" as="geometry" />
+        </mxCell>
+        <mxCell id="m_cGyEXt0wAStJiEPtur-6" edge="1" parent="1" source="m_cGyEXt0wAStJiEPtur-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;endArrow=diamond;endFill=1;" target="m_cGyEXt0wAStJiEPtur-2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e2YKUBdYqAEWy2go2X0a-9" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=16;" value="Properties are value containers such as TextProperty in an Entry Control." vertex="1">
-          <mxGeometry height="30" width="524" x="229" y="104" as="geometry" />
+        <mxCell id="m_cGyEXt0wAStJiEPtur-7" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=16;" value="Properties are value containers such as TextProperty in an Entry Control." vertex="1">
+          <mxGeometry height="30" width="524" x="-1881" y="166" as="geometry" />
         </mxCell>
-        <mxCell id="e2YKUBdYqAEWy2go2X0a-13" edge="1" parent="1" source="e2YKUBdYqAEWy2go2X0a-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;endArrow=diamond;endFill=1;" target="e2YKUBdYqAEWy2go2X0a-5">
+        <mxCell id="m_cGyEXt0wAStJiEPtur-8" edge="1" parent="1" source="m_cGyEXt0wAStJiEPtur-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;endArrow=diamond;endFill=1;" target="m_cGyEXt0wAStJiEPtur-4">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e2YKUBdYqAEWy2go2X0a-10" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=16;" value="Styles are the visual properties that define the view/control appearance." vertex="1">
-          <mxGeometry height="30" width="524" x="233" y="196" as="geometry" />
+        <mxCell id="m_cGyEXt0wAStJiEPtur-9" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=16;" value="Styles are the visual properties that define the view/control appearance." vertex="1">
+          <mxGeometry height="30" width="524" x="-1877" y="258" as="geometry" />
         </mxCell>
-        <mxCell id="e2YKUBdYqAEWy2go2X0a-14" edge="1" parent="1" source="e2YKUBdYqAEWy2go2X0a-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=1;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;endArrow=diamond;endFill=1;" target="e2YKUBdYqAEWy2go2X0a-4">
+        <mxCell id="m_cGyEXt0wAStJiEPtur-10" edge="1" parent="1" source="m_cGyEXt0wAStJiEPtur-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=1;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;endArrow=diamond;endFill=1;" target="m_cGyEXt0wAStJiEPtur-3">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e2YKUBdYqAEWy2go2X0a-11" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=16;" value="Capabilities are what the view/control is able to offer to the outside world, fore example: OnValueChangedEvent" vertex="1">
-          <mxGeometry height="30" width="524" x="112" y="300" as="geometry" />
+        <mxCell id="m_cGyEXt0wAStJiEPtur-11" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=16;" value="Capabilities are what the view/control is able to offer to the outside world, fore example: OnValueChangedEvent" vertex="1">
+          <mxGeometry height="30" width="524" x="-1998" y="362" as="geometry" />
+        </mxCell>
+        <mxCell id="m_cGyEXt0wAStJiEPtur-13" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;fillColor=#008a00;strokeColor=#005700;strokeWidth=7;sketch=1;curveFitting=1;jiggle=2;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="-1350" y="-309" />
+            </Array>
+            <mxPoint x="-1407" y="-264" as="sourcePoint" />
+            <mxPoint x="-1281" y="-260" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
