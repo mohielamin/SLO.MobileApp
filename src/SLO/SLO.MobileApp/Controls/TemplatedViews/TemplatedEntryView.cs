@@ -6,6 +6,26 @@ namespace SLO.MobileApp.Controls.TemplatedViews;
 
 public abstract partial class TemplatedEntryView : TemplatedViewBase
 {
+    public string Placeholder
+    {
+        get => (string)GetValue(PlaceholderProperty);
+        set => SetValue(PlaceholderProperty, value);
+    }
+
+    public string Text
+    {
+        get => (string)GetValue(TextProperty);
+        set => SetValue(TextProperty, value);
+    }
+
+    public static readonly BindableProperty PlaceholderProperty =
+        CreateProperty<string, TemplatedEntryView>(
+            propertyName: nameof(Placeholder));
+
+    public static readonly BindableProperty TextProperty =
+        CreateProperty<string, TemplatedEntryView>(
+            propertyName: nameof(Text));
+
     public static readonly BindableProperty SelectAllTextOnFocus =
         CreateProperty<bool, TemplatedEntryView>(
             propertyName: nameof(IsFullTextSelectionEnabled),

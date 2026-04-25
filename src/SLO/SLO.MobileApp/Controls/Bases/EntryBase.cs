@@ -2,7 +2,7 @@
 
 namespace SLO.MobileApp.Controls.Bases;
 
-public abstract partial class EntryBase : Entry
+public partial class EntryBase : Entry
 {
 
 }
