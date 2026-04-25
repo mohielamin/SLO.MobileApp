@@ -102,6 +102,9 @@
     <MauiXaml Update="Features\ShoppingLists\Pages\ShoppingListPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Features\ShoppingLists\Pages\ShoppingListItemEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Features\ShoppingLists\Views\ShoppingListItemView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
