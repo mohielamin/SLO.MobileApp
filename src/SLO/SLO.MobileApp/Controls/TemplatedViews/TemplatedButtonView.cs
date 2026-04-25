@@ -36,16 +36,6 @@ public abstract partial class TemplatedButtonView : TemplatedViewBase
         set => SetValue(ButtonColorProperty, value);
     }
 
-    public new Color BackgroundColor
-    {
-        get => (Color)GetValue(BackgroundColorProperty);
-    }
-
-    public new Brush Background
-    {
-        get => (Brush)GetValue(BackgroundProperty);
-    }
-
     public abstract event EventHandler Clicked;
 
     public static readonly BindableProperty TextProperty =
@@ -68,18 +58,4 @@ public abstract partial class TemplatedButtonView : TemplatedViewBase
     public static readonly BindableProperty ButtonColorProperty =
         CreateProperty<Color, TemplatedButtonView>(
             propertyName: nameof(ButtonColor));
-
-    private static readonly BindablePropertyKey BackgroundColorPropertyKey =
-        CreateReadOnlyProperty<Color, TemplatedButtonView>(
-            propertyName: nameof(BackgroundColor));
-
-    private static new readonly BindableProperty BackgroundColorProperty =
-        BackgroundColorPropertyKey.BindableProperty;
-
-    private static readonly BindablePropertyKey BackgroundPropertyKey =
-        CreateReadOnlyProperty<Brush, TemplatedButtonView>(
-            nameof(BackgroundColor));
-
-    private static new readonly BindableProperty BackgroundProperty =
-        BackgroundPropertyKey.BindableProperty;
 }
