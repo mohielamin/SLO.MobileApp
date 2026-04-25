@@ -63,9 +63,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Features\ShoppingLists\Pages\AddShoppingListItemPage.xaml.cs">
-      <DependentUpon>AddShoppingListItemPage.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Features\ShoppingLists\Pages\ShoppingListPage.xaml.cs">
       <DependentUpon>ShoppingListPage.xaml</DependentUpon>
     </Compile>
@@ -91,9 +88,6 @@
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Controls\Entries\TextEntry.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Features\ShoppingLists\Pages\AddShoppingListItemPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Features\ShoppingLists\Pages\EditShoppingListItemPage.xaml">

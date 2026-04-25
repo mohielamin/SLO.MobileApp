@@ -92,7 +92,7 @@ public partial class EditShoppingListItemPage : ContentPage
         BindableProperty.Create(
             propertyName,
             returnType: typeof(T),
-            declaringType: typeof(AddShoppingListItemPage),
+            declaringType: typeof(EditShoppingListItemPage),
             defaultValue,
             defaultBindingMode: BindingMode.TwoWay);
 
