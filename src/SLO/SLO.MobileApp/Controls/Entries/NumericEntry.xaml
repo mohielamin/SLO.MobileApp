@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templatedViews:TemplatedEntryView
+    x:Class="SLO.MobileApp.Controls.Entries.NumericEntry"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bases="clr-namespace:SLO.MobileApp.Controls.Bases"
+    xmlns:templatedViews="clr-namespace:SLO.MobileApp.Controls.TemplatedViews">
+
+    <templatedViews:TemplatedEntryView.ControlTemplate>
+        <ControlTemplate>
+
+            <bases:EntryBase
+                Focused="OnEntryFocusedEvent"
+                FontAttributes="{TemplateBinding FontAttribute}"
+                FontSize="{TemplateBinding FontSize}"
+                Keyboard="Numeric"
+                Placeholder="{TemplateBinding Placeholder}"
+                Text="{TemplateBinding Value}"
+                TextColor="{TemplateBinding TextColor}" />
+
+        </ControlTemplate>
+    </templatedViews:TemplatedEntryView.ControlTemplate>
+</templatedViews:TemplatedEntryView>

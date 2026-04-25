@@ -1,4 +1,5 @@
 ﻿using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
 using SLO.MobileApp.Controls.Bases;
 using System.Threading.Tasks;
 
@@ -18,6 +19,18 @@ public abstract partial class TemplatedEntryView : TemplatedViewBase
         set => SetValue(TextProperty, value);
     }
 
+    public Color TextColor
+    {
+        get => (Color)GetValue(TextColorProperty);
+        set => SetValue(TextColorProperty, value);
+    }
+
+    public bool SelectAllTextOnFocus
+    {
+        get => (bool)GetValue(SelectAllTextOnFocusProperty);
+        set => SetValue(SelectAllTextOnFocusProperty, value);
+    }
+
     public static readonly BindableProperty PlaceholderProperty =
         CreateProperty<string, TemplatedEntryView>(
             propertyName: nameof(Placeholder));
@@ -26,78 +39,18 @@ public abstract partial class TemplatedEntryView : TemplatedViewBase
         CreateProperty<string, TemplatedEntryView>(
             propertyName: nameof(Text));
 
-    public static readonly BindableProperty SelectAllTextOnFocus =
+    public static readonly BindableProperty TextColorProperty =
+        CreateProperty<Color, TemplatedEntryView>(
+            propertyName: nameof(TextColor));
+
+    public static readonly BindableProperty SelectAllTextOnFocusProperty =
         CreateProperty<bool, TemplatedEntryView>(
-            propertyName: nameof(IsFullTextSelectionEnabled),
-            defaultValue: false,
-            propertyChangedDelegate: IsFullTextSelectionEnabledChanged);
+            propertyName: nameof(SelectAllTextOnFocus),
+            defaultValue: false);
 
-    public bool IsFullTextSelectionEnabled
+    internal void OnEntryFocusedEvent(object sender, FocusEventArgs e)
     {
-        get => (bool)GetValue(SelectAllTextOnFocus);
-        set => SetValue(SelectAllTextOnFocus, value);
-    }
-
-    protected override void OnHandlerChanging(HandlerChangingEventArgs args)
-    {
-        base.OnHandlerChanging(args);
-
-        if (args.NewHandler is not null)
-        {
-            return;
-        }
-
-        this.Focused -= OnEntryFocusedEvent;
-    }
-
-    protected override void OnHandlerChanged()
-    {
-        base.OnHandlerChanged();
-
-        if (this.Handler is null)
-        {
-            return;
-        }
-
-        if (IsFullTextSelectionEnabled)
-        {
-            this.Focused += OnEntryFocusedEvent;
-        }
-    }
-
-    private static void IsFullTextSelectionEnabledChanged(
-        BindableObject bindable,
-        object oldValue,
-        object newValue)
-    {
-        if (bindable is not TemplatedEntryView templatedEntryView)
-        {
-            return;
-        }
-
-        if (oldValue.Equals(newValue))
-        {
-            return;
-        }
-
-        if ((bool)newValue is false)
-        {
-            templatedEntryView.Focused -=
-                templatedEntryView.OnEntryFocusedEvent;
-
-            return;
-        }
-
-        templatedEntryView.Focused -=
-            templatedEntryView.OnEntryFocusedEvent;
-
-        templatedEntryView.Focused +=
-            templatedEntryView.OnEntryFocusedEvent;
-    }
-
-    private void OnEntryFocusedEvent(object sender, FocusEventArgs e)
-    {
-        if (IsFullTextSelectionEnabled is false)
+        if (SelectAllTextOnFocus is false)
         {
             return;
         }

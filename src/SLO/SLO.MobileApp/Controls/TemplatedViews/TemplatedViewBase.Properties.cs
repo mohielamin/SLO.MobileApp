@@ -15,7 +15,6 @@ public partial class TemplatedViewBase
         get => (Brush)GetValue(BackgroundProperty);
     }
 
-
     private static readonly BindablePropertyKey BackgroundColorPropertyKey =
         CreateReadOnlyProperty<Color, TemplatedButtonView>(
             propertyName: nameof(BackgroundColor));
