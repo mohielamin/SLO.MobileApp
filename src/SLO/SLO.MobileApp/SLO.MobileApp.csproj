@@ -90,9 +90,6 @@
     <MauiXaml Update="Controls\Entries\TextEntry.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
-    <MauiXaml Update="Features\ShoppingLists\Pages\EditShoppingListItemPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
     <MauiXaml Update="Features\ShoppingLists\Pages\ShoppingListPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
