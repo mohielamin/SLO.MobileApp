@@ -16,6 +16,7 @@
                 Keyboard="Numeric"
                 Placeholder="{TemplateBinding Placeholder}"
                 Text="{TemplateBinding Value}"
+                TextChanged="TextChangedEvent"
                 TextColor="{TemplateBinding TextColor}" />
 
         </ControlTemplate>
