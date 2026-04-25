@@ -1,37 +1,29 @@
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
+﻿using Microsoft.Maui.Controls;
 
-namespace SLO.MobileApp.Views.Controls;
+namespace SLO.MobileApp.Controls.Entries;
 
-public partial class NumericEntry : ContentView
+public partial class NumericEntry
 {
+    public static readonly BindableProperty ValueProperty =
+        CreateProperty<int, NumericEntry>(
+            propertyName: nameof(Value),
+            propertyChangedDelegate: ValueChangedEvent);
+
     public int Value
     {
         get => (int)GetValue(ValueProperty);
         set => SetValue(ValueProperty, value);
     }
 
+    public static readonly BindableProperty MinValueProperty =
+        CreateProperty<int, NumericEntry>(
+            propertyName: nameof(MinValue),
+            propertyChangedDelegate: MinValueChangedEvent);
+
     public int MinValue
     {
         get => (int)GetValue(MinValueProperty);
         set => SetValue(MinValueProperty, value);
-    }
-
-    public Color TextColor
-    {
-        get => (Color)GetValue(TextColorProperty);
-        set => SetValue(TextColorProperty, value);
-    }
-
-    public string Placeholder
-    {
-        get => (string)GetValue(PlaceholderProperty);
-        set => SetValue(PlaceholderProperty, value);
-    }
-
-    public NumericEntry()
-    {
-        InitializeComponent();
     }
 
     private static void ValueChangedEvent(BindableObject bindable,

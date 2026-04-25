@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentView
-    x:Class="SLO.MobileApp.Views.Controls.NumericEntry"
+<templatedViews:TemplatedEntryView
+    x:Class="SLO.MobileApp.Controls.Entries.NumericEntry"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:bases="clr-namespace:SLO.MobileApp.Views.Bases">
+    xmlns:bases="clr-namespace:SLO.MobileApp.Controls.Bases"
+    xmlns:templatedViews="clr-namespace:SLO.MobileApp.Controls.TemplatedViews">
 
-    <ContentView.ControlTemplate>
-
+    <templatedViews:TemplatedEntryView.ControlTemplate>
         <ControlTemplate>
 
             <bases:EntryBase
+                Focused="OnEntryFocusedEvent"
                 FontAttributes="{TemplateBinding FontAttribute}"
                 FontSize="{TemplateBinding FontSize}"
-                IsFullTextSelectionEnabled="True"
                 Keyboard="Numeric"
                 Placeholder="{TemplateBinding Placeholder}"
                 Text="{TemplateBinding Value}"
+                TextChanged="TextChangedEvent"
                 TextColor="{TemplateBinding TextColor}" />
 
         </ControlTemplate>
-
-    </ContentView.ControlTemplate>
-
-</ContentView>
+    </templatedViews:TemplatedEntryView.ControlTemplate>
+</templatedViews:TemplatedEntryView>

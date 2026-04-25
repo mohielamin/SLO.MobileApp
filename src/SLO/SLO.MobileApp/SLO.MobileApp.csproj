@@ -87,6 +87,12 @@
     <MauiXaml Update="Controls\Buttons\SecondaryButton.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Controls\Entries\NumericEntry.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Controls\Entries\TextEntry.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Features\ShoppingLists\Pages\AddShoppingListItemPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>

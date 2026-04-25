@@ -4,7 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:buttons="clr-namespace:SLO.MobileApp.Controls.Buttons"
-    xmlns:controls="clr-namespace:SLO.MobileApp.Views.Controls"
+    xmlns:entries="clr-namespace:SLO.MobileApp.Controls.Entries"
     xmlns:local="clr-namespace:SLO.MobileApp.Features.ShoppingLists.Pages"
     x:DataType="local:EditShoppingListItemPage"
     MaximumHeightRequest="200"
@@ -18,21 +18,22 @@
         RowDefinitions="*,*,*"
         RowSpacing="10">
 
-        <controls:TextEntry
+        <entries:TextEntry
             Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="3"
             Placeholder="Item Name"
             Text="{Binding Name, Mode=TwoWay}" />
 
-        <controls:NumericEntry
+        <entries:NumericEntry
             Grid.Row="0"
             Grid.Column="3"
             MinValue="1"
             Placeholder="Quantity"
+            SelectAllTextOnFocus="True"
             Value="{Binding Quantity, Mode=TwoWay}" />
 
-        <controls:TextEntry
+        <entries:TextEntry
             Grid.Row="1"
             Grid.Column="0"
             Grid.ColumnSpan="4"
