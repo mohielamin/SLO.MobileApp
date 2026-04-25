@@ -22,21 +22,18 @@ public partial class ShoppingListPage : ContentPage
     protected override void OnNavigatedTo(
         NavigatedToEventArgs args)
     {
-        switch (args?.PreviousPage)
+        var shoppingListItemEditor =
+            args?.PreviousPage as ShoppingListItemEditor;
+
+        switch (shoppingListItemEditor?.EditMode)
         {
-            case ShoppingListPage:
-                return;
+            case true:
+                UpdateModifiedShoppingItem(shoppingListItemEditor);
+                break;
 
-            case AddShoppingListItemPage page:
-                CaptureAddedShoppingItem(page);
-                return;
-
-            case EditShoppingListItemPage page:
-                UpdateModifiedShoppingItem(page);
-                return;
-
-            default:
-                return;
+            case false:
+                CaptureAddedShoppingItem(shoppingListItemEditor);
+                break;
         }
     }
 
@@ -44,11 +41,11 @@ public partial class ShoppingListPage : ContentPage
         object sender,
         EventArgs e) =>
         await AppShell.Current.Navigation.PushModalAsync(
-            page: new AddShoppingListItemPage(),
+            page: new ShoppingListItemEditor(),
             animated: true);
 
     private void CaptureAddedShoppingItem(
-        AddShoppingListItemPage page)
+        ShoppingListItemEditor page)
     {
         if (page.Discarded)
         {
@@ -72,7 +69,7 @@ public partial class ShoppingListPage : ContentPage
     }
 
     private void UpdateModifiedShoppingItem(
-        EditShoppingListItemPage page)
+        ShoppingListItemEditor page)
     {
         if (SelectedShoppingItem is null)
         {
@@ -108,17 +105,13 @@ public partial class ShoppingListPage : ContentPage
     private void RemoveShoppingItemClicked(
         object sender, EventArgs e)
     {
-        var swipeItem = sender as SwipeItem;
-
-        if (swipeItem is null)
+        if (sender is not SwipeItem swipeItem)
         {
             return;
         }
 
-        ShoppingItem shoppingItem =
-            swipeItem.BindingContext as ShoppingItem;
-
-        if (shoppingItem is null)
+        if (swipeItem.BindingContext is not
+            ShoppingItem shoppingItem)
         {
             return;
         }
@@ -129,31 +122,30 @@ public partial class ShoppingListPage : ContentPage
     private async void EditShoppingItemClicked(
         object sender, EventArgs e)
     {
-        var swipeItem = sender as SwipeItem;
-
-        if (swipeItem is null)
+        if (sender is not SwipeItem swipeItem)
         {
             return;
         }
 
-        ShoppingItem shoppingItem =
-            swipeItem.BindingContext as ShoppingItem;
-
-        if (shoppingItem is null)
+        if (swipeItem.BindingContext is not
+            ShoppingItem shoppingItem)
         {
             return;
         }
 
         SelectedShoppingItem = shoppingItem;
 
-        var editShoppingListItemPage =
-            new EditShoppingListItemPage(
-                name: shoppingItem.Name,
-                description: shoppingItem.Description,
-                quantity: shoppingItem.Quantity);
+        var shoppingListItemEditor =
+            new ShoppingListItemEditor(
+                editMode: true)
+            {
+                Name = shoppingItem.Name,
+                Quantity = shoppingItem.Quantity,
+                Description = shoppingItem.Description
+            };
 
         await AppShell.Current.Navigation.PushModalAsync(
-            page: editShoppingListItemPage,
+            page: shoppingListItemEditor,
             animated: true);
     }
 }

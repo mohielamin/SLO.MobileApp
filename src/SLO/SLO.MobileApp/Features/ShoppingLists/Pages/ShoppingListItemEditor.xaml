@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    x:Class="SLO.MobileApp.Features.ShoppingLists.Pages.AddShoppingListItemPage"
+<features:ContentPageBase
+    x:Class="SLO.MobileApp.Features.ShoppingLists.Pages.ShoppingListItemEditor"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:buttons="clr-namespace:SLO.MobileApp.Controls.Buttons"
     xmlns:entries="clr-namespace:SLO.MobileApp.Controls.Entries"
+    xmlns:features="clr-namespace:SLO.MobileApp.Features"
     xmlns:local="clr-namespace:SLO.MobileApp.Features.ShoppingLists.Pages"
-    x:DataType="local:AddShoppingListItemPage"
+    x:DataType="local:ShoppingListItemEditor"
     MaximumHeightRequest="200"
     MaximumWidthRequest="400">
 
@@ -55,5 +56,4 @@
             Text="Save" />
 
     </Grid>
-
-</ContentPage>
+</features:ContentPageBase>
