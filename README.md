@@ -32,7 +32,8 @@ This is done in accordance with the Tri‑Nature pattern as demonstrated by The 
 
 The Below illustration reflects abstraction, structure, and UI independence.
 
-![SLO MobileApp Components-Base Views-Controls](https://github.com/user-attachments/assets/0364e468-5801-4661-ad9f-46017c5b41b5)
+<img width="1622" height="785" alt="SLO MobileApp Controls" src="https://github.com/user-attachments/assets/af659f97-ccda-4729-87dc-1364fe224e6d" />
+
 
 
 ## View Models
