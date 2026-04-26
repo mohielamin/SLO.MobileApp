@@ -4,8 +4,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
-    xmlns:bases="clr-namespace:SLO.MobileApp.Views.Bases"
     xmlns:buttons="clr-namespace:SLO.MobileApp.Controls.Buttons"
+    xmlns:labels="clr-namespace:SLO.MobileApp.Controls.Labels"
     xmlns:local="clr-namespace:SLO.MobileApp.Features.ShoppingLists.Pages"
     xmlns:models="clr-namespace:SLO.MobileApp.Core.Models.Foundations.ShoppingItems;assembly=SLO.MobileApp.Core"
     xmlns:views="clr-namespace:SLO.MobileApp.Features.ShoppingLists.Views"
@@ -30,12 +30,10 @@
                     HorizontalOptions="Fill"
                     VerticalOptions="Fill">
 
-                    <bases:LabelBase
+                    <labels:BodyLabel
                         HorizontalOptions="Center"
-                        HorizontalTextAlignment="Center"
                         Text="Your cart is empty!"
-                        VerticalOptions="Center"
-                        VerticalTextAlignment="Center" />
+                        VerticalOptions="Center" />
 
                 </Grid>
             </CollectionView.EmptyView>
