@@ -3,7 +3,7 @@
     x:Class="SLO.MobileApp.Features.ShoppingLists.Views.ShoppingListItemView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:labelBase="clr-namespace:SLO.MobileApp.Views.Bases"
+    xmlns:labels="clr-namespace:SLO.MobileApp.Controls.Labels"
     xmlns:models="clr-namespace:SLO.MobileApp.Core.Models.Foundations.ShoppingItems;assembly=SLO.MobileApp.Core"
     x:DataType="models:ShoppingItem">
 
@@ -17,19 +17,19 @@
             RowDefinitions="*,*"
             RowSpacing="10">
 
-            <labelBase:LabelBase
+            <labels:BodyLabel
                 Grid.Row="0"
                 Grid.Column="0"
                 HorizontalOptions="Start"
                 Text="{Binding Name}" />
 
-            <labelBase:LabelBase
+            <labels:BodyLabel
                 Grid.Row="0"
                 Grid.Column="1"
                 HorizontalOptions="End"
                 Text="{Binding Quantity}" />
 
-            <labelBase:LabelBase
+            <Label
                 Grid.Row="1"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
