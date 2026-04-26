@@ -2,6 +2,4 @@
 
 namespace SLO.MobileApp.Controls.Bases;
 
-public partial class LabelBase : Label
-{
-}
+public partial class LabelBase : Label { }
