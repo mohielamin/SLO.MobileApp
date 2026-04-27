@@ -93,6 +93,9 @@
     <MauiXaml Update="Controls\Labels\BodyLabel.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Controls\Labels\TitleLabel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Features\ShoppingLists\Pages\ShoppingListPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>

@@ -17,6 +17,12 @@ public abstract partial class TemplatedLabelView : TemplatedViewBase
         set => SetValue(TextColorProperty, value);
     }
 
+    public FontAttributes FontAttributes
+    {
+        get => (FontAttributes)GetValue(FontAttributesProperty);
+        set => SetValue(FontAttributesProperty, value);
+    }
+
     public static readonly BindableProperty TextProperty =
         CreateProperty<string, TemplatedLabelView>(
             propertyName: nameof(Text));
@@ -24,4 +30,8 @@ public abstract partial class TemplatedLabelView : TemplatedViewBase
     public static readonly BindableProperty TextColorProperty =
         CreateProperty<Color, TemplatedLabelView>(
             propertyName: nameof(TextColor));
+
+    public static readonly BindableProperty FontAttributesProperty =
+        CreateProperty<FontAttributes, TemplatedLabelView>(
+            propertyName: nameof(FontAttributes));
 }
