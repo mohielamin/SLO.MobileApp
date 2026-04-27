@@ -4,8 +4,8 @@ namespace SLO.MobileApp.Controls.Labels;
 
 public partial class TitleLabel : TemplatedLabelView
 {
-	public TitleLabel()
-	{
-		InitializeComponent();
-	}
+    public TitleLabel()
+    {
+        InitializeComponent();
+    }
 }
