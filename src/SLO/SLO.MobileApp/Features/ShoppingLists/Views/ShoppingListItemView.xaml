@@ -13,8 +13,8 @@
         StrokeShape="RoundRectangle 10">
 
         <Grid
-            ColumnDefinitions="*,*"
-            RowDefinitions="*,*"
+            ColumnDefinitions="*,Auto"
+            RowDefinitions="*,Auto"
             RowSpacing="10">
 
             <labels:TitleLabel
