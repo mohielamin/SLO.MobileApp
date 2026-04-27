@@ -10,10 +10,11 @@
         <ControlTemplate>
 
             <bases:LabelBase
+                FontAttributes="{TemplateBinding FontAttributes}"
                 HorizontalTextAlignment="{TemplateBinding HorizontalTextAlignment}"
                 Text="{TemplateBinding Text}"
                 TextColor="{TemplateBinding TextColor}"
-                VerticalTextAlignment="Center" />
+                VerticalTextAlignment="{TemplateBinding VerticalTextAlignment}" />
 
         </ControlTemplate>
     </templatedViews:TemplatedLabelView.ControlTemplate>

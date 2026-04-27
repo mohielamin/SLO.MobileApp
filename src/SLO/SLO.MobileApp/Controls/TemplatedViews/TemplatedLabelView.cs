@@ -30,6 +30,12 @@ public abstract partial class TemplatedLabelView : TemplatedViewBase
         set => SetValue(HorizontalTextAlignmentProperty, value);
     }
 
+    public TextAlignment VerticalTextAlignment
+    {
+        get => (TextAlignment)GetValue(VerticalTextAlignmentProperty);
+        set => SetValue(VerticalTextAlignmentProperty, value);
+    }
+
     public static readonly BindableProperty TextProperty =
         CreateProperty<string, TemplatedLabelView>(
             propertyName: nameof(Text));
@@ -45,4 +51,8 @@ public abstract partial class TemplatedLabelView : TemplatedViewBase
     public static readonly BindableProperty HorizontalTextAlignmentProperty =
         CreateProperty<TextAlignment, TemplatedLabelView>(
             propertyName: nameof(HorizontalTextAlignment));
+
+    public static readonly BindableProperty VerticalTextAlignmentProperty =
+        CreateProperty<TextAlignment, TemplatedLabelView>(
+            propertyName: nameof(VerticalTextAlignment));
 }
