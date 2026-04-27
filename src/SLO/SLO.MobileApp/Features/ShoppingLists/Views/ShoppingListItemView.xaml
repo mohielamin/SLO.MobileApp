@@ -17,7 +17,7 @@
             RowDefinitions="*,*"
             RowSpacing="10">
 
-            <labels:BodyLabel
+            <labels:TitleLabel
                 Grid.Row="0"
                 Grid.Column="0"
                 HorizontalOptions="Start"
@@ -29,7 +29,7 @@
                 HorizontalOptions="End"
                 Text="{Binding Quantity}" />
 
-            <Label
+            <labels:BodyLabel
                 Grid.Row="1"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"

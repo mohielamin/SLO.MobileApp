@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <templatedViews:TemplatedLabelView
-    x:Class="SLO.MobileApp.Controls.Labels.BodyLabel"
+    x:Class="SLO.MobileApp.Controls.Labels.TitleLabel"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:bases="clr-namespace:SLO.MobileApp.Controls.Bases"
@@ -11,10 +11,9 @@
 
             <bases:LabelBase
                 FontAttributes="{TemplateBinding FontAttributes}"
-                HorizontalTextAlignment="{TemplateBinding HorizontalTextAlignment}"
+                FontSize="24"
                 Text="{TemplateBinding Text}"
-                TextColor="{TemplateBinding TextColor}"
-                VerticalTextAlignment="{TemplateBinding VerticalTextAlignment}" />
+                TextColor="{TemplateBinding TextColor}" />
 
         </ControlTemplate>
     </templatedViews:TemplatedLabelView.ControlTemplate>
