@@ -10,7 +10,6 @@
         <ControlTemplate>
 
             <bases:LabelBase
-                FontAttributes="Bold"
                 HorizontalTextAlignment="Center"
                 Text="{TemplateBinding Text}"
                 TextColor="{TemplateBinding TextColor}"
