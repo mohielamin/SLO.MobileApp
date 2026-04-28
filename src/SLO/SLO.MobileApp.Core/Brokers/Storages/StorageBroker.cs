@@ -12,11 +12,11 @@ namespace SLO.MobileApp.Core.Brokers.Storages;
 
 internal sealed partial class StorageBroker : EFxceptionsContext, IStorageBroker
 {
-    private readonly IOptions<LocalConfiguration> _localConfiguration;
+    private readonly LocalConfiguration _localConfiguration;
 
-    public StorageBroker(IOptions<LocalConfiguration> localConfiguration)
+    public StorageBroker(IOptions<LocalConfiguration> localConfigurationOptions)
     {
-        _localConfiguration = localConfiguration;
+        _localConfiguration = localConfigurationOptions.Value;
         EnsureCreated();
     }
 
@@ -24,7 +24,7 @@ internal sealed partial class StorageBroker : EFxceptionsContext, IStorageBroker
         DbContextOptionsBuilder dbContextOptionsBuilder)
     {
         string connectionString =
-            $"Data Source={_localConfiguration.Value.DatabaseFilePath}";
+            $"Data Source={_localConfiguration.DatabaseFilePath}";
 
         dbContextOptionsBuilder.UseSqlite(connectionString);
     }
@@ -32,7 +32,7 @@ internal sealed partial class StorageBroker : EFxceptionsContext, IStorageBroker
     private void EnsureCreated()
     {
         bool databaseFileExists =
-            File.Exists(path: _localConfiguration.Value.DatabaseFilePath);
+            File.Exists(path: _localConfiguration.DatabaseFilePath);
 
         if (databaseFileExists)
         {
