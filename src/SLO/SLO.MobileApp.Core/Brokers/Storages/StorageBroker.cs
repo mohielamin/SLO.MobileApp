@@ -30,25 +30,40 @@ internal sealed partial class StorageBroker : EFxceptionsContext, IStorageBroker
     }
 
     private async ValueTask<T> InsertAsync<T>(
-        T item, CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
+        T item, CancellationToken cancellationToken)
+    {
+        Entry(item).State = EntityState.Added;
+        await SaveChangesAsync(cancellationToken);
+
+        return item;
+    }
 
     private async ValueTask<IQueryable<T>> SelectAllAsync<T>(
-        CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
+        CancellationToken cancellationToken) where T : class =>
+        Set<T>();
 
     private async ValueTask<T> SelectByIdAsync<T>(
         CancellationToken cancellationToken,
-        params Guid[] ids) =>
-        throw new NotImplementedException();
+        params Guid[] ids) where T : class =>
+        await FindAsync<T>(ids, cancellationToken);
 
     private async ValueTask<T> UpdateAsync<T>(
-        T item, CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
+        T item, CancellationToken cancellationToken)
+    {
+        Entry(item).State = EntityState.Modified;
+        await SaveChangesAsync(cancellationToken);
+
+        return item;
+    }
 
     private async ValueTask<T> DeleteAsync<T>(
-        T item, CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
+        T item, CancellationToken cancellationToken)
+    {
+        Entry(item).State = EntityState.Deleted;
+        await SaveChangesAsync(cancellationToken);
+
+        return item;
+    }
 
     private void EnsureCreated()
     {
