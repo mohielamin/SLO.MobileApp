@@ -29,19 +29,6 @@ internal sealed partial class StorageBroker : EFxceptionsContext, IStorageBroker
         dbContextOptionsBuilder.UseSqlite(connectionString);
     }
 
-    private void EnsureCreated()
-    {
-        bool databaseFileExists =
-            File.Exists(path: _localConfiguration.DatabaseFilePath);
-
-        if (databaseFileExists)
-        {
-            return;
-        }
-
-        Database.EnsureCreated();
-    }
-
     private async ValueTask<T> InsertAsync<T>(
         T item, CancellationToken cancellationToken) =>
         throw new NotImplementedException();
@@ -62,4 +49,29 @@ internal sealed partial class StorageBroker : EFxceptionsContext, IStorageBroker
     private async ValueTask<T> DeleteAsync<T>(
         T item, CancellationToken cancellationToken) =>
         throw new NotImplementedException();
+
+    private void EnsureCreated()
+    {
+        bool databaseFileExists =
+            File.Exists(path: _localConfiguration.DatabaseFilePath);
+
+        if (databaseFileExists)
+        {
+            EnsureMigrationApplied();
+
+            return;
+        }
+
+        Database.EnsureCreatedAsync();
+    }
+
+    private void EnsureMigrationApplied()
+    {
+        if (Database.HasPendingModelChanges() is false)
+        {
+            return;
+        }
+
+        Database.MigrateAsync();
+    }
 }
