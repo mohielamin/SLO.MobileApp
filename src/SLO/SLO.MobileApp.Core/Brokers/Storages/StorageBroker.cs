@@ -12,11 +12,11 @@ namespace SLO.MobileApp.Core.Brokers.Storages;
 
 internal sealed partial class StorageBroker : EFxceptionsContext, IStorageBroker
 {
-    private readonly IOptions<LocalConfiguration> _localConfiguration;
+    private readonly LocalConfiguration _localConfiguration;
 
-    public StorageBroker(IOptions<LocalConfiguration> localConfiguration)
+    public StorageBroker(IOptions<LocalConfiguration> localConfigurationOptions)
     {
-        _localConfiguration = localConfiguration;
+        _localConfiguration = localConfigurationOptions.Value;
         EnsureCreated();
     }
 
@@ -24,42 +24,69 @@ internal sealed partial class StorageBroker : EFxceptionsContext, IStorageBroker
         DbContextOptionsBuilder dbContextOptionsBuilder)
     {
         string connectionString =
-            $"Data Source={_localConfiguration.Value.DatabaseFilePath}";
+            $"Data Source={_localConfiguration.DatabaseFilePath}";
 
         dbContextOptionsBuilder.UseSqlite(connectionString);
+    }
+
+    private async ValueTask<T> InsertAsync<T>(
+        T item, CancellationToken cancellationToken)
+    {
+        Entry(item).State = EntityState.Added;
+        await SaveChangesAsync(cancellationToken);
+
+        return item;
+    }
+
+    private async ValueTask<IQueryable<T>> SelectAllAsync<T>(
+        CancellationToken cancellationToken) where T : class =>
+        Set<T>();
+
+    private async ValueTask<T> SelectByIdAsync<T>(
+        CancellationToken cancellationToken,
+        params Guid[] ids) where T : class =>
+        await FindAsync<T>(ids, cancellationToken);
+
+    private async ValueTask<T> UpdateAsync<T>(
+        T item, CancellationToken cancellationToken)
+    {
+        Entry(item).State = EntityState.Modified;
+        await SaveChangesAsync(cancellationToken);
+
+        return item;
+    }
+
+    private async ValueTask<T> DeleteAsync<T>(
+        T item, CancellationToken cancellationToken)
+    {
+        Entry(item).State = EntityState.Deleted;
+        await SaveChangesAsync(cancellationToken);
+
+        return item;
     }
 
     private void EnsureCreated()
     {
         bool databaseFileExists =
-            File.Exists(path: _localConfiguration.Value.DatabaseFilePath);
+            File.Exists(path: _localConfiguration.DatabaseFilePath);
 
         if (databaseFileExists)
+        {
+            EnsureMigrationApplied();
+
+            return;
+        }
+
+        Database.EnsureCreatedAsync();
+    }
+
+    private void EnsureMigrationApplied()
+    {
+        if (Database.HasPendingModelChanges() is false)
         {
             return;
         }
 
-        Database.EnsureCreated();
+        Database.MigrateAsync();
     }
-
-    private async ValueTask<T> InsertAsync<T>(
-        T item, CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
-
-    private async ValueTask<IQueryable<T>> SelectAllAsync<T>(
-        CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
-
-    private async ValueTask<T> SelectByIdAsync<T>(
-        CancellationToken cancellationToken,
-        params Guid[] ids) =>
-        throw new NotImplementedException();
-
-    private async ValueTask<T> UpdateAsync<T>(
-        T item, CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
-
-    private async ValueTask<T> DeleteAsync<T>(
-        T item, CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
 }
