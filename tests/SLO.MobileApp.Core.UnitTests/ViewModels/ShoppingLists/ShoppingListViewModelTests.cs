@@ -24,6 +24,24 @@ public partial class ShoppingListViewModelTests
                 shoppingItemService: _shoppingItemServiceMock.Object);
     }
 
+    public static TheoryData<Exception> DependencyValidationExceptions()
+    {
+        string randomExceptionMessage = Randomizers.GetRandomString();
+        string someExceptionMessage = Randomizers.GetRandomString();
+        var someInnerException = new Exception(someExceptionMessage);
+
+        return new TheoryData<Exception>
+        {
+            new ShoppingItemValidationException(
+                exceptionMessage: randomExceptionMessage,
+                innerException: someInnerException),
+
+            new ShoppingItemDependencyValidationException(
+                exceptionMessage: randomExceptionMessage,
+                innerException: someInnerException),
+        };
+    }
+
     public static TheoryData<Exception> DependencyExceptions()
     {
         string randomExceptionMessage = Randomizers.GetRandomString();
