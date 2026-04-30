@@ -45,7 +45,8 @@ public partial class ShoppingListViewModelTests
     public static TheoryData<Exception> DependencyExceptions()
     {
         string randomExceptionMessage = Randomizers.GetRandomString();
-        var someInnerException = new Exception(randomExceptionMessage);
+        string someExceptionMessage = Randomizers.GetRandomString();
+        var someInnerException = new Exception(someExceptionMessage);
 
         return new TheoryData<Exception>
         {
