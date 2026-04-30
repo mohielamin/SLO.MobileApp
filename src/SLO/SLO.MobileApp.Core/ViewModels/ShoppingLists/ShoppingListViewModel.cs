@@ -4,8 +4,8 @@ using SLO.MobileApp.Core.Brokers.DateTimes;
 using SLO.MobileApp.Core.Brokers.Loggings;
 using SLO.MobileApp.Core.Brokers.Storages;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
-using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -33,6 +33,12 @@ internal partial class ShoppingListViewModel : ObservableObject
     private async Task RetrieveAllShoppingItemsAsync(
         CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        IQueryable<ShoppingItem> retrievedShoppingItems =
+            await _storageBroker.SelectAllShoppingItemsAsync(
+                cancellationToken);
+
+        ShoppingItems =
+            new ObservableCollection<ShoppingItem>(
+                list: retrievedShoppingItems.ToList());
     }
 }
