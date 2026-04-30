@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
+using SLO.MobileApp.Core.Models.Foundations.ShoppingItems.Exceptions;
 using SLO.MobileApp.Core.Services.Foundations.ShoppingItems;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -26,12 +27,24 @@ internal partial class ShoppingListViewModel : ObservableObject
     private async Task RetrieveAllShoppingItemsAsync(
         CancellationToken cancellationToken)
     {
-        IQueryable<ShoppingItem> retrievedShoppingItems =
-            await _shoppingItemService.RetrieveAllShoppingItemsAsync(
-                cancellationToken);
+        try
+        {
 
-        ShoppingItems =
-            new ObservableCollection<ShoppingItem>(
-                list: retrievedShoppingItems.ToList());
+            IQueryable<ShoppingItem> retrievedShoppingItems =
+                await _shoppingItemService.RetrieveAllShoppingItemsAsync(
+                    cancellationToken);
+
+            ShoppingItems =
+                new ObservableCollection<ShoppingItem>(
+                    list: retrievedShoppingItems.ToList());
+        }
+        catch (ShoppingItemDependencyException ex)
+        {
+            ErrorMessage = ex.Message;
+        }
+        catch (ShoppingItemServiceException ex)
+        {
+            ErrorMessage = ex.Message;
+        }
     }
 }
