@@ -19,6 +19,9 @@ internal partial class ShoppingListViewModel : ObservableObject
 
     public ObservableCollection<ShoppingItem> ShoppingItems { get; private set; }
 
+    [ObservableProperty]
+    private string errorMessage;
+
     [RelayCommand(IncludeCancelCommand = true)]
     private async Task RetrieveAllShoppingItemsAsync(
         CancellationToken cancellationToken)

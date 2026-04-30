@@ -1,5 +1,6 @@
 ﻿using Moq;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
+using SLO.MobileApp.Core.Models.Foundations.ShoppingItems.Exceptions;
 using SLO.MobileApp.Core.Services.Foundations.ShoppingItems;
 using SLO.MobileApp.Core.UnitTests.Helpers;
 using SLO.MobileApp.Core.ViewModels.ShoppingLists;
@@ -21,6 +22,23 @@ public partial class ShoppingListViewModelTests
         _shoppingListViewModel =
             new ShoppingListViewModel(
                 shoppingItemService: _shoppingItemServiceMock.Object);
+    }
+
+    public static TheoryData<Exception> DependencyExceptions()
+    {
+        string randomExceptionMessage = Randomizers.GetRandomString();
+        var someInnerException = new Exception(randomExceptionMessage);
+
+        return new TheoryData<Exception>
+        {
+            new ShoppingItemDependencyException(
+                exceptionMessage: randomExceptionMessage,
+                innerException: someInnerException),
+
+            new ShoppingItemServiceException(
+                exceptionMessage: randomExceptionMessage,
+                innerException: someInnerException),
+        };
     }
 
     private void VerifyNoOtherDependencyCalls()
