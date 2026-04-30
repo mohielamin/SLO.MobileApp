@@ -43,4 +43,39 @@ public partial class ShoppingListViewModelTests
 
         VerifyNoOtherDependencyCalls();
     }
+
+    [Theory]
+    [MemberData(nameof(DependencyExceptions))]
+    public async Task ShouldRenderExceptionMessageOnAddIfDependencyErrorOccursAsync(
+        Exception dependencyException)
+    {
+        // given
+        ShoppingItem someShoppingItem =
+            CreateRandomShoppingItem();
+
+        string expectedErrorMessage =
+            dependencyException.Message;
+
+        _shoppingItemServiceMock.Setup(service =>
+            service.AddShoppingItemAsync(
+               someShoppingItem,
+                It.IsAny<CancellationToken>()))
+            .ThrowsAsync(dependencyException);
+
+        // when
+        await _shoppingListViewModel.AddShoppingListItemCommand
+            .ExecuteAsync(someShoppingItem);
+
+        // then
+        _shoppingListViewModel.ErrorMessage.Should().BeEquivalentTo(
+            expectedErrorMessage);
+
+        _shoppingItemServiceMock.Verify(service =>
+            service.AddShoppingItemAsync(
+                someShoppingItem,
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
 }
