@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
-using SLO.MobileApp.Core.Models.Foundations.ShoppingItems.Exceptions;
 using SLO.MobileApp.Core.Services.Foundations.ShoppingItems;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -26,26 +25,26 @@ internal partial class ShoppingListViewModel : ObservableObject
     [RelayCommand(IncludeCancelCommand = true)]
     private async Task AddShoppingListItemAsync(
         ShoppingItem shoppingItem,
-        CancellationToken cancellationToken)
-    {
-        ShoppingItem addShoppingItem =
-            await _shoppingItemService.AddShoppingItemAsync(
-                shoppingItem, cancellationToken);
-
-        if (ShoppingListItems is null)
+        CancellationToken cancellationToken) =>
+        await TryCatch(async () =>
         {
-            ShoppingListItems =
-                new ObservableCollection<ShoppingItem>();
-        }
+            ShoppingItem addShoppingItem =
+                await _shoppingItemService.AddShoppingItemAsync(
+                    shoppingItem, cancellationToken);
 
-        ShoppingListItems.Add(item: addShoppingItem);
-    }
+            if (ShoppingListItems is null)
+            {
+                ShoppingListItems =
+                    new ObservableCollection<ShoppingItem>();
+            }
+
+            ShoppingListItems.Add(item: addShoppingItem);
+        });
 
     [RelayCommand(IncludeCancelCommand = true)]
     private async Task RetrieveAllShoppingItemsAsync(
-        CancellationToken cancellationToken)
-    {
-        try
+        CancellationToken cancellationToken) =>
+        await TryCatch(async () =>
         {
             IQueryable<ShoppingItem> retrievedShoppingItems =
                 await _shoppingItemService.RetrieveAllShoppingItemsAsync(
@@ -54,14 +53,5 @@ internal partial class ShoppingListViewModel : ObservableObject
             ShoppingListItems =
                 new ObservableCollection<ShoppingItem>(
                     list: retrievedShoppingItems.ToList());
-        }
-        catch (ShoppingItemDependencyException ex)
-        {
-            ErrorMessage = ex.Message;
-        }
-        catch (ShoppingItemServiceException ex)
-        {
-            ErrorMessage = ex.Message;
-        }
-    }
+        });
 }
