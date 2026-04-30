@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingItems.Exceptions;
 using SLO.MobileApp.Core.Services.Foundations.ShoppingItems;
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
@@ -29,7 +28,17 @@ internal partial class ShoppingListViewModel : ObservableObject
         ShoppingItem shoppingItem,
         CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        ShoppingItem addShoppingItem =
+            await _shoppingItemService.AddShoppingItemAsync(
+                shoppingItem, cancellationToken);
+
+        if (ShoppingListItems is null)
+        {
+            ShoppingListItems =
+                new ObservableCollection<ShoppingItem>();
+        }
+
+        ShoppingListItems.Add(item: addShoppingItem);
     }
 
     [RelayCommand(IncludeCancelCommand = true)]

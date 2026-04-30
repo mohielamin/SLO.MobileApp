@@ -2,7 +2,6 @@
 using Moq;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,12 +13,6 @@ public partial class ShoppingListViewModelTests
     public async ValueTask ShouldAddShoppingListItemAsync()
     {
         // given
-        IQueryable<ShoppingItem> randomShoppingListItems =
-            CreateRandomShoppingItems();
-
-        IQueryable<ShoppingItem> currentShoppingListItems =
-            randomShoppingListItems;
-
         ShoppingItem randomShoppingListItem =
             CreateRandomShoppingItem();
 
