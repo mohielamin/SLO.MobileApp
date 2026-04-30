@@ -1,8 +1,6 @@
 ﻿using Moq;
-using SLO.MobileApp.Core.Brokers.DateTimes;
-using SLO.MobileApp.Core.Brokers.Loggings;
-using SLO.MobileApp.Core.Brokers.Storages;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
+using SLO.MobileApp.Core.Services.Foundations.ShoppingItems;
 using SLO.MobileApp.Core.UnitTests.Helpers;
 using SLO.MobileApp.Core.ViewModels.ShoppingLists;
 using System;
@@ -13,29 +11,21 @@ namespace SLO.MobileApp.Core.UnitTests.ViewModels.ShoppingLists;
 
 public partial class ShoppingListViewModelTests
 {
-    private readonly Mock<IStorageBroker> _storageBrokerMock;
-    private readonly Mock<IDateTimeBroker> _dateTimeBrokerMock;
-    private readonly Mock<ILoggingBroker> _loggingBrokerMock;
+    private readonly Mock<IShoppingItemService> _shoppingItemServiceMock;
     private readonly ShoppingListViewModel _shoppingListViewModel;
 
     public ShoppingListViewModelTests()
     {
-        _storageBrokerMock = new Mock<IStorageBroker>();
-        _dateTimeBrokerMock = new Mock<IDateTimeBroker>();
-        _loggingBrokerMock = new Mock<ILoggingBroker>();
+        _shoppingItemServiceMock = new Mock<IShoppingItemService>();
 
         _shoppingListViewModel =
             new ShoppingListViewModel(
-                storageBroker: _storageBrokerMock.Object,
-                dateTimeBroker: _dateTimeBrokerMock.Object,
-                loggingBroker: _loggingBrokerMock.Object);
+                shoppingItemService: _shoppingItemServiceMock.Object);
     }
 
     private void VerifyNoOtherDependencyCalls()
     {
-        _storageBrokerMock.VerifyNoOtherCalls();
-        _dateTimeBrokerMock.VerifyNoOtherCalls();
-        _loggingBrokerMock.VerifyNoOtherCalls();
+        _shoppingItemServiceMock.VerifyNoOtherCalls();
     }
 
     private IQueryable<ShoppingItem> CreateRandomShoppingItems() =>

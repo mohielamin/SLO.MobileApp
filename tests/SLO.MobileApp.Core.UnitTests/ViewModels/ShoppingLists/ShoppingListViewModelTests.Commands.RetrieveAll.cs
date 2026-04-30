@@ -24,8 +24,8 @@ public partial class ShoppingListViewModelTests
            new ObservableCollection<ShoppingItem>(
                list: retrievedShoppingItems.ToList());
 
-        _storageBrokerMock.Setup(broker =>
-            broker.SelectAllShoppingItemsAsync(
+        _shoppingItemServiceMock.Setup(service =>
+            service.RetrieveAllShoppingItemsAsync(
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(retrievedShoppingItems);
 
@@ -38,10 +38,10 @@ public partial class ShoppingListViewModelTests
         _shoppingListViewModel.ShoppingItems.Should().BeEquivalentTo(
             expectedShoppingItems);
 
-        _storageBrokerMock.Verify(broker =>
-            broker.SelectAllShoppingItemsAsync(
-                It.IsAny<CancellationToken>()),
-            Times.Once());
+        _shoppingItemServiceMock.Verify(service =>
+             service.RetrieveAllShoppingItemsAsync(
+                 It.IsAny<CancellationToken>()),
+             Times.Once());
 
         VerifyNoOtherDependencyCalls();
     }
