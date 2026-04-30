@@ -29,7 +29,6 @@ internal partial class ShoppingListViewModel : ObservableObject
     {
         try
         {
-
             IQueryable<ShoppingItem> retrievedShoppingItems =
                 await _shoppingItemService.RetrieveAllShoppingItemsAsync(
                     cancellationToken);
