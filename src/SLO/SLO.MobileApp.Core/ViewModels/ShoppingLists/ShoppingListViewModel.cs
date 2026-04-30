@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingItems.Exceptions;
 using SLO.MobileApp.Core.Services.Foundations.ShoppingItems;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
@@ -18,10 +19,18 @@ internal partial class ShoppingListViewModel : ObservableObject
         IShoppingItemService shoppingItemService) =>
         _shoppingItemService = shoppingItemService;
 
-    public ObservableCollection<ShoppingItem> ShoppingItems { get; private set; }
+    public ObservableCollection<ShoppingItem> ShoppingListItems { get; private set; }
 
     [ObservableProperty]
     private string errorMessage;
+
+    [RelayCommand(IncludeCancelCommand = true)]
+    private async Task AddShoppingListItemAsync(
+        ShoppingItem shoppingItem,
+        CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
 
     [RelayCommand(IncludeCancelCommand = true)]
     private async Task RetrieveAllShoppingItemsAsync(
@@ -33,7 +42,7 @@ internal partial class ShoppingListViewModel : ObservableObject
                 await _shoppingItemService.RetrieveAllShoppingItemsAsync(
                     cancellationToken);
 
-            ShoppingItems =
+            ShoppingListItems =
                 new ObservableCollection<ShoppingItem>(
                     list: retrievedShoppingItems.ToList());
         }

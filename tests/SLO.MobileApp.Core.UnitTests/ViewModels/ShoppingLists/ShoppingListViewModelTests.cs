@@ -46,12 +46,16 @@ public partial class ShoppingListViewModelTests
         _shoppingItemServiceMock.VerifyNoOtherCalls();
     }
 
-    private IQueryable<ShoppingItem> CreateRandomShoppingItems() =>
+    private static ShoppingItem CreateRandomShoppingItem() =>
+        CreateShoppingItemFiller()
+        .Create();
+
+    private static IQueryable<ShoppingItem> CreateRandomShoppingItems() =>
         CreateShoppingItemFiller()
         .Create(count: Randomizers.GetRandomNumber())
         .AsQueryable();
 
-    private Filler<ShoppingItem> CreateShoppingItemFiller()
+    private static Filler<ShoppingItem> CreateShoppingItemFiller()
     {
         var filler = new Filler<ShoppingItem>();
         DateTimeOffset randomDateTime = Randomizers.GetRandomDateTime();

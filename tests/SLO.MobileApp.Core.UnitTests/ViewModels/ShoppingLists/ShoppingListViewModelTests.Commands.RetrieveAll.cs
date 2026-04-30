@@ -35,7 +35,7 @@ public partial class ShoppingListViewModelTests
             .ExecuteAsync(parameter: null);
 
         // then
-        _shoppingListViewModel.ShoppingItems.Should().BeEquivalentTo(
+        _shoppingListViewModel.ShoppingListItems.Should().BeEquivalentTo(
             expectedShoppingItems);
 
         _shoppingItemServiceMock.Verify(service =>
