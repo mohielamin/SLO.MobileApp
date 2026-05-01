@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
 using SLO.MobileApp.Core.Services.Foundations.ShoppingItems;
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
@@ -39,7 +38,7 @@ internal partial class ShoppingListViewModel : ObservableObject
                     new ObservableCollection<ShoppingItem>();
             }
 
-            ShoppingListItems.Add(item: addShoppingItem);
+            ShoppingListItems.Add(item: shoppingItem);
         });
 
     [RelayCommand(IncludeCancelCommand = true)]
@@ -61,6 +60,11 @@ internal partial class ShoppingListViewModel : ObservableObject
         ShoppingItem shoppingItem,
         CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        ShoppingItem matchingShoppingItem =
+            ShoppingListItems.FirstOrDefault(shoppingItem =>
+                shoppingItem.Id == shoppingItem.Id);
+
+        ShoppingListItems.Remove(item: matchingShoppingItem);
+        ShoppingListItems.Add(item: shoppingItem);
     }
 }
