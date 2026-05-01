@@ -1,7 +1,4 @@
-﻿using Moq;
-using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
-using SLO.MobileApp.Core.Models.Foundations.ShoppingItems.Exceptions;
-using SLO.MobileApp.Core.Services.Foundations.ShoppingItems;
+﻿using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
 using SLO.MobileApp.Core.UnitTests.Helpers;
 using SLO.MobileApp.Core.ViewModels.ShoppingLists;
 using System;
@@ -12,58 +9,11 @@ namespace SLO.MobileApp.Core.UnitTests.ViewModels.ShoppingLists;
 
 public partial class ShoppingListViewModelTests
 {
-    private readonly Mock<IShoppingItemService> _shoppingItemServiceMock;
     private readonly ShoppingListViewModel _shoppingListViewModel;
 
-    public ShoppingListViewModelTests()
-    {
-        _shoppingItemServiceMock = new Mock<IShoppingItemService>();
-
+    public ShoppingListViewModelTests() =>
         _shoppingListViewModel =
-            new ShoppingListViewModel(
-                shoppingItemService: _shoppingItemServiceMock.Object);
-    }
-
-    public static TheoryData<Exception> DependencyValidationExceptions()
-    {
-        string randomExceptionMessage = Randomizers.GetRandomString();
-        string someExceptionMessage = Randomizers.GetRandomString();
-        var someInnerException = new Exception(someExceptionMessage);
-
-        return new TheoryData<Exception>
-        {
-            new ShoppingItemValidationException(
-                exceptionMessage: randomExceptionMessage,
-                innerException: someInnerException),
-
-            new ShoppingItemDependencyValidationException(
-                exceptionMessage: randomExceptionMessage,
-                innerException: someInnerException),
-        };
-    }
-
-    public static TheoryData<Exception> DependencyExceptions()
-    {
-        string randomExceptionMessage = Randomizers.GetRandomString();
-        string someExceptionMessage = Randomizers.GetRandomString();
-        var someInnerException = new Exception(someExceptionMessage);
-
-        return new TheoryData<Exception>
-        {
-            new ShoppingItemDependencyException(
-                exceptionMessage: randomExceptionMessage,
-                innerException: someInnerException),
-
-            new ShoppingItemServiceException(
-                exceptionMessage: randomExceptionMessage,
-                innerException: someInnerException),
-        };
-    }
-
-    private void VerifyNoOtherDependencyCalls()
-    {
-        _shoppingItemServiceMock.VerifyNoOtherCalls();
-    }
+            new ShoppingListViewModel();
 
     private static ShoppingItem CreateRandomShoppingItem() =>
         CreateShoppingItemFiller()

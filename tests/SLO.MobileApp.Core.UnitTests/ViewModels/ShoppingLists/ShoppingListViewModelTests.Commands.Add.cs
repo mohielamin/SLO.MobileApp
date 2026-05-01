@@ -1,8 +1,6 @@
 ﻿using FluentAssertions;
-using Moq;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
 using System.Collections.ObjectModel;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace SLO.MobileApp.Core.UnitTests.ViewModels.ShoppingLists;
@@ -26,12 +24,6 @@ public partial class ShoppingListViewModelTests
             new ObservableCollection<ShoppingItem>(
                 list: [addedShoppingListItem]);
 
-        _shoppingItemServiceMock.Setup(service =>
-            service.AddShoppingItemAsync(
-                inputShoppingListItem,
-                It.IsAny<CancellationToken>()))
-            .ReturnsAsync(addedShoppingListItem);
-
         // when
         await _shoppingListViewModel.AddShoppingListItemCommand
             .ExecuteAsync(parameter: inputShoppingListItem);
@@ -40,12 +32,6 @@ public partial class ShoppingListViewModelTests
         _shoppingListViewModel.ShoppingListItems.Should().BeEqualTo(
             expectedShoppingListItems);
 
-        _shoppingItemServiceMock.Verify(service =>
-            service.AddShoppingItemAsync(
-                inputShoppingListItem,
-                It.IsAny<CancellationToken>()),
-            Times.Once());
-
-        VerifyNoOtherDependencyCalls();
+        _shoppingListViewModel.ErrorMessage.Should().BeNull();
     }
 }
