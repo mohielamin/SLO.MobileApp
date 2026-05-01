@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
 using SLO.MobileApp.Core.Services.Foundations.ShoppingItems;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
@@ -74,5 +75,13 @@ internal partial class ShoppingListViewModel : ObservableObject
 
         ShoppingListItems.Remove(item: matchingShoppingItem);
         ShoppingListItems.Add(item: shoppingItem);
+    }
+
+    [RelayCommand(IncludeCancelCommand = true)]
+    private async Task RemoveShoppingListItemAsync(
+        ShoppingItem shoppingItem,
+        CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
     }
 }
