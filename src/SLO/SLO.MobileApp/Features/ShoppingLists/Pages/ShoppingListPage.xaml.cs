@@ -1,22 +1,22 @@
 using Microsoft.Maui.Controls;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
+using SLO.MobileApp.Core.ViewModels.ShoppingLists;
 using System;
-using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace SLO.MobileApp.Features.ShoppingLists.Pages;
 
 public partial class ShoppingListPage : ContentPage
 {
-    public ObservableCollection<ShoppingItem> ShoppingItems { get; } =
-        new ObservableCollection<ShoppingItem>();
+    private readonly ShoppingListViewModel _shoppingListViewModel;
 
     public ShoppingItem SelectedShoppingItem { get; set; }
 
-    public ShoppingListPage()
+    public ShoppingListPage(
+        ShoppingListViewModel shoppingListViewModel)
     {
         InitializeComponent();
-        this.BindingContext = this;
+        _shoppingListViewModel = shoppingListViewModel;
+        this.BindingContext = _shoppingListViewModel;
     }
 
     protected override void OnNavigatedTo(
@@ -44,7 +44,7 @@ public partial class ShoppingListPage : ContentPage
             page: new ShoppingListItemEditor(),
             animated: true);
 
-    private void CaptureAddedShoppingItem(
+    private async void CaptureAddedShoppingItem(
         ShoppingListItemEditor page)
     {
         if (page.Discarded)
@@ -60,7 +60,8 @@ public partial class ShoppingListPage : ContentPage
                     Quantity = page.Quantity,
                 };
 
-        ShoppingItems.Add(capturedShoppingItem);
+        await _shoppingListViewModel.AddShoppingListItemCommand
+            .ExecuteAsync(parameter: capturedShoppingItem);
 
         ItemsCollectionView.ScrollTo(
             item: capturedShoppingItem,
@@ -68,7 +69,7 @@ public partial class ShoppingListPage : ContentPage
             animate: true);
     }
 
-    private void UpdateModifiedShoppingItem(
+    private async void UpdateModifiedShoppingItem(
         ShoppingListItemEditor page)
     {
         if (SelectedShoppingItem is null)
@@ -81,16 +82,7 @@ public partial class ShoppingListPage : ContentPage
             return;
         }
 
-        ShoppingItem foundShoppingItem =
-            ShoppingItems.FirstOrDefault(shoppingItem =>
-            shoppingItem.Equals(SelectedShoppingItem));
-
-        if (foundShoppingItem is null)
-        {
-            return;
-        }
-
-        ShoppingItem updatedShoppingItem =
+        ShoppingItem modifiedShoppingItem =
             new ShoppingItem
             {
                 Name = page.Name,
@@ -98,11 +90,11 @@ public partial class ShoppingListPage : ContentPage
                 Quantity = page.Quantity,
             };
 
-        int currentItemIndex = ShoppingItems.IndexOf(foundShoppingItem);
-        ShoppingItems[currentItemIndex] = updatedShoppingItem;
+        await _shoppingListViewModel.ModifyShoppingListItemCommand
+            .ExecuteAsync(parameter: modifiedShoppingItem);
     }
 
-    private void RemoveShoppingItemClicked(
+    private async void RemoveShoppingItemClicked(
         object sender, EventArgs e)
     {
         if (sender is not SwipeItem swipeItem)
@@ -116,7 +108,8 @@ public partial class ShoppingListPage : ContentPage
             return;
         }
 
-        ShoppingItems.Remove(item: shoppingItem);
+        await _shoppingListViewModel.RemoveShoppingListItemCommand
+            .ExecuteAsync(parameter: shoppingItem);
     }
 
     private async void EditShoppingItemClicked(

@@ -6,10 +6,10 @@
     xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
     xmlns:buttons="clr-namespace:SLO.MobileApp.Controls.Buttons"
     xmlns:labels="clr-namespace:SLO.MobileApp.Controls.Labels"
-    xmlns:local="clr-namespace:SLO.MobileApp.Features.ShoppingLists.Pages"
     xmlns:models="clr-namespace:SLO.MobileApp.Core.Models.Foundations.ShoppingItems;assembly=SLO.MobileApp.Core"
+    xmlns:viewModels="clr-namespace:SLO.MobileApp.Core.ViewModels.ShoppingLists;assembly=SLO.MobileApp.Core"
     xmlns:views="clr-namespace:SLO.MobileApp.Features.ShoppingLists.Views"
-    x:DataType="views:ShoppingListItemView">
+    x:DataType="viewModels:ShoppingListViewModel">
 
     <Grid RowDefinitions="*,Auto">
 
@@ -18,8 +18,7 @@
             Grid.Row="0"
             Grid.RowSpan="2"
             Margin="10"
-            x:DataType="local:ShoppingListPage"
-            ItemsSource="{Binding ShoppingItems}"
+            ItemsSource="{Binding ShoppingListItems}"
             ItemsUpdatingScrollMode="KeepScrollOffset">
 
             <CollectionView.EmptyView>

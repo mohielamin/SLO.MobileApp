@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SLO.MobileApp.Core.Services.Foundations.ShoppingItems;
 
-internal interface IShoppingItemService
+public interface IShoppingItemService
 {
     ValueTask<ShoppingItem> AddShoppingItemAsync(
         ShoppingItem shoppingItem, CancellationToken cancellationToken);
