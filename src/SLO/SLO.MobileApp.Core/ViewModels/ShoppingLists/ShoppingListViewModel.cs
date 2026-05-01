@@ -11,7 +11,8 @@ namespace SLO.MobileApp.Core.ViewModels.ShoppingLists;
 
 public partial class ShoppingListViewModel : ObservableObject
 {
-    public ObservableCollection<ShoppingItem> ShoppingListItems { get; private set; }
+    public ObservableCollection<ShoppingItem> ShoppingListItems { get; } =
+        new ObservableCollection<ShoppingItem>();
 
     [ObservableProperty]
     private string errorMessage;
@@ -26,12 +27,6 @@ public partial class ShoppingListViewModel : ObservableObject
             ErrorMessage = "Shopping list item is null.";
 
             return;
-        }
-
-        if (ShoppingListItems is null)
-        {
-            ShoppingListItems =
-                new ObservableCollection<ShoppingItem>();
         }
 
         ShoppingListItems.Add(item: shoppingItem);
