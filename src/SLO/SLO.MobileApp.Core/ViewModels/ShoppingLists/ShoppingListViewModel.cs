@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SLO.MobileApp.Core.ViewModels.ShoppingLists;
 
-internal partial class ShoppingListViewModel : ObservableObject
+public partial class ShoppingListViewModel : ObservableObject
 {
     public ObservableCollection<ShoppingItem> ShoppingListItems { get; private set; }
 
