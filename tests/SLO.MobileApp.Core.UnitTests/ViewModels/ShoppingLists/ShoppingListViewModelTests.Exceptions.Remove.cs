@@ -9,12 +9,15 @@ namespace SLO.MobileApp.Core.UnitTests.ViewModels.ShoppingLists;
 public partial class ShoppingListViewModelTests
 {
     [Fact]
-    public async Task ShouldRenderNotFoundErrorMessageOnModifyIfShoppingListItemIsNotFoundAsync()
+    public async Task ShouldRenderNotFoundErrorMessageOnRemoveIfShoppingListItemIsNotFoundAsync()
     {
         // given
         var currentShoppingListItems =
             new ObservableCollection<ShoppingItem>(
                 list: CreateRandomShoppingItems().ToList());
+
+        ObservableCollection<ShoppingItem> expectedShoppingListItems =
+            currentShoppingListItems;
 
         ShoppingItem randomShoppingItem = CreateRandomShoppingItem();
         ShoppingItem notFoundShoppingItem = randomShoppingItem;
@@ -32,12 +35,12 @@ public partial class ShoppingListViewModelTests
                 .ExecuteAsync(parameter: shoppingItem);
         }
 
-        await _shoppingListViewModel.ModifyShoppingListItemCommand
+        await _shoppingListViewModel.RemoveShoppingListItemCommand
             .ExecuteAsync(parameter: inputShoppingListItem);
 
         // then
         _shoppingListViewModel.ShoppingListItems.Should().BeEquivalentTo(
-            currentShoppingListItems);
+            expectedShoppingListItems);
 
         _shoppingListViewModel.ErrorMessage.Should().BeEquivalentTo(
             expectedErrorMessage);
