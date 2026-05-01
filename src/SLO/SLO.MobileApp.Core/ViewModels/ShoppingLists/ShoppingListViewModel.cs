@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
 using SLO.MobileApp.Core.Services.Foundations.ShoppingItems;
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
@@ -82,6 +81,10 @@ internal partial class ShoppingListViewModel : ObservableObject
         ShoppingItem shoppingItem,
         CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        ShoppingItem matchingShoppingListItem =
+            ShoppingListItems.FirstOrDefault(shoppingListItem =>
+                shoppingListItem.Id == shoppingItem.Id);
+
+        ShoppingListItems.Remove(item: matchingShoppingListItem);
     }
 }
