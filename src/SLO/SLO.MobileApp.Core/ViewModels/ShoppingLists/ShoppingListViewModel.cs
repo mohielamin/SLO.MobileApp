@@ -64,6 +64,14 @@ internal partial class ShoppingListViewModel : ObservableObject
             ShoppingListItems.FirstOrDefault(shoppingListItem =>
                 shoppingListItem.Id == shoppingItem.Id);
 
+        if (matchingShoppingItem is null)
+        {
+            ErrorMessage = $"A shopping list item with Id: {shoppingItem.Id}, " +
+                "could not be found.";
+
+            return;
+        }
+
         ShoppingListItems.Remove(item: matchingShoppingItem);
         ShoppingListItems.Add(item: shoppingItem);
     }
