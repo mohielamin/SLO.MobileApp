@@ -61,8 +61,8 @@ internal partial class ShoppingListViewModel : ObservableObject
         CancellationToken cancellationToken)
     {
         ShoppingItem matchingShoppingItem =
-            ShoppingListItems.FirstOrDefault(shoppingItem =>
-                shoppingItem.Id == shoppingItem.Id);
+            ShoppingListItems.FirstOrDefault(shoppingListItem =>
+                shoppingListItem.Id == shoppingItem.Id);
 
         ShoppingListItems.Remove(item: matchingShoppingItem);
         ShoppingListItems.Add(item: shoppingItem);
