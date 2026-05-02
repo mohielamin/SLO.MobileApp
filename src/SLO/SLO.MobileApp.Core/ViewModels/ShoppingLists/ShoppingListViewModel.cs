@@ -44,11 +44,10 @@ public partial class ShoppingListViewModel : ObservableObject
         ShoppingItem shoppingItem,
         CancellationToken cancellationToken)
     {
-        ShoppingItem matchingShoppingItem =
-            ShoppingListItems.FirstOrDefault(shoppingListItem =>
-                shoppingListItem.Id == shoppingItem.Id);
+        (_, int index) =
+            GetMatchingShoppingListItem(shoppingItem);
 
-        if (matchingShoppingItem is null)
+        if (index == -1)
         {
             ErrorMessage = $"A shopping list item with Id: {shoppingItem.Id}, " +
                 "could not be found.";
@@ -56,8 +55,7 @@ public partial class ShoppingListViewModel : ObservableObject
             return;
         }
 
-        ShoppingListItems.Remove(item: matchingShoppingItem);
-        ShoppingListItems.Add(item: shoppingItem);
+        ShoppingListItems[index] = shoppingItem;
     }
 
     [RelayCommand(IncludeCancelCommand = true)]
@@ -65,11 +63,9 @@ public partial class ShoppingListViewModel : ObservableObject
         ShoppingItem shoppingItem,
         CancellationToken cancellationToken)
     {
-        ShoppingItem matchingShoppingListItem =
-            ShoppingListItems.FirstOrDefault(shoppingListItem =>
-                shoppingListItem.Id == shoppingItem.Id);
+        (_, int index) = GetMatchingShoppingListItem(shoppingItem);
 
-        if (matchingShoppingListItem is null)
+        if (index == -1)
         {
             ErrorMessage = $"A shopping list item with Id: {shoppingItem.Id}, " +
                 $"could not be found.";
@@ -77,6 +73,25 @@ public partial class ShoppingListViewModel : ObservableObject
             return;
         }
 
-        ShoppingListItems.Remove(item: matchingShoppingListItem);
+        ShoppingListItems.RemoveAt(index);
+    }
+
+    private (ShoppingItem ShoppingListItem, int Index) GetMatchingShoppingListItem(
+        ShoppingItem shoppingItem)
+    {
+        ShoppingItem matchingShoppingListItem =
+            ShoppingListItems.FirstOrDefault(listItem =>
+                listItem.Id == shoppingItem.Id);
+
+        if (matchingShoppingListItem is null)
+        {
+            return (ShoppingListItem: null, Index: -1);
+
+        }
+
+        int index = ShoppingListItems.IndexOf(
+            item: matchingShoppingListItem);
+
+        return (ShoppingListItem: matchingShoppingListItem, index);
     }
 }

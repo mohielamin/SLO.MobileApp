@@ -9,7 +9,7 @@ public partial class ShoppingListPage : ContentPage
 {
     private readonly ShoppingListViewModel _shoppingListViewModel;
 
-    public ShoppingItem SelectedShoppingItem { get; set; }
+    public ShoppingItem SelectedShoppingListItem { get; set; }
 
     public ShoppingListPage(
         ShoppingListViewModel shoppingListViewModel)
@@ -55,6 +55,7 @@ public partial class ShoppingListPage : ContentPage
         var capturedShoppingItem =
                 new ShoppingItem
                 {
+                    Id = Guid.NewGuid(),
                     Name = page.Name,
                     Description = page.Description,
                     Quantity = page.Quantity,
@@ -72,7 +73,7 @@ public partial class ShoppingListPage : ContentPage
     private async void UpdateModifiedShoppingItem(
         ShoppingListItemEditor page)
     {
-        if (SelectedShoppingItem is null)
+        if (SelectedShoppingListItem is null)
         {
             return;
         }
@@ -85,6 +86,7 @@ public partial class ShoppingListPage : ContentPage
         ShoppingItem modifiedShoppingItem =
             new ShoppingItem
             {
+                Id = SelectedShoppingListItem.Id,
                 Name = page.Name,
                 Description = page.Description,
                 Quantity = page.Quantity,
@@ -126,7 +128,7 @@ public partial class ShoppingListPage : ContentPage
             return;
         }
 
-        SelectedShoppingItem = shoppingItem;
+        SelectedShoppingListItem = shoppingItem;
 
         var shoppingListItemEditor =
             new ShoppingListItemEditor(
