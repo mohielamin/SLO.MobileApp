@@ -39,7 +39,7 @@ public partial class ShoppingListItemServiceTests
             broker.InsertShoppingListItemAsync(
                 It.IsAny<ShoppingListItem>(),
                 It.IsAny<CancellationToken>()),
-            Times.Once());
+            Times.Never());
 
         _loggingBrokerMock.Verify(broker =>
             broker.LogErrorAsync(

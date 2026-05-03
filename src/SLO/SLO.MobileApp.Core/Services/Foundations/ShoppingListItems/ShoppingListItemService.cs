@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SLO.MobileApp.Core.Services.Foundations.ShoppingListItems;
 
-internal class ShoppingListItemService : IShoppingListItemService
+internal partial class ShoppingListItemService : IShoppingListItemService
 {
     private readonly IStorageBroker _storageBroker;
     private readonly IDateTimeBroker _dateTimeBroker;
@@ -26,6 +26,11 @@ internal class ShoppingListItemService : IShoppingListItemService
     public async ValueTask<ShoppingListItem> AddShoppingListItemAsync(
         ShoppingListItem shoppingListItem,
         CancellationToken cancellationToken) =>
-        await _storageBroker.InsertShoppingListItemAsync(
-            shoppingListItem, cancellationToken);
+        await TryCatch(cancellationToken, async () =>
+        {
+            ValidateShoppingListItem(shoppingListItem);
+
+            return await _storageBroker.InsertShoppingListItemAsync(
+                shoppingListItem, cancellationToken);
+        });
 }
