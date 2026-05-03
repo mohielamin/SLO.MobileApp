@@ -19,6 +19,9 @@ public partial class ShoppingListItemServiceTests
         ShoppingListItem inputShoppingListIem =
             randomShoppingListItem;
 
+        inputShoppingListIem.UpdatedBy =
+            inputShoppingListIem.CreatedBy;
+
         ShoppingListItem insertedShoppingListItem =
             inputShoppingListIem;
 

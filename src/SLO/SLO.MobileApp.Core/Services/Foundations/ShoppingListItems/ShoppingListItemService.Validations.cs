@@ -32,6 +32,13 @@ internal partial class ShoppingListItemService
 
             (Rule: Invalid(shoppingListItem.UpdatedAt),
             Parameter: nameof(ShoppingListItem.UpdatedAt)));
+
+        Validate(
+            (Rule: NotSameAs(
+                firstId: shoppingListItem.UpdatedBy,
+                secondId: shoppingListItem.CreatedBy,
+                secondIdName: nameof(ShoppingListItem.CreatedBy)),
+            Parameter: nameof(ShoppingListItem.UpdatedBy)));
     }
 
     private void ValidateShoppingListItem(
@@ -63,6 +70,15 @@ internal partial class ShoppingListItemService
         {
             Condition = string.IsNullOrWhiteSpace(text),
             Message = "Text is required."
+        };
+
+    private dynamic NotSameAs(
+        Guid firstId,
+        Guid secondId,
+        string secondIdName) => new
+        {
+            Condition = firstId != secondId,
+            Message = $"Id is not same as {secondIdName}."
         };
 
     private void Validate(params (dynamic Rule, string Parameter)[] validations)
