@@ -136,7 +136,7 @@ public partial class ShoppingListItemServiceTests
     }
 
     [Fact]
-    public async Task ShouldThrowValidationExceptionOnAddIfCreatedByNotSameAsUpdatedByAndLogItAsync()
+    public async Task ShouldThrowValidationExceptionOnAddIfUpdatedByNotSameAsCreatedByAndLogItAsync()
     {
         // given
         Guid notSameId = Guid.NewGuid();
@@ -157,6 +157,63 @@ public partial class ShoppingListItemServiceTests
         invalidShoppingListItemException.AddData(
             key: nameof(ShoppingListItem.UpdatedBy),
             values: $"Id is not same as {nameof(ShoppingListItem.CreatedBy)}.");
+
+        var expectedShoppingListItemValidationException =
+            new ShoppingListItemValidationException(
+                exceptionMessage: "Shopping list item validation error occurred, " +
+                "fix the errors and try again please!",
+                innerException: invalidShoppingListItemException);
+
+        // when
+        ValueTask<ShoppingListItem> addShoppingListItemTask =
+            _shoppingListItemService.AddShoppingListItemAsync(
+                invalidShoppingListItem,
+                It.IsAny<CancellationToken>());
+
+        await Assert.ThrowsAsync<ShoppingListItemValidationException>(
+            addShoppingListItemTask.AsTask);
+
+        // then
+        _storageBrokerMock.Verify(broker =>
+            broker.InsertShoppingListItemAsync(
+                It.IsAny<ShoppingListItem>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogErrorAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    expectedShoppingListItemValidationException))),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
+
+    [Fact]
+    public async Task ShouldThrowValidationExceptionOnAddIfUpdatedAtNotSameAsCreatedAtAndLogItAsync()
+    {
+        // given
+        DateTimeOffset notSameDateTime = Randomizers.GetRandomDateTime();
+
+        ShoppingListItem randomShoppingListItem =
+            CreateRandomShoppingListItem();
+
+        ShoppingListItem invalidShoppingListItem =
+            randomShoppingListItem;
+
+        invalidShoppingListItem.UpdatedBy =
+            invalidShoppingListItem.CreatedBy;
+
+        invalidShoppingListItem.UpdatedAt = notSameDateTime;
+
+        var invalidShoppingListItemException =
+            new InvalidShoppingListItemException(
+                exceptionMessage: "Invalid shopping list item error occurred, " +
+                "fix the errors and try again please!");
+
+        invalidShoppingListItemException.AddData(
+            key: nameof(ShoppingListItem.UpdatedAt),
+            values: $"Date is not same as {nameof(ShoppingListItem.CreatedAt)}.");
 
         var expectedShoppingListItemValidationException =
             new ShoppingListItemValidationException(
