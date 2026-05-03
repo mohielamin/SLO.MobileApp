@@ -1,13 +1,16 @@
 ﻿using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems.Exceptions;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SLO.MobileApp.Core.Services.Foundations.ShoppingListItems;
 
 internal partial class ShoppingListItemService
 {
-    private void ValidateShoppingListItemOnAdd(
-        ShoppingListItem shoppingListItem)
+    private async ValueTask ValidateShoppingListItemOnAddAsync(
+        ShoppingListItem shoppingListItem,
+        CancellationToken cancellationToken)
     {
         ValidateShoppingListItem(shoppingListItem);
 
@@ -45,6 +48,12 @@ internal partial class ShoppingListItemService
                 secondDate: shoppingListItem.CreatedAt,
                 secondDateName: nameof(ShoppingListItem.CreatedAt)),
             Parameter: nameof(ShoppingListItem.UpdatedAt)));
+
+        Validate(
+            (Rule: await NotRecentAsync(
+                dateTime: shoppingListItem.CreatedAt,
+                cancellationToken),
+            Parameter: nameof(shoppingListItem.CreatedAt)));
     }
 
     private void ValidateShoppingListItem(
@@ -96,6 +105,33 @@ internal partial class ShoppingListItemService
             Condition = firstDate != secondDate,
             Message = $"Date is not same as {secondDateName}."
         };
+
+    private async ValueTask<dynamic> NotRecentAsync(
+        DateTimeOffset dateTime,
+        CancellationToken cancellationToken) =>
+        new
+        {
+            Condition =
+            await DateNotRecentAsync(
+                dateTime,
+                cancellationToken),
+
+            Message = "Date is not recent."
+        };
+
+    private async ValueTask<bool> DateNotRecentAsync(
+        DateTimeOffset dateTime,
+        CancellationToken cancellationToken)
+    {
+        DateTimeOffset currentDateTime =
+            await _dateTimeBroker.GetCurrentDateTimeAsync(
+                cancellationToken);
+
+        TimeSpan oneMinute = TimeSpan.FromMinutes(minutes: 1);
+        TimeSpan difference = currentDateTime - dateTime;
+
+        return difference.Duration() > oneMinute;
+    }
 
     private void Validate(params (dynamic Rule, string Parameter)[] validations)
     {

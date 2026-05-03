@@ -2,6 +2,8 @@
 using Force.DeepCloner;
 using Moq;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
+using SLO.MobileApp.Core.UnitTests.Helpers;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,8 +15,12 @@ public partial class ShoppingListItemServiceTests
     public async Task ShouldAddShoppingItemListAsync()
     {
         // given
+        DateTimeOffset currentDateTime =
+            Randomizers.GetRandomDateTime();
+
         ShoppingListItem randomShoppingListItem =
-            CreateRandomShoppingListItem();
+            CreateRandomShoppingListItem(
+                dateTimes: currentDateTime);
 
         ShoppingListItem inputShoppingListIem =
             randomShoppingListItem;
@@ -27,6 +33,11 @@ public partial class ShoppingListItemServiceTests
 
         ShoppingListItem expectedShoppingListItem =
             insertedShoppingListItem.DeepClone();
+
+        _dateTimeBrokerMock.Setup(broker =>
+            broker.GetCurrentDateTimeAsync(
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(currentDateTime);
 
         _storageBrokerMock.Setup(broker =>
             broker.InsertShoppingListItemAsync(
@@ -43,6 +54,11 @@ public partial class ShoppingListItemServiceTests
         // then
         actualShoppingListItem.Should().BeEquivalentTo(
             expectedShoppingListItem);
+
+        _dateTimeBrokerMock.Verify(broker =>
+            broker.GetCurrentDateTimeAsync(
+                It.IsAny<CancellationToken>()),
+            Times.Once());
 
         _storageBrokerMock.Verify(broker =>
             broker.InsertShoppingListItemAsync(
