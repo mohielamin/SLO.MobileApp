@@ -28,7 +28,7 @@ internal partial class ShoppingListItemService : IShoppingListItemService
         CancellationToken cancellationToken) =>
         await TryCatch(cancellationToken, async () =>
         {
-            ValidateShoppingListItem(shoppingListItem);
+            ValidateShoppingListItemOnAdd(shoppingListItem);
 
             return await _storageBroker.InsertShoppingListItemAsync(
                 shoppingListItem, cancellationToken);
