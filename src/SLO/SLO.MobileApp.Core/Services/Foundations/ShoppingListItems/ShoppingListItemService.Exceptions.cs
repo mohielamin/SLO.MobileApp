@@ -36,6 +36,12 @@ internal partial class ShoppingListItemService
                 exception: ex,
                 cancellationToken);
         }
+        catch (NotFoundShoppingListItemException ex)
+        {
+            throw await CreateAndLogValidationErrorAsync(
+                exception: ex,
+                cancellationToken);
+        }
         catch (DuplicateKeyException ex)
         {
             var alreadyExistsShoppingListItemException =

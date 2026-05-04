@@ -64,6 +64,18 @@ internal partial class ShoppingListItemService
             Parameter: nameof(shoppingListItemId)));
     }
 
+    private void ValidateStorageShoppingListItem(
+        ShoppingListItem storageShoppingListItem,
+        Guid shoppingListItemId)
+    {
+        if (storageShoppingListItem is null)
+        {
+            throw new NotFoundShoppingListItemException(
+                exceptionMessage: $"A shopping list item with Id: " +
+                $"{shoppingListItemId}, could not be found.");
+        }
+    }
+
     private void ValidateShoppingListItem(
         ShoppingListItem shoppingListItem)
     {
