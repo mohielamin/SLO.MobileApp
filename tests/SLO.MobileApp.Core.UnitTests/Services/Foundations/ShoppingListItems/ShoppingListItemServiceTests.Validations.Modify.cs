@@ -369,7 +369,7 @@ public partial class ShoppingListItemServiceTests
                 dateTimes: currentDateTime);
 
         ShoppingListItem invalidShoppingListItem =
-            randomShoppingListItem;
+            randomShoppingListItem.DeepClone();
 
         invalidShoppingListItem.UpdatedAt =
             invalidShoppingListItem.UpdatedAt.AddMinutes(1);
@@ -456,7 +456,7 @@ public partial class ShoppingListItemServiceTests
                 dateTimes: currentDateTime);
 
         ShoppingListItem invalidShoppingListItem =
-            randomShoppingListItem;
+            randomShoppingListItem.DeepClone();
 
         invalidShoppingListItem.UpdatedAt =
             invalidShoppingListItem.UpdatedAt.AddMinutes(1);

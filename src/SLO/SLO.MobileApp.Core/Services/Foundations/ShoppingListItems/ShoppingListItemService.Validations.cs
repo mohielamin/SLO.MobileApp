@@ -134,7 +134,13 @@ internal partial class ShoppingListItemService
                 firstDate: storageShoppingListItem.CreatedAt,
                 secondDate: inputShoppingListItem.CreatedAt,
                 secondDateName: nameof(ShoppingListItem.CreatedAt)),
-            Parameter: nameof(ShoppingListItem.CreatedAt)));
+            Parameter: nameof(ShoppingListItem.CreatedAt)),
+
+            (Rule: SameAs(
+                firstDate: storageShoppingListItem.UpdatedAt,
+                secondDate: inputShoppingListItem.UpdatedAt,
+                secondDateName: nameof(ShoppingListItem.UpdatedAt)),
+            Parameter: nameof(ShoppingListItem.UpdatedAt)));
     }
 
     private void ValidateShoppingListItem(
