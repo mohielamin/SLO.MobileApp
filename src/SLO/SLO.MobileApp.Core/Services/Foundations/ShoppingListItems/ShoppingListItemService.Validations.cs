@@ -119,6 +119,18 @@ internal partial class ShoppingListItemService
         }
     }
 
+    private void ValidateAgainstStorageShoppingListItem(
+        ShoppingListItem storageShoppingListItem,
+        ShoppingListItem inputShoppingListItem)
+    {
+        Validate(
+            (Rule: NotSameAs(
+                firstId: storageShoppingListItem.CreatedBy,
+                secondId: inputShoppingListItem.CreatedBy,
+                secondIdName: nameof(ShoppingListItem.CreatedBy)),
+            Parameter: nameof(ShoppingListItem.CreatedBy)));
+    }
+
     private void ValidateShoppingListItem(
         ShoppingListItem shoppingListItem)
     {
