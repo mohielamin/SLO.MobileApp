@@ -59,4 +59,55 @@ public partial class ShoppingListItemServiceTests
 
         VerifyNoOtherDependencyCalls();
     }
+
+    [Fact]
+    public async Task ShouldThrowServiceExceptionOnRetrieveByIdIfServiceErrorOccursAndLogItAsync()
+    {
+        // given
+        Guid someShoppingListItemId = Guid.NewGuid();
+        string exceptionMessage = Randomizers.GetRandomString();
+        var someServiceException = new Exception(exceptionMessage);
+
+        var failedShoppingListItemServiceException =
+            new FailedShoppingListItemServiceException(
+                exceptionMessage: "Failed shopping list item service error occurred, " +
+                "please contact support.",
+                innerException: someServiceException);
+
+        var expectedShoppingListItemServiceException =
+            new ShoppingListItemServiceException(
+                exceptionMessage: "Shopping list item service error occurred, " +
+                "please contact support.",
+                innerException: failedShoppingListItemServiceException);
+
+        _storageBrokerMock.Setup(broker =>
+            broker.SelectShoppingListItemByIdAsync(
+                someShoppingListItemId,
+                It.IsAny<CancellationToken>()))
+            .ThrowsAsync(someServiceException);
+
+        // when
+        ValueTask<ShoppingListItem> retrieveShoppingListItemByIdTask =
+            _shoppingListItemService.RetrieveShoppingListItemByIdAsync(
+                someShoppingListItemId,
+                It.IsAny<CancellationToken>());
+
+        // then
+        await Assert.ThrowsAsync<ShoppingListItemServiceException>(
+            retrieveShoppingListItemByIdTask.AsTask);
+
+        _storageBrokerMock.Verify(broker =>
+            broker.SelectShoppingListItemByIdAsync(
+                someShoppingListItemId,
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogErrorAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    expectedShoppingListItemServiceException))),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
 }
