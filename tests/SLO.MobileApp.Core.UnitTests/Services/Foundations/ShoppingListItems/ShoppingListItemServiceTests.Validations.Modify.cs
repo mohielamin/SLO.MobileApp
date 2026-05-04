@@ -56,4 +56,94 @@ public partial class ShoppingListItemServiceTests
 
         VerifyNoOtherDependencyCalls();
     }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData(" ")]
+    public async Task ShouldThrowValidationExceptionOnModifyIfShoppingListItemIsInvalidAndLogItAsync(
+        string invalidString)
+    {
+        // given
+        ShoppingListItem invalidShoppingListItem =
+            new ShoppingListItem
+            {
+                Id = default,
+                ShoppingListId = default,
+                Name = invalidString,
+                CreatedBy = default,
+                UpdatedBy = default,
+                CreatedAt = default,
+                UpdatedAt = default,
+            };
+
+        var invalidShoppingListItemException =
+            new InvalidShoppingListItemException(
+                exceptionMessage: "Invalid shopping list item error occurred, " +
+                "fix the errors and try again please!");
+
+        invalidShoppingListItemException.AddData(
+            key: nameof(ShoppingListItem.Id),
+            values: "Id is required.");
+
+        invalidShoppingListItemException.AddData(
+            key: nameof(ShoppingListItem.ShoppingListId),
+            values: "Id is required.");
+
+        invalidShoppingListItemException.AddData(
+            key: nameof(ShoppingListItem.Name),
+            values: "Text is required.");
+
+        invalidShoppingListItemException.AddData(
+            key: nameof(ShoppingListItem.CreatedBy),
+            values: "Id is required.");
+
+        invalidShoppingListItemException.AddData(
+            key: nameof(ShoppingListItem.UpdatedBy),
+            values: "Id is required.");
+
+        invalidShoppingListItemException.AddData(
+            key: nameof(ShoppingListItem.CreatedAt),
+            values: "Date is required.");
+
+        invalidShoppingListItemException.AddData(
+            key: nameof(ShoppingListItem.UpdatedAt),
+            values: "Date is required.");
+
+        var expectedShoppingListItemValidationException =
+            new ShoppingListItemValidationException(
+                exceptionMessage: "Shopping list item validation error occurred, " +
+                "fix the errors and try again please!",
+                innerException: invalidShoppingListItemException);
+
+        // when
+        ValueTask<ShoppingListItem> modifyShoppingListItemTask =
+            _shoppingListItemService.ModifyShoppingListItemAsync(
+                shoppingListItem: invalidShoppingListItem,
+                It.IsAny<CancellationToken>());
+
+        // then
+        await Assert.ThrowsAsync<ShoppingListItemValidationException>(
+            modifyShoppingListItemTask.AsTask);
+
+        _storageBrokerMock.Verify(broker =>
+            broker.SelectShoppingListItemByIdAsync(
+                It.IsAny<Guid>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _storageBrokerMock.Verify(broker =>
+            broker.UpdateShoppingListItemAsync(
+                It.IsAny<ShoppingListItem>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogErrorAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    expectedShoppingListItemValidationException))),
+                Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
 }
