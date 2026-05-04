@@ -18,4 +18,8 @@ public partial interface IStorageBroker
     ValueTask<ShoppingListItem> SelectShoppingListItemByIdAsync(
         Guid shoppingListItemId,
         CancellationToken cancellationToken);
+
+    ValueTask<ShoppingListItem> UpdateShoppingListItemAsync(
+        ShoppingListItem shoppingListItem,
+        CancellationToken cancellationToken);
 }

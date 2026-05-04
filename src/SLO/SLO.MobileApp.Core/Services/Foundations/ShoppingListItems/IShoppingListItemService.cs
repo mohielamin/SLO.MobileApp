@@ -18,4 +18,8 @@ public interface IShoppingListItemService
     ValueTask<ShoppingListItem> RetrieveShoppingListItemByIdAsync(
         Guid shoppingListItemId,
         CancellationToken cancellationToken);
+
+    ValueTask<ShoppingListItem> ModifyShoppingListItemAsync(
+        ShoppingListItem shoppingListItem,
+        CancellationToken cancellationToken);
 }
