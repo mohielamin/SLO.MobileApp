@@ -1,4 +1,5 @@
-﻿using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
+﻿using Microsoft.Data.SqlClient;
+using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems.Exceptions;
 using System;
 using System.Threading;
@@ -31,6 +32,18 @@ internal partial class ShoppingListItemService
                 exception: ex,
                 cancellationToken);
         }
+        catch (SqlException ex)
+        {
+            var failedShoppingListItemStorageException =
+                new FailedShoppingListItemStorageException(
+                    exceptionMessage: "Failed shopping list item storage error occurred, " +
+                    "please contact support.",
+                    innerException: ex);
+
+            throw await CreateAndLogCriticalDependencyErrorAsync(
+                failedShoppingListItemStorageException,
+                cancellationToken);
+        }
     }
 
     private async ValueTask<ShoppingListItemValidationException> CreateAndLogValidationErrorAsync(
@@ -48,5 +61,21 @@ internal partial class ShoppingListItemService
             cancellationToken);
 
         return shoppingListItemValidationException;
+    }
+
+    private async ValueTask<ShoppingListItemDependencyException> CreateAndLogCriticalDependencyErrorAsync(
+        Exception exception,
+        CancellationToken cancellationToken)
+    {
+        var shoppingListItemDependencyException =
+            new ShoppingListItemDependencyException(
+                exceptionMessage: "Shopping list item dependency error occurred, " +
+                "please contact support.",
+                innerException: exception);
+
+        await _loggingBroker.LogCriticalAsync(
+            exception: shoppingListItemDependencyException);
+
+        return shoppingListItemDependencyException;
     }
 }

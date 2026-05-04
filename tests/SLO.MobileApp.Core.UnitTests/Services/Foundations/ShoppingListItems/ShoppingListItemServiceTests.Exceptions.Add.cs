@@ -14,6 +14,10 @@ public partial class ShoppingListItemServiceTests
     {
         // given
         ShoppingListItem someShoppingListItem = CreateRandomShoppingListItem();
+
+        someShoppingListItem.UpdatedBy =
+            someShoppingListItem.CreatedBy;
+
         var sqlException = Randomizers.GetSqlException();
 
         var failedShoppingListItemStorageException =
@@ -28,9 +32,8 @@ public partial class ShoppingListItemServiceTests
                 "please contact support.",
                 innerException: failedShoppingListItemStorageException);
 
-        _storageBrokerMock.Setup(broker =>
-            broker.InsertShoppingListItemAsync(
-                someShoppingListItem,
+        _dateTimeBrokerMock.Setup(broker =>
+            broker.GetCurrentDateTimeAsync(
                 It.IsAny<CancellationToken>()))
             .ThrowsAsync(sqlException);
 
@@ -44,11 +47,16 @@ public partial class ShoppingListItemServiceTests
         await Assert.ThrowsAsync<ShoppingListItemDependencyException>(
             addShoppingListItemTask.AsTask);
 
-        _storageBrokerMock.Verify(broker =>
-            broker.InsertShoppingListItemAsync(
-                someShoppingListItem,
+        _dateTimeBrokerMock.Verify(broker =>
+            broker.GetCurrentDateTimeAsync(
                 It.IsAny<CancellationToken>()),
             Times.Once());
+
+        _storageBrokerMock.Verify(broker =>
+            broker.InsertShoppingListItemAsync(
+                It.IsAny<ShoppingListItem>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
 
         _loggingBrokerMock.Verify(broker =>
             broker.LogCriticalAsync(
