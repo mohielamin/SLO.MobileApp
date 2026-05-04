@@ -39,6 +39,7 @@ internal partial class ShoppingListItemService : IShoppingListItemService
 
     public async ValueTask<IQueryable<ShoppingListItem>> RetrieveAllShoppingListItemsAsync(
         CancellationToken cancellationToken) =>
+        await TryCatch(cancellationToken, async () =>
         await _storageBroker.SelectAllShoppingListItemsAsync(
-            cancellationToken);
+            cancellationToken));
 }
