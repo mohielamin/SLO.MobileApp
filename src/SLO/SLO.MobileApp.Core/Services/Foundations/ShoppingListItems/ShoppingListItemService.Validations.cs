@@ -56,6 +56,14 @@ internal partial class ShoppingListItemService
             Parameter: nameof(shoppingListItem.CreatedAt)));
     }
 
+    private void ValidateShoppingListItemOnRetrieveById(
+        Guid shoppingListItemId)
+    {
+        Validate(
+            (Rule: Invalid(shoppingListItemId),
+            Parameter: nameof(shoppingListItemId)));
+    }
+
     private void ValidateShoppingListItem(
         ShoppingListItem shoppingListItem)
     {
