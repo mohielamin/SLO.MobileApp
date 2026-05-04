@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EFxceptions.Models.Exceptions;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems.Exceptions;
@@ -10,6 +11,65 @@ namespace SLO.MobileApp.Core.UnitTests.Services.Foundations.ShoppingListItems;
 
 public partial class ShoppingListItemServiceTests
 {
+    [Fact]
+    public async Task ShouldThrowDependencyValidationExceptionOnAddIfShoppingListItemAlreadyExistsAndLogItAsync()
+    {
+        // given
+        ShoppingListItem someShoppingListItem = CreateRandomShoppingListItem();
+
+        someShoppingListItem.UpdatedBy =
+            someShoppingListItem.CreatedBy;
+
+        string exceptionMessage = Randomizers.GetRandomString();
+        var duplicateKeyException = new DuplicateKeyException(exceptionMessage);
+
+        var alreadyExistsShoppingListItemException =
+            new AlreadyExistsShoppingListItemException(
+                exceptionMessage: "A shopping list item with same Id " +
+                "already exists.",
+                innerException: duplicateKeyException);
+
+        var expectedShoppingListItemDependencyValidationException =
+            new ShoppingListItemDependencyValidationException(
+                exceptionMessage: "Shopping list item dependency validation error occurred, " +
+                "try again please!",
+                innerException: alreadyExistsShoppingListItemException);
+
+        _dateTimeBrokerMock.Setup(broker =>
+            broker.GetCurrentDateTimeAsync(
+                It.IsAny<CancellationToken>()))
+            .ThrowsAsync(duplicateKeyException);
+
+        // when
+        ValueTask<ShoppingListItem> addShoppingListItemTask =
+            _shoppingListItemService.AddShoppingListItemAsync(
+                someShoppingListItem,
+                It.IsAny<CancellationToken>());
+
+        // then
+        await Assert.ThrowsAsync<ShoppingListItemDependencyValidationException>(
+            addShoppingListItemTask.AsTask);
+
+        _dateTimeBrokerMock.Verify(broker =>
+            broker.GetCurrentDateTimeAsync(
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        _storageBrokerMock.Verify(broker =>
+            broker.InsertShoppingListItemAsync(
+                It.IsAny<ShoppingListItem>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogErrorAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    expectedShoppingListItemDependencyValidationException))),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
+
     [Fact]
     public async Task ShouldThrowDependencyExceptionOnAddIfDbUpdateErrorOccursAndLogItAsync()
     {
