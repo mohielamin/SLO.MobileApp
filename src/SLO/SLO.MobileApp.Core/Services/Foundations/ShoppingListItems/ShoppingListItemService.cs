@@ -65,6 +65,14 @@ internal partial class ShoppingListItemService : IShoppingListItemService
 
     public async ValueTask<ShoppingListItem> ModifyShoppingListItemAsync(
         ShoppingListItem shoppingListItem,
-        CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
+        CancellationToken cancellationToken)
+    {
+        await _storageBroker.SelectShoppingListItemByIdAsync(
+            shoppingListItemId: shoppingListItem.Id,
+            cancellationToken);
+
+        return await _storageBroker.UpdateShoppingListItemAsync(
+            shoppingListItem,
+            cancellationToken);
+    }
 }
