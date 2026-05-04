@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using EFxceptions.Models.Exceptions;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems.Exceptions;
@@ -33,6 +34,18 @@ internal partial class ShoppingListItemService
                 exception: ex,
                 cancellationToken);
         }
+        catch (DuplicateKeyException ex)
+        {
+            var alreadyExistsShoppingListItemException =
+                new AlreadyExistsShoppingListItemException(
+                    exceptionMessage: "A shopping list item with same Id " +
+                    "already exists.",
+                    innerException: ex);
+
+            throw await CreateAndLogDependencyValidationErrorAsync(
+                exception: alreadyExistsShoppingListItemException,
+                cancellationToken);
+        }
         catch (DbUpdateException ex)
         {
             var failedShoppingListItemStorageException =
@@ -42,7 +55,7 @@ internal partial class ShoppingListItemService
                     innerException: ex);
 
             throw await CreateAndLogDependencyErrorAsync(
-                failedShoppingListItemStorageException,
+                exception: failedShoppingListItemStorageException,
                 cancellationToken);
         }
         catch (SqlException ex)
@@ -54,7 +67,7 @@ internal partial class ShoppingListItemService
                     innerException: ex);
 
             throw await CreateAndLogCriticalDependencyErrorAsync(
-                failedShoppingListItemStorageException,
+                exception: failedShoppingListItemStorageException,
                 cancellationToken);
         }
     }
@@ -74,6 +87,22 @@ internal partial class ShoppingListItemService
             cancellationToken);
 
         return shoppingListItemValidationException;
+    }
+
+    private async ValueTask<ShoppingListItemDependencyValidationException> CreateAndLogDependencyValidationErrorAsync(
+        Exception exception,
+        CancellationToken cancellationToken)
+    {
+        var shoppingListItemDependencyValidationException =
+            new ShoppingListItemDependencyValidationException(
+                exceptionMessage: "Shopping list item dependency validation error occurred, " +
+                "try again please!",
+                innerException: exception);
+
+        await _loggingBroker.LogErrorAsync(
+            exception: shoppingListItemDependencyValidationException);
+
+        return shoppingListItemDependencyValidationException;
     }
 
     private async ValueTask<ShoppingListItemDependencyException> CreateAndLogCriticalDependencyErrorAsync(
@@ -103,7 +132,7 @@ internal partial class ShoppingListItemService
                 innerException: exception);
 
         await _loggingBroker.LogErrorAsync(
-            shoppingListItemDependencyException);
+            exception: shoppingListItemDependencyException);
 
         return shoppingListItemDependencyException;
     }
