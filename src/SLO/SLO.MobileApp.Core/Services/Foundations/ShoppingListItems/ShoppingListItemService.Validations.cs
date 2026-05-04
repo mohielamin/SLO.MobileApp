@@ -67,6 +67,8 @@ internal partial class ShoppingListItemService
     private void ValidateShoppingListItemOnModify(
         ShoppingListItem shoppingListItem)
     {
+        ValidateShoppingListItem(shoppingListItem);
+
         Validate(
             (Rule: Invalid(shoppingListItem.Id),
             Parameter: nameof(ShoppingListItem.Id)),
@@ -87,6 +89,13 @@ internal partial class ShoppingListItemService
             Parameter: nameof(ShoppingListItem.CreatedAt)),
 
             (Rule: Invalid(shoppingListItem.UpdatedAt),
+            Parameter: nameof(ShoppingListItem.UpdatedAt)));
+
+        Validate(
+            (Rule: SameAs(
+                firstDate: shoppingListItem.UpdatedAt,
+                secondDate: shoppingListItem.CreatedAt,
+                secondDateName: nameof(ShoppingListItem.CreatedAt)),
             Parameter: nameof(ShoppingListItem.UpdatedAt)));
     }
 
@@ -150,6 +159,16 @@ internal partial class ShoppingListItemService
         {
             Condition = firstDate != secondDate,
             Message = $"Date is not same as {secondDateName}."
+        };
+
+    private dynamic SameAs(
+        DateTimeOffset firstDate,
+        DateTimeOffset secondDate,
+        string secondDateName) =>
+        new
+        {
+            Condition = firstDate == secondDate,
+            Message = $"Date is same as {secondDateName}."
         };
 
     private async ValueTask<dynamic> NotRecentAsync(
