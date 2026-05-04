@@ -128,7 +128,13 @@ internal partial class ShoppingListItemService
                 firstId: storageShoppingListItem.CreatedBy,
                 secondId: inputShoppingListItem.CreatedBy,
                 secondIdName: nameof(ShoppingListItem.CreatedBy)),
-            Parameter: nameof(ShoppingListItem.CreatedBy)));
+            Parameter: nameof(ShoppingListItem.CreatedBy)),
+
+            (Rule: NotSameAs(
+                firstDate: storageShoppingListItem.CreatedAt,
+                secondDate: inputShoppingListItem.CreatedAt,
+                secondDateName: nameof(ShoppingListItem.CreatedAt)),
+            Parameter: nameof(ShoppingListItem.CreatedAt)));
     }
 
     private void ValidateShoppingListItem(
