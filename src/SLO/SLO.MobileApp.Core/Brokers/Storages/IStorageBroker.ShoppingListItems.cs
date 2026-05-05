@@ -22,4 +22,8 @@ public partial interface IStorageBroker
     ValueTask<ShoppingListItem> UpdateShoppingListItemAsync(
         ShoppingListItem shoppingListItem,
         CancellationToken cancellationToken);
+
+    ValueTask<ShoppingListItem> DeleteShoppingListItemAsync(
+        ShoppingListItem shoppingListItem,
+        CancellationToken cancellationToken);
 }

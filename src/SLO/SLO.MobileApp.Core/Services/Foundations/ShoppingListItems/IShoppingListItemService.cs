@@ -22,4 +22,8 @@ public interface IShoppingListItemService
     ValueTask<ShoppingListItem> ModifyShoppingListItemAsync(
         ShoppingListItem shoppingListItem,
         CancellationToken cancellationToken);
+
+    ValueTask<ShoppingListItem> RemoveShoppingListItemByIdAsync(
+        Guid shoppingListItemId,
+        CancellationToken cancellationToken);
 }

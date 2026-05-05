@@ -10,12 +10,10 @@ internal partial class StorageBroker
 {
     public async ValueTask<ShoppingListItem> InsertShoppingListItemAsync(
         ShoppingListItem shoppingListItem,
-        CancellationToken cancellationToken)
-    {
-        return await InsertAsync(
+        CancellationToken cancellationToken) =>
+        await InsertAsync(
             item: shoppingListItem,
             cancellationToken);
-    }
 
     public async ValueTask<IQueryable<ShoppingListItem>> SelectAllShoppingListItemsAsync(
         CancellationToken cancellationToken) =>
@@ -32,6 +30,13 @@ internal partial class StorageBroker
         ShoppingListItem shoppingListItem,
         CancellationToken cancellationToken) =>
         await UpdateAsync(
+            item: shoppingListItem,
+            cancellationToken);
+
+    public async ValueTask<ShoppingListItem> DeleteShoppingListItemAsync(
+        ShoppingListItem shoppingListItem,
+        CancellationToken cancellationToken) =>
+        await DeleteAsync(
             item: shoppingListItem,
             cancellationToken);
 }

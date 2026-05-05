@@ -89,4 +89,9 @@ internal partial class ShoppingListItemService : IShoppingListItemService
                 shoppingListItem,
                 cancellationToken);
         });
+
+    public async ValueTask<ShoppingListItem> RemoveShoppingListItemByIdAsync(
+        Guid shoppingListItemId,
+        CancellationToken cancellationToken) =>
+        throw new NotImplementedException();
 }
