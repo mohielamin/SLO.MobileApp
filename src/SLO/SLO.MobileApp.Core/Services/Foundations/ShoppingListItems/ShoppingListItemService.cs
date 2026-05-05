@@ -92,6 +92,15 @@ internal partial class ShoppingListItemService : IShoppingListItemService
 
     public async ValueTask<ShoppingListItem> RemoveShoppingListItemByIdAsync(
         Guid shoppingListItemId,
-        CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
+        CancellationToken cancellationToken)
+    {
+        ShoppingListItem storageShoppingListItem =
+            await _storageBroker.SelectShoppingListItemByIdAsync(
+                shoppingListItemId,
+                cancellationToken);
+
+        return await _storageBroker.DeleteShoppingListItemAsync(
+            shoppingListItem: storageShoppingListItem,
+            cancellationToken);
+    }
 }
