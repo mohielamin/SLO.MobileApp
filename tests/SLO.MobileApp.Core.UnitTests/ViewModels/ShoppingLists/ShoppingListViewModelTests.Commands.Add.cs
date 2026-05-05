@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
+using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -11,17 +11,17 @@ public partial class ShoppingListViewModelTests
     public async ValueTask ShouldAddShoppingListItemAsync()
     {
         // given
-        ShoppingItem randomShoppingListItem =
-            CreateRandomShoppingItem();
+        ShoppingListItem randomShoppingListItem =
+            CreateRandomShoppingListItem();
 
-        ShoppingItem inputShoppingListItem =
+        ShoppingListItem inputShoppingListItem =
             randomShoppingListItem;
 
-        ShoppingItem addedShoppingListItem =
+        ShoppingListItem addedShoppingListItem =
             inputShoppingListItem;
 
         var expectedShoppingListItems =
-            new ObservableCollection<ShoppingItem>(
+            new ObservableCollection<ShoppingListItem>(
                 list: [addedShoppingListItem]);
 
         // when

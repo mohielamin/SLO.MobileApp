@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using Force.DeepCloner;
-using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
+using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,26 +13,26 @@ namespace SLO.MobileApp.Core.UnitTests.ViewModels.ShoppingLists
         public async Task ShouldRemoveShoppingListItemAsync()
         {
             // given
-            ShoppingItem randomShoppingItem = CreateRandomShoppingItem();
-            ShoppingItem existsShoppingListItem = randomShoppingItem;
+            ShoppingListItem randomShoppingListItem = CreateRandomShoppingListItem();
+            ShoppingListItem existsShoppingListItem = randomShoppingListItem;
 
-            ShoppingItem inputShoppingListItem =
+            ShoppingListItem inputShoppingListItem =
                 existsShoppingListItem.DeepClone();
 
             var randomShoppingListItems =
-                new ObservableCollection<ShoppingItem>(
-                    list: CreateRandomShoppingItems().ToList());
+                new ObservableCollection<ShoppingListItem>(
+                    list: CreateRandomShoppingListItems().ToList());
 
-            ObservableCollection<ShoppingItem> currentShoppingListItems =
+            ObservableCollection<ShoppingListItem> currentShoppingListItems =
                 randomShoppingListItems.DeepClone();
 
-            ObservableCollection<ShoppingItem> expectedShoppingListItems =
+            ObservableCollection<ShoppingListItem> expectedShoppingListItems =
                 randomShoppingListItems.DeepClone();
 
             currentShoppingListItems.Add(existsShoppingListItem);
 
             // when
-            foreach (ShoppingItem shoppingItem in currentShoppingListItems)
+            foreach (ShoppingListItem shoppingItem in currentShoppingListItems)
             {
                 await _shoppingListViewModel.AddShoppingListItemCommand
                     .ExecuteAsync(parameter: shoppingItem);

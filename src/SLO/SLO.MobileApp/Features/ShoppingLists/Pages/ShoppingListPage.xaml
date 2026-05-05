@@ -6,7 +6,7 @@
     xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
     xmlns:buttons="clr-namespace:SLO.MobileApp.Controls.Buttons"
     xmlns:labels="clr-namespace:SLO.MobileApp.Controls.Labels"
-    xmlns:models="clr-namespace:SLO.MobileApp.Core.Models.Foundations.ShoppingItems;assembly=SLO.MobileApp.Core"
+    xmlns:models="clr-namespace:SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;assembly=SLO.MobileApp.Core"
     xmlns:viewModels="clr-namespace:SLO.MobileApp.Core.ViewModels.ShoppingLists;assembly=SLO.MobileApp.Core"
     xmlns:views="clr-namespace:SLO.MobileApp.Features.ShoppingLists.Views"
     x:DataType="viewModels:ShoppingListViewModel">
@@ -38,19 +38,19 @@
                 </Grid>
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:ShoppingItem">
+                <DataTemplate x:DataType="models:ShoppingListItem">
                     <SwipeView android:SwipeView.SwipeTransitionMode="Drag">
                         <SwipeView.RightItems>
                             <SwipeItems>
 
                                 <SwipeItem
                                     BackgroundColor="Red"
-                                    Invoked="RemoveShoppingItemClicked"
+                                    Invoked="RemoveShoppingListItemClicked"
                                     Text="Remove" />
 
                                 <SwipeItem
                                     BackgroundColor="Orange"
-                                    Invoked="EditShoppingItemClicked"
+                                    Invoked="EditShoppingListItemClicked"
                                     Text="Edit" />
 
                             </SwipeItems>

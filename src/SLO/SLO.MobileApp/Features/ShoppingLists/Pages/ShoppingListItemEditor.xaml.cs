@@ -11,9 +11,9 @@ public partial class ShoppingListItemEditor : ContentPageBase
         set => SetValue(NameProperty, value);
     }
 
-    public decimal Quantity
+    public int Quantity
     {
-        get => (decimal)GetValue(QuantityProperty);
+        get => (int)GetValue(QuantityProperty);
         set => SetValue(QuantityProperty, value);
     }
 
@@ -39,7 +39,7 @@ public partial class ShoppingListItemEditor : ContentPageBase
             propertyName: nameof(Name));
 
     public static readonly BindableProperty QuantityProperty =
-        CreateProperty<decimal, ShoppingListItemEditor>(
+        CreateProperty<int, ShoppingListItemEditor>(
             propertyName: nameof(Quantity));
 
     public static readonly BindableProperty DescriptionProperty =

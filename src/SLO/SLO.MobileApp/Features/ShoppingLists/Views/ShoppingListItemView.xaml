@@ -4,8 +4,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:labels="clr-namespace:SLO.MobileApp.Controls.Labels"
-    xmlns:models="clr-namespace:SLO.MobileApp.Core.Models.Foundations.ShoppingItems;assembly=SLO.MobileApp.Core"
-    x:DataType="models:ShoppingItem">
+    xmlns:models="clr-namespace:SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;assembly=SLO.MobileApp.Core"
+    x:DataType="models:ShoppingListItem">
 
     <Border
         Padding="10"
