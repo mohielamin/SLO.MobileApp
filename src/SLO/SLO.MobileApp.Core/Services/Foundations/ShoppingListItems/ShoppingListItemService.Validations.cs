@@ -107,6 +107,14 @@ internal partial class ShoppingListItemService
             Parameter: nameof(ShoppingListItem.UpdatedAt)));
     }
 
+    private void ValidateShoppingListItemOnRemoveById(
+        Guid shoppingListItemId)
+    {
+        Validate(
+            (Rule: Invalid(shoppingListItemId),
+            Parameter: nameof(shoppingListItemId)));
+    }
+
     private void ValidateStorageShoppingListItem(
         ShoppingListItem storageShoppingListItem,
         Guid shoppingListItemId)
