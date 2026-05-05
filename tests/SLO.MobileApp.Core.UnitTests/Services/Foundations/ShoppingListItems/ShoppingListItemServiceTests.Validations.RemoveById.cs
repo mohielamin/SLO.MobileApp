@@ -62,4 +62,54 @@ public partial class ShoppingListItemServiceTests
 
         VerifyNoOtherDependencyCalls();
     }
+
+    [Fact]
+    public async Task ShouldThrowValidationExceptionOnRemoveByIdIfShoppingListItemIdIsNotFoundAndLogItAsync()
+    {
+        // given
+        Guid shoppingListItemId = Guid.NewGuid();
+        ShoppingListItem nullShoppingListItem = null;
+        ShoppingListItem notFoundShoppingListItem = nullShoppingListItem;
+
+        var notFoundShoppingListItemException =
+            new NotFoundShoppingListItemException(
+                exceptionMessage: $"A shopping list item with Id: {shoppingListItemId}, " +
+                $"could not be found.");
+
+        var expectedShoppingListItemValidationException =
+            new ShoppingListItemValidationException(
+                exceptionMessage: "Shopping list item validation error occurred, " +
+                "fix the errors and try again please!",
+                innerException: notFoundShoppingListItemException);
+
+        // when
+        ValueTask<ShoppingListItem> removeShoppingListItemByIdTask =
+            _shoppingListItemService.RemoveShoppingListItemByIdAsync(
+                shoppingListItemId,
+                It.IsAny<CancellationToken>());
+
+        // then
+        await Assert.ThrowsAsync<ShoppingListItemValidationException>(
+            removeShoppingListItemByIdTask.AsTask);
+
+        _storageBrokerMock.Verify(broker =>
+            broker.SelectShoppingListItemByIdAsync(
+                shoppingListItemId,
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        _storageBrokerMock.Verify(broker =>
+            broker.DeleteShoppingListItemAsync(
+                It.IsAny<ShoppingListItem>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogErrorAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    expectedShoppingListItemValidationException))),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
 }
