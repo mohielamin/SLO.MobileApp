@@ -12,6 +12,73 @@ namespace SLO.MobileApp.Core.UnitTests.Services.Foundations.ShoppingListItems;
 public partial class ShoppingListItemServiceTests
 {
     [Fact]
+    public async Task ShouldThrowDependencyValidationExceptionOnModifyIfDbUpdateConcurrencyErrorOccursAndLogItAsync()
+    {
+        // given
+        ShoppingListItem someShoppingListItem =
+            CreateRandomShoppingListItem();
+
+        someShoppingListItem.UpdatedAt =
+            someShoppingListItem.UpdatedAt.AddMinutes(1);
+
+        string exceptionMessage = Randomizers.GetRandomString();
+
+        var dbUpdateConcurrencyException =
+            new DbUpdateConcurrencyException(exceptionMessage);
+
+        var lockedShoppingListItemException =
+            new LockedShoppingListItemException(
+                exceptionMessage: "Locked shopping list item error occurred.",
+                innerException: dbUpdateConcurrencyException);
+
+        var expectedShoppingListItemDependencyValidationException =
+            new ShoppingListItemDependencyValidationException(
+                exceptionMessage: "Shopping list item dependency validation error occurred, " +
+                "try again please!",
+                innerException: lockedShoppingListItemException);
+
+        _dateTimeBrokerMock.Setup(broker =>
+            broker.GetCurrentDateTimeAsync(
+                It.IsAny<CancellationToken>()))
+            .ThrowsAsync(dbUpdateConcurrencyException);
+
+        // when
+        ValueTask<ShoppingListItem> modifyShoppingListItemTask =
+            _shoppingListItemService.ModifyShoppingListItemAsync(
+                shoppingListItem: someShoppingListItem,
+                cancellationToken: It.IsAny<CancellationToken>());
+
+        // then
+        await Assert.ThrowsAsync<ShoppingListItemDependencyValidationException>(
+            modifyShoppingListItemTask.AsTask);
+
+        _dateTimeBrokerMock.Verify(broker =>
+            broker.GetCurrentDateTimeAsync(
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        _storageBrokerMock.Verify(broker =>
+            broker.SelectShoppingListItemByIdAsync(
+                It.IsAny<Guid>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _storageBrokerMock.Verify(broker =>
+            broker.UpdateShoppingListItemAsync(
+                It.IsAny<ShoppingListItem>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogErrorAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    expectedShoppingListItemDependencyValidationException))),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
+
+    [Fact]
     public async Task ShouldThrowDependencyExceptionOnModifyIfDbUpdateErrorOccursAndLogItAsync()
     {
         // given
