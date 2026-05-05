@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
+using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,25 +11,25 @@ namespace SLO.MobileApp.Core.ViewModels.ShoppingLists;
 
 public partial class ShoppingListViewModel : ObservableObject
 {
-    public ObservableCollection<ShoppingItem> ShoppingListItems { get; } =
-        new ObservableCollection<ShoppingItem>();
+    public ObservableCollection<ShoppingListItem> ShoppingListItems { get; } =
+        new ObservableCollection<ShoppingListItem>();
 
     [ObservableProperty]
     private string errorMessage;
 
     [RelayCommand(IncludeCancelCommand = true)]
     private async Task AddShoppingListItemAsync(
-        ShoppingItem shoppingItem,
+        ShoppingListItem shoppingListItem,
         CancellationToken cancellationToken)
     {
-        if (shoppingItem is null)
+        if (shoppingListItem is null)
         {
             ErrorMessage = "Shopping list item is null.";
 
             return;
         }
 
-        ShoppingListItems.Add(item: shoppingItem);
+        ShoppingListItems.Add(item: shoppingListItem);
     }
 
     [RelayCommand(IncludeCancelCommand = true)]
@@ -41,33 +41,33 @@ public partial class ShoppingListViewModel : ObservableObject
 
     [RelayCommand(IncludeCancelCommand = true)]
     private async Task ModifyShoppingListItemAsync(
-        ShoppingItem shoppingItem,
+        ShoppingListItem shoppingListItem,
         CancellationToken cancellationToken)
     {
         (_, int index) =
-            GetMatchingShoppingListItem(shoppingItem);
+            GetMatchingShoppingListItem(shoppingListItem);
 
         if (index == -1)
         {
-            ErrorMessage = $"A shopping list item with Id: {shoppingItem.Id}, " +
+            ErrorMessage = $"A shopping list item with Id: {shoppingListItem.Id}, " +
                 "could not be found.";
 
             return;
         }
 
-        ShoppingListItems[index] = shoppingItem;
+        ShoppingListItems[index] = shoppingListItem;
     }
 
     [RelayCommand(IncludeCancelCommand = true)]
     private async Task RemoveShoppingListItemAsync(
-        ShoppingItem shoppingItem,
+        ShoppingListItem shoppingListItem,
         CancellationToken cancellationToken)
     {
-        (_, int index) = GetMatchingShoppingListItem(shoppingItem);
+        (_, int index) = GetMatchingShoppingListItem(shoppingListItem);
 
         if (index == -1)
         {
-            ErrorMessage = $"A shopping list item with Id: {shoppingItem.Id}, " +
+            ErrorMessage = $"A shopping list item with Id: {shoppingListItem.Id}, " +
                 $"could not be found.";
 
             return;
@@ -76,10 +76,10 @@ public partial class ShoppingListViewModel : ObservableObject
         ShoppingListItems.RemoveAt(index);
     }
 
-    private (ShoppingItem ShoppingListItem, int Index) GetMatchingShoppingListItem(
-        ShoppingItem shoppingItem)
+    private (ShoppingListItem ShoppingListItem, int Index) GetMatchingShoppingListItem(
+        ShoppingListItem shoppingItem)
     {
-        ShoppingItem matchingShoppingListItem =
+        ShoppingListItem matchingShoppingListItem =
             ShoppingListItems.FirstOrDefault(listItem =>
                 listItem.Id == shoppingItem.Id);
 

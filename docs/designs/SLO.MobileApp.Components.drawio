@@ -1,4 +1,4 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" version="29.6.6" pages="7">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.6 Chrome/144.0.7559.236 Electron/40.8.4 Safari/537.36" pages="6">
   <diagram id="AJybEndliQvF_vg6prNn" name="High Level Design">
     <mxGraphModel dx="491" dy="734" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
@@ -124,7 +124,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="Shopping List Item Views" id="fP_k9GKazhlwa8e1zkTx">
-    <mxGraphModel dx="971" dy="516" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1815" dy="1093" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -242,29 +242,29 @@
         <mxCell id="g34gTGlE4yFkIp8zsBiW-15" edge="1" parent="1" source="g34gTGlE4yFkIp8zsBiW-7" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;startSize=8;endArrow=classic;endSize=8;" target="g34gTGlE4yFkIp8zsBiW-14" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="g34gTGlE4yFkIp8zsBiW-7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=16;fontColor=default;labelBackgroundColor=none;fillColor=#4D4D4D;" value="Shopping Item Service" vertex="1">
+        <mxCell id="g34gTGlE4yFkIp8zsBiW-7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=16;fontColor=default;labelBackgroundColor=none;fillColor=#4D4D4D;" value="Shopping List Item Service" vertex="1">
           <mxGeometry height="467.5" width="215" x="648.5" y="-156.5" as="geometry" />
         </mxCell>
         <mxCell id="g34gTGlE4yFkIp8zsBiW-19" edge="1" parent="1" source="g34gTGlE4yFkIp8zsBiW-9" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;startSize=8;endArrow=classic;endSize=8;" target="g34gTGlE4yFkIp8zsBiW-16">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="g34gTGlE4yFkIp8zsBiW-9" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=12;fontFamily=Helvetica;fontColor=default;labelBackgroundColor=default;" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Retrieve All Shopping Items&lt;/font&gt;" vertex="1">
-          <mxGeometry height="30" width="201.5" x="610" y="124" as="geometry" />
+        <mxCell id="g34gTGlE4yFkIp8zsBiW-9" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=12;fontFamily=Helvetica;fontColor=default;labelBackgroundColor=default;" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Retrieve All Shopping List Items&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="233" x="610" y="124" as="geometry" />
         </mxCell>
         <mxCell id="g34gTGlE4yFkIp8zsBiW-18" edge="1" parent="1" source="g34gTGlE4yFkIp8zsBiW-10" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;startSize=8;endArrow=classic;endSize=8;" target="g34gTGlE4yFkIp8zsBiW-17">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="g34gTGlE4yFkIp8zsBiW-10" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=16;fontFamily=Helvetica;fontColor=default;labelBackgroundColor=default;" value="Add New Shopping Item" vertex="1">
-          <mxGeometry height="30" width="178" x="610" y="171" as="geometry" />
+        <mxCell id="g34gTGlE4yFkIp8zsBiW-10" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=16;fontFamily=Helvetica;fontColor=default;labelBackgroundColor=default;" value="Add New Shopping List Item" vertex="1">
+          <mxGeometry height="30" width="212" x="610" y="171" as="geometry" />
         </mxCell>
-        <mxCell id="g34gTGlE4yFkIp8zsBiW-14" parent="1" style="rhombus;whiteSpace=wrap;html=1;fontSize=16;rounded=0;labelBackgroundColor=none;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" value="Shopping Items Storage" vertex="1">
+        <mxCell id="g34gTGlE4yFkIp8zsBiW-14" parent="1" style="rhombus;whiteSpace=wrap;html=1;fontSize=16;rounded=0;labelBackgroundColor=none;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" value="Shopping List Item Storages" vertex="1">
           <mxGeometry height="197.5" width="197.5" x="1026" y="-21.5" as="geometry" />
         </mxCell>
-        <mxCell id="g34gTGlE4yFkIp8zsBiW-16" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=12;fontFamily=Helvetica;fontColor=default;labelBackgroundColor=default;" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Select All Shopping Items&lt;/font&gt;" vertex="1">
-          <mxGeometry height="30" width="201.5" x="954" y="124" as="geometry" />
+        <mxCell id="g34gTGlE4yFkIp8zsBiW-16" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=12;fontFamily=Helvetica;fontColor=default;labelBackgroundColor=default;" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Select All Shopping List Items&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="233" x="954" y="124" as="geometry" />
         </mxCell>
-        <mxCell id="g34gTGlE4yFkIp8zsBiW-17" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=16;fontFamily=Helvetica;fontColor=default;labelBackgroundColor=default;" value="Insert New Shopping Item" vertex="1">
-          <mxGeometry height="30" width="191" x="954" y="171" as="geometry" />
+        <mxCell id="g34gTGlE4yFkIp8zsBiW-17" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=16;fontFamily=Helvetica;fontColor=default;labelBackgroundColor=default;" value="Insert New Shopping List Item" vertex="1">
+          <mxGeometry height="30" width="228" x="954" y="171" as="geometry" />
         </mxCell>
         <mxCell id="g34gTGlE4yFkIp8zsBiW-38" parent="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;rounded=0;fontSize=16;" value="Shopping List Item View" vertex="1">
           <mxGeometry height="30" width="178" x="-304" y="394" as="geometry" />
@@ -547,43 +547,8 @@
       </root>
     </mxGraphModel>
   </diagram>
-  <diagram id="SlOrZTnb1TxL_jsLOJxO" name="Shopping Item Service">
-    <mxGraphModel dx="786" dy="534" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        <mxCell id="9nr1ErC3q-8_o3ee6tXt-3" edge="1" parent="1" source="9nr1ErC3q-8_o3ee6tXt-1" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" target="9nr1ErC3q-8_o3ee6tXt-2" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="9nr1ErC3q-8_o3ee6tXt-10" edge="1" parent="1" source="9nr1ErC3q-8_o3ee6tXt-1" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;startSize=8;endArrow=classic;endSize=8;" target="9nr1ErC3q-8_o3ee6tXt-6">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="9nr1ErC3q-8_o3ee6tXt-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Shopping Item Service" vertex="1">
-          <mxGeometry height="60" width="120" x="140" y="170" as="geometry" />
-        </mxCell>
-        <mxCell id="9nr1ErC3q-8_o3ee6tXt-5" edge="1" parent="1" source="9nr1ErC3q-8_o3ee6tXt-2" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" target="9nr1ErC3q-8_o3ee6tXt-4" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="9nr1ErC3q-8_o3ee6tXt-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Shopping Item Storage Broker" vertex="1">
-          <mxGeometry height="60" width="120" x="380" y="170" as="geometry" />
-        </mxCell>
-        <mxCell id="9nr1ErC3q-8_o3ee6tXt-4" parent="1" style="rhombus;whiteSpace=wrap;html=1;rounded=0;" value="Shopping Items" vertex="1">
-          <mxGeometry height="80" width="80" x="640" y="160" as="geometry" />
-        </mxCell>
-        <mxCell id="9nr1ErC3q-8_o3ee6tXt-9" edge="1" parent="1" source="9nr1ErC3q-8_o3ee6tXt-6" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;startSize=8;endArrow=classic;endSize=8;" target="9nr1ErC3q-8_o3ee6tXt-8" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="9nr1ErC3q-8_o3ee6tXt-6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Logging Broker" vertex="1">
-          <mxGeometry height="60" width="120" x="380" y="286" as="geometry" />
-        </mxCell>
-        <mxCell id="9nr1ErC3q-8_o3ee6tXt-8" parent="1" style="rhombus;whiteSpace=wrap;html=1;rounded=0;" value="Loggings" vertex="1">
-          <mxGeometry height="80" width="80" x="640" y="276" as="geometry" />
-        </mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
   <diagram id="Oi7ipF1vi78FALljP_BK" name="Base Views-Controls">
-    <mxGraphModel dx="1383" dy="668" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1415" dy="693" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />

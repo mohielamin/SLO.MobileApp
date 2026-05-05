@@ -1,4 +1,4 @@
-﻿using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
+﻿using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
 using SLO.MobileApp.Core.UnitTests.Helpers;
 using SLO.MobileApp.Core.ViewModels.ShoppingLists;
 using System;
@@ -15,18 +15,18 @@ public partial class ShoppingListViewModelTests
         _shoppingListViewModel =
             new ShoppingListViewModel();
 
-    private static ShoppingItem CreateRandomShoppingItem() =>
+    private static ShoppingListItem CreateRandomShoppingListItem() =>
         CreateShoppingItemFiller()
         .Create();
 
-    private static IQueryable<ShoppingItem> CreateRandomShoppingItems() =>
+    private static IQueryable<ShoppingListItem> CreateRandomShoppingListItems() =>
         CreateShoppingItemFiller()
         .Create(count: Randomizers.GetRandomNumber())
         .AsQueryable();
 
-    private static Filler<ShoppingItem> CreateShoppingItemFiller()
+    private static Filler<ShoppingListItem> CreateShoppingItemFiller()
     {
-        var filler = new Filler<ShoppingItem>();
+        var filler = new Filler<ShoppingListItem>();
         DateTimeOffset randomDateTime = Randomizers.GetRandomDateTime();
 
         filler.Setup()

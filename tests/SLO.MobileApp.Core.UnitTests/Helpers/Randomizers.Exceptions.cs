@@ -5,8 +5,17 @@ namespace SLO.MobileApp.Core.UnitTests.Helpers;
 
 internal static partial class Randomizers
 {
-    public static SqlException GetSqlException() =>
-        (SqlException)RuntimeHelpers
-        .GetUninitializedObject(
-            typeof(SqlException));
+    private static SqlException _sqlException;
+
+    public static SqlException GetSqlException()
+    {
+        if (_sqlException is null)
+        {
+            _sqlException =
+                (SqlException)RuntimeHelpers
+                .GetUninitializedObject(typeof(SqlException));
+        }
+
+        return _sqlException;
+    }
 }

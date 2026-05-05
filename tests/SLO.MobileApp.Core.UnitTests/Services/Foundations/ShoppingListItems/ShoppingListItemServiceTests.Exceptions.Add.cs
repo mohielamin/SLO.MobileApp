@@ -1,0 +1,249 @@
+﻿using EFxceptions.Models.Exceptions;
+using Microsoft.EntityFrameworkCore;
+using Moq;
+using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
+using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems.Exceptions;
+using SLO.MobileApp.Core.UnitTests.Helpers;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace SLO.MobileApp.Core.UnitTests.Services.Foundations.ShoppingListItems;
+
+public partial class ShoppingListItemServiceTests
+{
+    [Fact]
+    public async Task ShouldThrowDependencyValidationExceptionOnAddIfShoppingListItemAlreadyExistsAndLogItAsync()
+    {
+        // given
+        ShoppingListItem someShoppingListItem = CreateRandomShoppingListItem();
+
+        someShoppingListItem.UpdatedBy =
+            someShoppingListItem.CreatedBy;
+
+        string exceptionMessage = Randomizers.GetRandomString();
+        var duplicateKeyException = new DuplicateKeyException(exceptionMessage);
+
+        var alreadyExistsShoppingListItemException =
+            new AlreadyExistsShoppingListItemException(
+                exceptionMessage: "A shopping list item with same Id " +
+                "already exists.",
+                innerException: duplicateKeyException);
+
+        var expectedShoppingListItemDependencyValidationException =
+            new ShoppingListItemDependencyValidationException(
+                exceptionMessage: "Shopping list item dependency validation error occurred, " +
+                "try again please!",
+                innerException: alreadyExistsShoppingListItemException);
+
+        _dateTimeBrokerMock.Setup(broker =>
+            broker.GetCurrentDateTimeAsync(
+                It.IsAny<CancellationToken>()))
+            .ThrowsAsync(duplicateKeyException);
+
+        // when
+        ValueTask<ShoppingListItem> addShoppingListItemTask =
+            _shoppingListItemService.AddShoppingListItemAsync(
+                someShoppingListItem,
+                It.IsAny<CancellationToken>());
+
+        // then
+        await Assert.ThrowsAsync<ShoppingListItemDependencyValidationException>(
+            addShoppingListItemTask.AsTask);
+
+        _dateTimeBrokerMock.Verify(broker =>
+            broker.GetCurrentDateTimeAsync(
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        _storageBrokerMock.Verify(broker =>
+            broker.InsertShoppingListItemAsync(
+                It.IsAny<ShoppingListItem>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogErrorAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    expectedShoppingListItemDependencyValidationException))),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
+
+    [Fact]
+    public async Task ShouldThrowDependencyExceptionOnAddIfDbUpdateErrorOccursAndLogItAsync()
+    {
+        // given
+        ShoppingListItem someShoppingListItem = CreateRandomShoppingListItem();
+
+        someShoppingListItem.UpdatedBy =
+            someShoppingListItem.CreatedBy;
+
+        string exceptionMessage = Randomizers.GetRandomString();
+        var dbUpdateException = new DbUpdateException(exceptionMessage);
+
+        var failedShoppingListItemStorageException =
+            new FailedShoppingListItemStorageException(
+                exceptionMessage: "Failed shopping list item storage error occurred, " +
+                "please contact support.",
+                innerException: dbUpdateException);
+
+        var expectedShoppingListItemDependencyException =
+            new ShoppingListItemDependencyException(
+                exceptionMessage: "Shopping list item dependency error occurred, " +
+                "please contact support.",
+                innerException: failedShoppingListItemStorageException);
+
+        _dateTimeBrokerMock.Setup(broker =>
+            broker.GetCurrentDateTimeAsync(
+                It.IsAny<CancellationToken>()))
+            .ThrowsAsync(dbUpdateException);
+
+        // when
+        ValueTask<ShoppingListItem> addShoppingListItemTask =
+            _shoppingListItemService.AddShoppingListItemAsync(
+                someShoppingListItem,
+                It.IsAny<CancellationToken>());
+
+        // then
+        await Assert.ThrowsAsync<ShoppingListItemDependencyException>(
+            addShoppingListItemTask.AsTask);
+
+        _dateTimeBrokerMock.Verify(broker =>
+            broker.GetCurrentDateTimeAsync(
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        _storageBrokerMock.Verify(broker =>
+            broker.InsertShoppingListItemAsync(
+                It.IsAny<ShoppingListItem>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogErrorAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    expectedShoppingListItemDependencyException))),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
+
+    [Fact]
+    public async Task ShouldThrowCriticalDependencyExceptionOnAddIfSqlErrorOccursAndLogItAsync()
+    {
+        // given
+        ShoppingListItem someShoppingListItem = CreateRandomShoppingListItem();
+
+        someShoppingListItem.UpdatedBy =
+            someShoppingListItem.CreatedBy;
+
+        var sqlException = Randomizers.GetSqlException();
+
+        var failedShoppingListItemStorageException =
+            new FailedShoppingListItemStorageException(
+                exceptionMessage: "Failed shopping list item storage error occurred, " +
+                "please contact support.",
+                innerException: sqlException);
+
+        var expectedShoppingListItemDependencyException =
+            new ShoppingListItemDependencyException(
+                exceptionMessage: "Shopping list item dependency error occurred, " +
+                "please contact support.",
+                innerException: failedShoppingListItemStorageException);
+
+        _dateTimeBrokerMock.Setup(broker =>
+            broker.GetCurrentDateTimeAsync(
+                It.IsAny<CancellationToken>()))
+            .ThrowsAsync(sqlException);
+
+        // when
+        ValueTask<ShoppingListItem> addShoppingListItemTask =
+            _shoppingListItemService.AddShoppingListItemAsync(
+                someShoppingListItem,
+                It.IsAny<CancellationToken>());
+
+        // then
+        await Assert.ThrowsAsync<ShoppingListItemDependencyException>(
+            addShoppingListItemTask.AsTask);
+
+        _dateTimeBrokerMock.Verify(broker =>
+            broker.GetCurrentDateTimeAsync(
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        _storageBrokerMock.Verify(broker =>
+            broker.InsertShoppingListItemAsync(
+                It.IsAny<ShoppingListItem>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogCriticalAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    expectedShoppingListItemDependencyException))),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
+
+    [Fact]
+    public async Task ShouldThrowServiceExceptionOnAddIfServiceErrorOccursAndLogItAsync()
+    {
+        // given
+        ShoppingListItem someShoppingListItem = CreateRandomShoppingListItem();
+
+        someShoppingListItem.UpdatedBy =
+            someShoppingListItem.CreatedBy;
+
+        string exceptionMessage = Randomizers.GetRandomString();
+        var someServiceException = new Exception(exceptionMessage);
+
+        var failedShoppingListItemServiceException =
+            new FailedShoppingListItemServiceException(
+                exceptionMessage: "Failed shopping list item service error occurred, " +
+                "please contact support.",
+                innerException: someServiceException);
+
+        var expectedShoppingListItemServiceException =
+            new ShoppingListItemServiceException(
+                exceptionMessage: "Shopping list item service error occurred, " +
+                "please contact support.",
+                innerException: failedShoppingListItemServiceException);
+
+        _dateTimeBrokerMock.Setup(broker =>
+            broker.GetCurrentDateTimeAsync(
+                It.IsAny<CancellationToken>()))
+            .ThrowsAsync(someServiceException);
+
+        // when
+        ValueTask<ShoppingListItem> addShoppingListItemTask =
+            _shoppingListItemService.AddShoppingListItemAsync(
+                someShoppingListItem,
+                It.IsAny<CancellationToken>());
+
+        // then
+        await Assert.ThrowsAsync<ShoppingListItemServiceException>(
+            addShoppingListItemTask.AsTask);
+
+        _dateTimeBrokerMock.Verify(broker =>
+            broker.GetCurrentDateTimeAsync(
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        _storageBrokerMock.Verify(broker =>
+            broker.InsertShoppingListItemAsync(
+                It.IsAny<ShoppingListItem>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogErrorAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    expectedShoppingListItemServiceException))),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
+}

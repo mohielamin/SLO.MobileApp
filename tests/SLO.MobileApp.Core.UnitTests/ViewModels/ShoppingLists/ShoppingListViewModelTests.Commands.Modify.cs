@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using Force.DeepCloner;
-using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
+using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -13,25 +13,25 @@ public partial class ShoppingListViewModelTests
     public async Task ShouldModifyShoppingListItemAsync()
     {
         // given
-        ShoppingItem randomShoppingItem = CreateRandomShoppingItem();
-        ShoppingItem existsShoppingItem = randomShoppingItem;
-        ShoppingItem modifiedShoppingItem = randomShoppingItem.DeepClone();
+        ShoppingListItem randomShoppingListItem = CreateRandomShoppingListItem();
+        ShoppingListItem existsShoppingListItem = randomShoppingListItem;
+        ShoppingListItem modifiedShoppingListItem = randomShoppingListItem.DeepClone();
 
-        modifiedShoppingItem.UpdatedAt =
-            modifiedShoppingItem.UpdatedAt = DateTimeOffset.UtcNow;
+        modifiedShoppingListItem.UpdatedAt =
+            modifiedShoppingListItem.UpdatedAt = DateTimeOffset.UtcNow;
 
-        ObservableCollection<ShoppingItem> expectedShoppingItems =
-            [modifiedShoppingItem];
+        ObservableCollection<ShoppingListItem> expectedShoppingListItems =
+            [modifiedShoppingListItem];
 
         await _shoppingListViewModel.AddShoppingListItemCommand
-            .ExecuteAsync(parameter: existsShoppingItem);
+            .ExecuteAsync(parameter: existsShoppingListItem);
 
         // when
         await _shoppingListViewModel.ModifyShoppingListItemCommand
-            .ExecuteAsync(parameter: modifiedShoppingItem);
+            .ExecuteAsync(parameter: modifiedShoppingListItem);
 
         // then
         _shoppingListViewModel.ShoppingListItems.Should().BeEqualTo(
-            expectedShoppingItems);
+            expectedShoppingListItems);
     }
 }

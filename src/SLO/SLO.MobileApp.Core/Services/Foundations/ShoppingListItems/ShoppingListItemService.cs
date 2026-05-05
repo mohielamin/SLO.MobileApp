@@ -1,0 +1,113 @@
+﻿using SLO.MobileApp.Core.Brokers.DateTimes;
+using SLO.MobileApp.Core.Brokers.Loggings;
+using SLO.MobileApp.Core.Brokers.Storages;
+using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace SLO.MobileApp.Core.Services.Foundations.ShoppingListItems;
+
+internal partial class ShoppingListItemService : IShoppingListItemService
+{
+    private readonly IStorageBroker _storageBroker;
+    private readonly IDateTimeBroker _dateTimeBroker;
+    private readonly ILoggingBroker _loggingBroker;
+
+    public ShoppingListItemService(
+        IStorageBroker storageBroker,
+        IDateTimeBroker dateTimeBroker,
+        ILoggingBroker loggingBroker)
+    {
+        _storageBroker = storageBroker;
+        _dateTimeBroker = dateTimeBroker;
+        _loggingBroker = loggingBroker;
+    }
+
+    public async ValueTask<ShoppingListItem> AddShoppingListItemAsync(
+        ShoppingListItem shoppingListItem,
+        CancellationToken cancellationToken) =>
+        await TryCatch(cancellationToken, async () =>
+        {
+            await ValidateShoppingListItemOnAddAsync(
+                shoppingListItem,
+                cancellationToken);
+
+            return await _storageBroker.InsertShoppingListItemAsync(
+                shoppingListItem, cancellationToken);
+        });
+
+    public async ValueTask<IQueryable<ShoppingListItem>> RetrieveAllShoppingListItemsAsync(
+        CancellationToken cancellationToken) =>
+        await TryCatch(cancellationToken, async () =>
+        await _storageBroker.SelectAllShoppingListItemsAsync(
+            cancellationToken));
+
+    public async ValueTask<ShoppingListItem> RetrieveShoppingListItemByIdAsync(
+        Guid shoppingListItemId,
+        CancellationToken cancellationToken) =>
+        await TryCatch(cancellationToken, async () =>
+        {
+            ValidateShoppingListItemOnRetrieveById(shoppingListItemId);
+
+            ShoppingListItem storageShoppingListItem =
+           await _storageBroker.SelectShoppingListItemByIdAsync(
+               shoppingListItemId,
+               cancellationToken);
+
+            ValidateStorageShoppingListItem(
+                storageShoppingListItem,
+                shoppingListItemId);
+
+            return storageShoppingListItem;
+        });
+
+    public async ValueTask<ShoppingListItem> ModifyShoppingListItemAsync(
+        ShoppingListItem shoppingListItem,
+        CancellationToken cancellationToken) =>
+        await TryCatch(cancellationToken, async () =>
+        {
+            await ValidateShoppingListItemOnModifyAsync(
+                shoppingListItem,
+                cancellationToken);
+
+            ShoppingListItem storageShoppingListItem =
+            await _storageBroker.SelectShoppingListItemByIdAsync(
+                shoppingListItemId: shoppingListItem.Id,
+                cancellationToken);
+
+            ValidateStorageShoppingListItem(
+                storageShoppingListItem,
+                shoppingListItemId: shoppingListItem.Id);
+
+            ValidateAgainstStorageShoppingListItem(
+                storageShoppingListItem,
+                inputShoppingListItem: shoppingListItem);
+
+            return await _storageBroker.UpdateShoppingListItemAsync(
+                shoppingListItem,
+                cancellationToken);
+        });
+
+    public async ValueTask<ShoppingListItem> RemoveShoppingListItemByIdAsync(
+        Guid shoppingListItemId,
+        CancellationToken cancellationToken) =>
+        await TryCatch(cancellationToken, async () =>
+        {
+            ValidateShoppingListItemOnRemoveById(shoppingListItemId);
+
+            ShoppingListItem storageShoppingListItem =
+                await _storageBroker.SelectShoppingListItemByIdAsync(
+                    shoppingListItemId,
+                    cancellationToken);
+
+            ValidateStorageShoppingListItem(
+                storageShoppingListItem,
+                shoppingListItemId);
+
+            return await _storageBroker.DeleteShoppingListItemAsync(
+                shoppingListItem: storageShoppingListItem,
+                cancellationToken);
+        });
+}

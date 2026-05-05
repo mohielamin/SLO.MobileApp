@@ -1,5 +1,5 @@
 using Microsoft.Maui.Controls;
-using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
+using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
 using SLO.MobileApp.Core.ViewModels.ShoppingLists;
 using System;
 
@@ -9,7 +9,7 @@ public partial class ShoppingListPage : ContentPage
 {
     private readonly ShoppingListViewModel _shoppingListViewModel;
 
-    public ShoppingItem SelectedShoppingListItem { get; set; }
+    public ShoppingListItem SelectedShoppingListItem { get; set; }
 
     public ShoppingListPage(
         ShoppingListViewModel shoppingListViewModel)
@@ -28,11 +28,11 @@ public partial class ShoppingListPage : ContentPage
         switch (shoppingListItemEditor?.EditMode)
         {
             case true:
-                UpdateModifiedShoppingItem(shoppingListItemEditor);
+                UpdateModifiedShoppingListItem(shoppingListItemEditor);
                 break;
 
             case false:
-                CaptureAddedShoppingItem(shoppingListItemEditor);
+                CaptureAddedShoppingListItem(shoppingListItemEditor);
                 break;
         }
     }
@@ -44,7 +44,7 @@ public partial class ShoppingListPage : ContentPage
             page: new ShoppingListItemEditor(),
             animated: true);
 
-    private async void CaptureAddedShoppingItem(
+    private async void CaptureAddedShoppingListItem(
         ShoppingListItemEditor page)
     {
         if (page.Discarded)
@@ -52,8 +52,8 @@ public partial class ShoppingListPage : ContentPage
             return;
         }
 
-        var capturedShoppingItem =
-                new ShoppingItem
+        var capturedShoppingListItem =
+                new ShoppingListItem
                 {
                     Id = Guid.NewGuid(),
                     Name = page.Name,
@@ -62,15 +62,15 @@ public partial class ShoppingListPage : ContentPage
                 };
 
         await _shoppingListViewModel.AddShoppingListItemCommand
-            .ExecuteAsync(parameter: capturedShoppingItem);
+            .ExecuteAsync(parameter: capturedShoppingListItem);
 
         ItemsCollectionView.ScrollTo(
-            item: capturedShoppingItem,
+            item: capturedShoppingListItem,
             position: ScrollToPosition.MakeVisible,
             animate: true);
     }
 
-    private async void UpdateModifiedShoppingItem(
+    private async void UpdateModifiedShoppingListItem(
         ShoppingListItemEditor page)
     {
         if (SelectedShoppingListItem is null)
@@ -83,8 +83,8 @@ public partial class ShoppingListPage : ContentPage
             return;
         }
 
-        ShoppingItem modifiedShoppingItem =
-            new ShoppingItem
+        ShoppingListItem modifiedShoppingListItem =
+            new ShoppingListItem
             {
                 Id = SelectedShoppingListItem.Id,
                 Name = page.Name,
@@ -93,10 +93,10 @@ public partial class ShoppingListPage : ContentPage
             };
 
         await _shoppingListViewModel.ModifyShoppingListItemCommand
-            .ExecuteAsync(parameter: modifiedShoppingItem);
+            .ExecuteAsync(parameter: modifiedShoppingListItem);
     }
 
-    private async void RemoveShoppingItemClicked(
+    private async void RemoveShoppingListItemClicked(
         object sender, EventArgs e)
     {
         if (sender is not SwipeItem swipeItem)
@@ -105,7 +105,7 @@ public partial class ShoppingListPage : ContentPage
         }
 
         if (swipeItem.BindingContext is not
-            ShoppingItem shoppingItem)
+            ShoppingListItem shoppingItem)
         {
             return;
         }
@@ -114,7 +114,7 @@ public partial class ShoppingListPage : ContentPage
             .ExecuteAsync(parameter: shoppingItem);
     }
 
-    private async void EditShoppingItemClicked(
+    private async void EditShoppingListItemClicked(
         object sender, EventArgs e)
     {
         if (sender is not SwipeItem swipeItem)
@@ -123,7 +123,7 @@ public partial class ShoppingListPage : ContentPage
         }
 
         if (swipeItem.BindingContext is not
-            ShoppingItem shoppingItem)
+            ShoppingListItem shoppingItem)
         {
             return;
         }

@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using SLO.MobileApp.Core.Models.Foundations.ShoppingItems;
+using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,23 +13,23 @@ public partial class ShoppingListViewModelTests
     {
         // given
         var currentShoppingListItems =
-            new ObservableCollection<ShoppingItem>(
-                list: CreateRandomShoppingItems().ToList());
+            new ObservableCollection<ShoppingListItem>(
+                list: CreateRandomShoppingListItems().ToList());
 
-        ObservableCollection<ShoppingItem> expectedShoppingListItems =
+        ObservableCollection<ShoppingListItem> expectedShoppingListItems =
             currentShoppingListItems;
 
-        ShoppingItem randomShoppingItem = CreateRandomShoppingItem();
-        ShoppingItem notFoundShoppingItem = randomShoppingItem;
-        ShoppingItem inputShoppingListItem = notFoundShoppingItem;
+        ShoppingListItem randomShoppingListItem = CreateRandomShoppingListItem();
+        ShoppingListItem notFoundShoppingListItem = randomShoppingListItem;
+        ShoppingListItem inputShoppingListItem = notFoundShoppingListItem;
 
         string expectedErrorMessage =
-            $"A shopping list item with Id: {notFoundShoppingItem.Id}, " +
+            $"A shopping list item with Id: {notFoundShoppingListItem.Id}, " +
             $"could not be found.";
 
 
         // when
-        foreach (ShoppingItem shoppingItem in currentShoppingListItems)
+        foreach (ShoppingListItem shoppingItem in currentShoppingListItems)
         {
             await _shoppingListViewModel.AddShoppingListItemCommand
                 .ExecuteAsync(parameter: shoppingItem);

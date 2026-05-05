@@ -1,0 +1,111 @@
+﻿using Moq;
+using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
+using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems.Exceptions;
+using SLO.MobileApp.Core.UnitTests.Helpers;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace SLO.MobileApp.Core.UnitTests.Services.Foundations.ShoppingListItems;
+
+public partial class ShoppingListItemServiceTests
+{
+    [Fact]
+    public async Task ShouldThrowValidationExceptionOnRetrieveByIdIfShoppingListItemIdIsInvalidAndLogItAsync()
+    {
+        // given
+        Guid invalidId = Guid.Empty;
+        Guid shoppingListItemId = invalidId;
+
+        var invalidShoppingListItemException =
+            new InvalidShoppingListItemException(
+                exceptionMessage: "Invalid shopping list item error occurred, " +
+                "fix the errors and try again please!");
+
+        invalidShoppingListItemException.AddData(
+            key: nameof(shoppingListItemId),
+            values: "Id is required.");
+
+        var expectedShoppingListItemValidationException =
+            new ShoppingListItemValidationException(
+                exceptionMessage: "Shopping list item validation error occurred, " +
+                "fix the errors and try again please!",
+                innerException: invalidShoppingListItemException);
+
+        // when
+        ValueTask<ShoppingListItem> retrieveShoppingListItemByIdTask =
+            _shoppingListItemService.RetrieveShoppingListItemByIdAsync(
+                shoppingListItemId,
+                It.IsAny<CancellationToken>());
+
+        // then
+        await Assert.ThrowsAsync<ShoppingListItemValidationException>(
+            retrieveShoppingListItemByIdTask.AsTask);
+
+        _storageBrokerMock.Verify(broker =>
+            broker.SelectShoppingListItemByIdAsync(
+                It.IsAny<Guid>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogErrorAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    expectedShoppingListItemValidationException))),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
+
+    [Fact]
+    public async Task ShouldThrowValidationExceptionOnRetrieveByIdIfShoppingListItemIdIsNotFoundAndLogItAsync()
+    {
+        // given
+        Guid randomId = Guid.NewGuid();
+        Guid shoppingListItemId = randomId;
+        ShoppingListItem nullShoppingListIem = null;
+        ShoppingListItem notFoundShoppingListItem = nullShoppingListIem;
+        ShoppingListItem storageShoppingListItem = notFoundShoppingListItem;
+
+        var notFoundShoppingListItemException =
+            new NotFoundShoppingListItemException(
+                exceptionMessage: $"A shopping list item with Id: {shoppingListItemId}, " +
+                $"could not be found.");
+
+        var expectedShoppingListItemValidationException =
+            new ShoppingListItemValidationException(
+                exceptionMessage: "Shopping list item validation error occurred, " +
+                "fix the errors and try again please!",
+                innerException: notFoundShoppingListItemException);
+
+        _storageBrokerMock.Setup(broker =>
+            broker.SelectShoppingListItemByIdAsync(
+                shoppingListItemId,
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(storageShoppingListItem);
+
+        // when
+        ValueTask<ShoppingListItem> retrieveShoppingListItemByIdTask =
+            _shoppingListItemService.RetrieveShoppingListItemByIdAsync(
+                shoppingListItemId,
+                It.IsAny<CancellationToken>());
+
+        // then
+        await Assert.ThrowsAsync<ShoppingListItemValidationException>(
+            retrieveShoppingListItemByIdTask.AsTask);
+
+        _storageBrokerMock.Verify(broker =>
+            broker.SelectShoppingListItemByIdAsync(
+                It.IsAny<Guid>(),
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogErrorAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    expectedShoppingListItemValidationException))),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
+}
