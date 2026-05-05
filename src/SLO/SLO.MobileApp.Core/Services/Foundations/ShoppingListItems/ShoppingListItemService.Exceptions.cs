@@ -54,6 +54,17 @@ internal partial class ShoppingListItemService
                 exception: alreadyExistsShoppingListItemException,
                 cancellationToken);
         }
+        catch (DbUpdateConcurrencyException ex)
+        {
+            var lockedShoppingListItemException =
+                new LockedShoppingListItemException(
+                    exceptionMessage: "Locked shopping list item error occurred.",
+                    innerException: ex);
+
+            throw await CreateAndLogDependencyValidationErrorAsync(
+                exception: lockedShoppingListItemException,
+                cancellationToken);
+        }
         catch (DbUpdateException ex)
         {
             var failedShoppingListItemStorageException =
