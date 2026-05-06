@@ -2,7 +2,6 @@
 using SLO.MobileApp.Core.Brokers.Loggings;
 using SLO.MobileApp.Core.Brokers.Storages;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingLists;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -27,5 +26,7 @@ internal class ShoppingListService : IShoppingListService
     public async ValueTask<ShoppingList> AddShoppingListAsync(
         ShoppingList shoppingList,
         CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
+        await _storageBroker.InsertShoppingListAsync(
+            shoppingList,
+            cancellationToken);
 }
