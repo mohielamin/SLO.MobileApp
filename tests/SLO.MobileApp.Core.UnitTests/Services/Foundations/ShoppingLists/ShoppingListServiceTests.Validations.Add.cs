@@ -49,4 +49,63 @@ public partial class ShoppingListServiceTests
 
         VerifyNoOtherDependencyCalls();
     }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData(" ")]
+    public async Task ShouldThrowValidationExceptionOnAddIfShoppingListIsInvalidAndLogItAsync(
+        string invalidString)
+    {
+        // given
+        ShoppingList invalidShoppingList =
+            new ShoppingList
+            {
+                Id = default,
+                Name = invalidString
+            };
+
+        var invalidShoppingListException =
+            new InvalidShoppingListException(
+                exceptionMessage: "Invalid shopping list error occurred, " +
+                "fix the errors and try again please!");
+
+        invalidShoppingListException.AddData(
+            key: nameof(ShoppingList.Id),
+            values: "Id is required.");
+
+        invalidShoppingListException.AddData(
+            key: nameof(ShoppingList.Name),
+            values: "Text is required.");
+
+        var expectedShoppingListValidationException =
+            new ShoppingListValidationException(
+                exceptionMessage: "Shopping list validation error occurred, " +
+                "fix the errors and try again please!",
+                innerException: invalidShoppingListException);
+
+        // when
+        ValueTask<ShoppingList> addShoppingListTask =
+            _shoppingListService.AddShoppingListAsync(
+                invalidShoppingList,
+                It.IsAny<CancellationToken>());
+
+        // then
+        await Assert.ThrowsAsync<ShoppingListValidationException>(
+            addShoppingListTask.AsTask);
+
+        _storageBrokerMock.Verify(broker =>
+            broker.InsertShoppingListAsync(
+                It.IsAny<ShoppingList>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogErrorAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    expectedShoppingListValidationException))),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
 }
