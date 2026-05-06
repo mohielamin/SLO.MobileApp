@@ -2,6 +2,7 @@
 using SLO.MobileApp.Core.Models.Foundations.ShoppingLists;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingLists.Exceptions;
 using SLO.MobileApp.Core.UnitTests.Helpers;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -77,6 +78,55 @@ public partial class ShoppingListServiceTests
         invalidShoppingListException.AddData(
             key: nameof(ShoppingList.Name),
             values: "Text is required.");
+
+        var expectedShoppingListValidationException =
+            new ShoppingListValidationException(
+                exceptionMessage: "Shopping list validation error occurred, " +
+                "fix the errors and try again please!",
+                innerException: invalidShoppingListException);
+
+        // when
+        ValueTask<ShoppingList> addShoppingListTask =
+            _shoppingListService.AddShoppingListAsync(
+                invalidShoppingList,
+                It.IsAny<CancellationToken>());
+
+        // then
+        await Assert.ThrowsAsync<ShoppingListValidationException>(
+            addShoppingListTask.AsTask);
+
+        _storageBrokerMock.Verify(broker =>
+            broker.InsertShoppingListAsync(
+                It.IsAny<ShoppingList>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogErrorAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    expectedShoppingListValidationException))),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
+
+    [Fact]
+    public async Task ShouldThrowValidationExceptionOnAddIfUpdateByNotSameAsCreatedByAndLogItAsync()
+    {
+        // given
+        ShoppingList randomShoppingList = CreateRandomShoppingList();
+        Guid notSameId = Guid.NewGuid();
+        ShoppingList invalidShoppingList = randomShoppingList;
+        invalidShoppingList.UpdatedBy = notSameId;
+
+        var invalidShoppingListException =
+            new InvalidShoppingListException(
+                exceptionMessage: "Invalid shopping list error occurred, " +
+                "fix the errors and try again please!");
+
+        invalidShoppingListException.AddData(
+            key: nameof(ShoppingList.UpdatedBy),
+            values: $"Id is not same as {nameof(ShoppingList.CreatedBy)}.");
 
         var expectedShoppingListValidationException =
             new ShoppingListValidationException(
