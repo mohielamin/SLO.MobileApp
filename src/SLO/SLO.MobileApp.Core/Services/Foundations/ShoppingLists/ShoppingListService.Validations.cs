@@ -35,7 +35,13 @@ internal partial class ShoppingListService
                 firstId: shoppingList.UpdatedBy,
                 secondId: shoppingList.CreatedBy,
                 secondIdName: nameof(ShoppingList.CreatedBy)),
-            Parameter: nameof(ShoppingList.UpdatedBy)));
+            Parameter: nameof(ShoppingList.UpdatedBy)),
+
+            (Rule: NotSameAs(
+                firstDate: shoppingList.UpdatedAt,
+                secondDate: shoppingList.CreatedAt,
+                secondDateName: nameof(ShoppingList.CreatedAt)),
+            Parameter: nameof(ShoppingList.UpdatedAt)));
     }
 
     private static void ValidateShoppingList(
@@ -77,6 +83,16 @@ internal partial class ShoppingListService
         {
             Condition = firstId != secondId,
             Message = $"Id is not same as {secondIdName}."
+        };
+
+    private static dynamic NotSameAs(
+        DateTimeOffset firstDate,
+        DateTimeOffset secondDate,
+        string secondDateName) =>
+        new
+        {
+            Condition = firstDate != secondDate,
+            Message = $"Date is not same as {secondDateName}."
         };
 
     private static void Validate(
