@@ -8,7 +8,7 @@ namespace SLO.MobileApp.Core.UnitTests.ViewModels.ShoppingLists;
 public partial class ShoppingListViewModelTests
 {
     [Fact]
-    public async ValueTask ShouldAddShoppingListItemAsync()
+    public async Task ShouldAddShoppingListItemAsync()
     {
         // given
         ShoppingListItem randomShoppingListItem =
