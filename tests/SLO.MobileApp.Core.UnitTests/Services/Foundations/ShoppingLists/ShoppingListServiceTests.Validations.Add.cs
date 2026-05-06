@@ -79,6 +79,22 @@ public partial class ShoppingListServiceTests
             key: nameof(ShoppingList.Name),
             values: "Text is required.");
 
+        invalidShoppingListException.AddData(
+            key: nameof(ShoppingList.CreatedBy),
+            values: "Id is required.");
+
+        invalidShoppingListException.AddData(
+            key: nameof(ShoppingList.UpdatedBy),
+            values: "Id is required.");
+
+        invalidShoppingListException.AddData(
+            key: nameof(ShoppingList.CreatedAt),
+            values: "Date is required.");
+
+        invalidShoppingListException.AddData(
+            key: nameof(ShoppingList.UpdatedAt),
+            values: "Date is required.");
+
         var expectedShoppingListValidationException =
             new ShoppingListValidationException(
                 exceptionMessage: "Shopping list validation error occurred, " +
