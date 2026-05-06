@@ -30,15 +30,29 @@ public partial class ShoppingListServiceTests
                 loggingBroker: _loggingBrokerMock.Object);
     }
 
-    private static ShoppingList CreateRandomShoppingList() =>
-        CreateShoppingListFiller()
+    public static TheoryData<int> InvalidMinuteCases()
+    {
+        return new TheoryData<int>
+        {
+            Randomizers.GetRandomNumber(min: 2),
+            Randomizers.GetRandomNumber(max: 2) * -1,
+        };
+    }
+
+    private static ShoppingList CreateRandomShoppingList(
+        DateTimeOffset dateTimes = default) =>
+        CreateShoppingListFiller(dateTimes)
         .Create();
 
-    private static Filler<ShoppingList> CreateShoppingListFiller()
+    private static Filler<ShoppingList> CreateShoppingListFiller(
+        DateTimeOffset dateTimes = default)
     {
         var filler = new Filler<ShoppingList>();
 
-        DateTimeOffset dateTimes = Randomizers.GetRandomDateTime();
+        if (dateTimes == default)
+        {
+            dateTimes = Randomizers.GetRandomDateTime();
+        }
 
         filler.Setup()
             .OnType<DateTimeOffset>().Use(dateTimes);

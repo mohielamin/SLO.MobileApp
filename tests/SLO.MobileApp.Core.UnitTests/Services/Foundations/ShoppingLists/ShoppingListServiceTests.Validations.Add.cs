@@ -227,4 +227,68 @@ public partial class ShoppingListServiceTests
 
         VerifyNoOtherDependencyCalls();
     }
+
+    [Theory]
+    [MemberData(nameof(InvalidMinuteCases))]
+    public async Task ShouldThrowValidationExceptionOnAddIfCreatedAtIsNotRecentAndLogItAsync(
+        int invalidMoreThenOneMinuteCase)
+    {
+        // given
+        DateTimeOffset currentDateTime = Randomizers.GetRandomDateTime();
+
+        ShoppingList randomShoppingList =
+            CreateRandomShoppingList(
+                dateTimes: currentDateTime);
+
+        randomShoppingList.UpdatedBy =
+            randomShoppingList.CreatedBy;
+
+        ShoppingList invalidShoppingList = randomShoppingList;
+
+        invalidShoppingList.CreatedAt =
+            invalidShoppingList.CreatedAt.AddMinutes(
+                minutes: invalidMoreThenOneMinuteCase);
+
+        invalidShoppingList.UpdatedAt =
+            invalidShoppingList.CreatedAt;
+
+        var invalidShoppingListException =
+            new InvalidShoppingListException(
+                exceptionMessage: "Invalid shopping list error occurred, " +
+                "fix the errors and try again please!");
+
+        invalidShoppingListException.AddData(
+            key: nameof(ShoppingList.CreatedAt),
+            values: "Date is not recent.");
+
+        var expectedShoppingListValidationException =
+            new ShoppingListValidationException(
+                exceptionMessage: "Shopping list validation error occurred, " +
+                "fix the errors and try again please!",
+                innerException: invalidShoppingListException);
+
+        // when
+        ValueTask<ShoppingList> addShoppingListTask =
+            _shoppingListService.AddShoppingListAsync(
+                invalidShoppingList,
+                It.IsAny<CancellationToken>());
+
+        // then
+        await Assert.ThrowsAsync<ShoppingListValidationException>(
+            addShoppingListTask.AsTask);
+
+        _storageBrokerMock.Verify(broker =>
+            broker.InsertShoppingListAsync(
+                It.IsAny<ShoppingList>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogErrorAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    expectedShoppingListValidationException))),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
 }
