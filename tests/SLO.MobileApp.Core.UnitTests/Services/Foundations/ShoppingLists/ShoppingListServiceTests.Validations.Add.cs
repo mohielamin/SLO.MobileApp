@@ -267,6 +267,11 @@ public partial class ShoppingListServiceTests
                 "fix the errors and try again please!",
                 innerException: invalidShoppingListException);
 
+        _dateTimeBrokerMock.Setup(broker =>
+            broker.GetCurrentDateTimeAsync(
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(currentDateTime);
+
         // when
         ValueTask<ShoppingList> addShoppingListTask =
             _shoppingListService.AddShoppingListAsync(
@@ -276,6 +281,11 @@ public partial class ShoppingListServiceTests
         // then
         await Assert.ThrowsAsync<ShoppingListValidationException>(
             addShoppingListTask.AsTask);
+
+        _dateTimeBrokerMock.Verify(broker =>
+            broker.GetCurrentDateTimeAsync(
+                It.IsAny<CancellationToken>()),
+            Times.Once());
 
         _storageBrokerMock.Verify(broker =>
             broker.InsertShoppingListAsync(

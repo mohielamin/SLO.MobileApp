@@ -1,13 +1,16 @@
 ﻿using SLO.MobileApp.Core.Models.Foundations.ShoppingLists;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingLists.Exceptions;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SLO.MobileApp.Core.Services.Foundations.ShoppingLists;
 
 internal partial class ShoppingListService
 {
-    private void ValidateShoppingListOnAdd(
-        ShoppingList shoppingList)
+    private async ValueTask ValidateShoppingListOnAddAsync(
+        ShoppingList shoppingList,
+        CancellationToken cancellationToken)
     {
         ValidateShoppingList(shoppingList);
 
@@ -42,6 +45,12 @@ internal partial class ShoppingListService
                 secondDate: shoppingList.CreatedAt,
                 secondDateName: nameof(ShoppingList.CreatedAt)),
             Parameter: nameof(ShoppingList.UpdatedAt)));
+
+        Validate(
+            (Rule: await NotRecentAsync(
+                dateTime: shoppingList.CreatedAt,
+                cancellationToken),
+            Parameter: nameof(ShoppingList.CreatedAt)));
     }
 
     private static void ValidateShoppingList(
@@ -94,6 +103,32 @@ internal partial class ShoppingListService
             Condition = firstDate != secondDate,
             Message = $"Date is not same as {secondDateName}."
         };
+
+    private async ValueTask<dynamic> NotRecentAsync(
+        DateTimeOffset dateTime,
+        CancellationToken cancellationToken) =>
+        new
+        {
+            Condition = await DateIsNotRecentAsync(
+                dateTime,
+                cancellationToken),
+
+            Message = "Date is not recent."
+        };
+
+    private async ValueTask<bool> DateIsNotRecentAsync(
+        DateTimeOffset dateTime,
+        CancellationToken cancellationToken)
+    {
+        DateTimeOffset currentDateTime =
+            await _dateTimeBroker.GetCurrentDateTimeAsync(
+                cancellationToken);
+
+        TimeSpan oneMinute = TimeSpan.FromMinutes(1);
+        TimeSpan difference = currentDateTime.Subtract(dateTime);
+
+        return difference.Duration() > oneMinute;
+    }
 
     private static void Validate(
         params (dynamic Rule, string Parameter)[] validations)

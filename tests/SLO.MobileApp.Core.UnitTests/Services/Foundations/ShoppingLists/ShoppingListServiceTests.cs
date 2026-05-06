@@ -35,7 +35,7 @@ public partial class ShoppingListServiceTests
         return new TheoryData<int>
         {
             Randomizers.GetRandomNumber(min: 2),
-            Randomizers.GetRandomNumber(max: 2) * -1,
+            Randomizers.GetRandomNumber(min: 2) * -1,
         };
     }
 
