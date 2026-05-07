@@ -131,7 +131,13 @@ internal partial class ShoppingListService
                 firstId: inputShoppingList.CreatedBy,
                 secondId: storageShoppingList.CreatedBy,
                 secondIdName: nameof(ShoppingList.CreatedBy)),
-            Parameter: nameof(ShoppingList.CreatedBy)));
+            Parameter: nameof(ShoppingList.CreatedBy)),
+
+            (Rule: NotSameAs(
+                firstDate: inputShoppingList.CreatedAt,
+                secondDate: storageShoppingList.CreatedAt,
+                secondDateName: nameof(ShoppingList.CreatedAt)),
+            Parameter: nameof(ShoppingList.CreatedAt)));
     }
 
     private static dynamic Invalid(Guid id) =>
