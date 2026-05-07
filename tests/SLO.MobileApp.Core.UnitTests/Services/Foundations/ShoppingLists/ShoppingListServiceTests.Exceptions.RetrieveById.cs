@@ -59,4 +59,55 @@ public partial class ShoppingListServiceTests
 
         VerifyNoOtherDependencyCalls();
     }
+
+    [Fact]
+    public async Task ShouldThrowServiceExceptionOnRetrieveByIdIfServiceErrorOccursAndLogItAsync()
+    {
+        // given
+        Guid someShoppingListId = Guid.NewGuid();
+        string exceptionMessage = Randomizers.GetRandomString();
+        var someServiceException = new Exception(exceptionMessage);
+
+        var failedShoppingListServiceException =
+            new FailedShoppingListServiceException(
+                exceptionMessage: "Failed shopping list service error occurred, " +
+                "please contact support.",
+                innerException: someServiceException);
+
+        var expectedShoppingListServiceException =
+            new ShoppingListServiceException(
+                exceptionMessage: "Shopping list service error occurred, " +
+                "please contact support.",
+                innerException: failedShoppingListServiceException);
+
+        _storageBrokerMock.Setup(broker =>
+            broker.SelectShoppingListByIdAsync(
+                someShoppingListId,
+                It.IsAny<CancellationToken>()))
+            .ThrowsAsync(someServiceException);
+
+        // when
+        ValueTask<ShoppingList> retrieveShoppingListByIdTask =
+            _shoppingListService.RetrieveShoppingListByIdAsync(
+                someShoppingListId,
+                It.IsAny<CancellationToken>());
+
+        // then
+        await Assert.ThrowsAsync<ShoppingListServiceException>(
+            retrieveShoppingListByIdTask.AsTask);
+
+        _storageBrokerMock.Verify(broker =>
+            broker.SelectShoppingListByIdAsync(
+                someShoppingListId,
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogErrorAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    expectedShoppingListServiceException))),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
 }
