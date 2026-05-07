@@ -52,8 +52,15 @@ internal partial class ShoppingListService : IShoppingListService
         {
             ValidateShoppingListOnRetrieveById(shoppingListId);
 
-            return await _storageBroker.SelectShoppingListByIdAsync(
+            ShoppingList storageShoppingList =
+            await _storageBroker.SelectShoppingListByIdAsync(
                 shoppingListId,
                 cancellationToken);
+
+            ValidateStorageShoppingList(
+                storageShoppingList,
+                shoppingListId);
+
+            return storageShoppingList;
         });
 }

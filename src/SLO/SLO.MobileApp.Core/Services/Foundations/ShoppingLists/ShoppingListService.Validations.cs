@@ -71,6 +71,18 @@ internal partial class ShoppingListService
         }
     }
 
+    private static void ValidateStorageShoppingList(
+        ShoppingList storageShoppingList,
+        Guid shoppingListId)
+    {
+        if (storageShoppingList is null)
+        {
+            throw new NotFoundShoppingListException(
+                exceptionMessage: $"A shopping list with Id: {shoppingListId}, " +
+                $"could not be found.");
+        }
+    }
+
     private static dynamic Invalid(Guid id) =>
         new
         {
