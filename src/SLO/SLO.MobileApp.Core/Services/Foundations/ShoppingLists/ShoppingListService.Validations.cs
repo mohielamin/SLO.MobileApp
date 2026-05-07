@@ -61,6 +61,31 @@ internal partial class ShoppingListService
             Parameter: nameof(shoppingListId)));
     }
 
+    private void ValidateShoppingListOnModify(
+        ShoppingList shoppingList)
+    {
+        ValidateShoppingList(shoppingList);
+
+        Validate(
+            (Rule: Invalid(shoppingList.Id),
+            Parameter: nameof(ShoppingList.Id)),
+
+            (Rule: Invalid(shoppingList.Name),
+            Parameter: nameof(ShoppingList.Name)),
+
+            (Rule: Invalid(shoppingList.CreatedBy),
+            Parameter: nameof(ShoppingList.CreatedBy)),
+
+            (Rule: Invalid(shoppingList.UpdatedBy),
+            Parameter: nameof(ShoppingList.UpdatedBy)),
+
+            (Rule: Invalid(shoppingList.CreatedAt),
+            Parameter: nameof(shoppingList.CreatedAt)),
+
+            (Rule: Invalid(shoppingList.UpdatedAt),
+            Parameter: nameof(ShoppingList.UpdatedAt)));
+    }
+
     private static void ValidateShoppingList(
         ShoppingList shoppingList)
     {
