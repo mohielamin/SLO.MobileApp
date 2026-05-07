@@ -428,4 +428,87 @@ public partial class ShoppingListServiceTests
 
         VerifyNoOtherDependencyCalls();
     }
+
+    [Fact]
+    public async Task ShouldThrowValidationExceptionOnModifyIfInputCreatedAtNotSameAsStorageCreatedAtAndLogItAsync()
+    {
+        // given
+        DateTimeOffset currentDateTime = Randomizers.GetRandomDateTime();
+
+        ShoppingList randomShoppingList =
+            CreateRandomShoppingList(
+                dateTimes: currentDateTime);
+
+        ShoppingList storageShoppingList = randomShoppingList;
+
+        ShoppingList invalidShoppingList =
+            randomShoppingList.DeepClone();
+
+        invalidShoppingList.UpdatedAt =
+            invalidShoppingList.UpdatedAt.AddMinutes(1);
+
+        DateTimeOffset notSameDateTime = Randomizers.GetRandomDateTime();
+        invalidShoppingList.CreatedAt = notSameDateTime;
+
+        var invalidShoppingListException =
+            new InvalidShoppingListException(
+                exceptionMessage: "Invalid shopping list error occurred, " +
+                "fix the errors and try again please!");
+
+        invalidShoppingListException.AddData(
+            key: nameof(ShoppingList.CreatedAt),
+            values: $"Date is not same as {nameof(ShoppingList.CreatedAt)}.");
+
+        var expectedShoppingListValidationException =
+            new ShoppingListValidationException(
+                exceptionMessage: "Shopping list validation error occurred, " +
+                "fix the errors and try again please!",
+                innerException: invalidShoppingListException);
+
+        _dateTimeBrokerMock.Setup(broker =>
+            broker.GetCurrentDateTimeAsync(
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(currentDateTime);
+
+        _storageBrokerMock.Setup(broker =>
+            broker.SelectShoppingListByIdAsync(
+                invalidShoppingList.Id,
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(storageShoppingList);
+
+        // when
+        ValueTask<ShoppingList> modifyShoppingListTask =
+            _shoppingListService.ModifyShoppingListAsync(
+                invalidShoppingList,
+                It.IsAny<CancellationToken>());
+
+        // then
+        await Assert.ThrowsAsync<ShoppingListValidationException>(
+            modifyShoppingListTask.AsTask);
+
+        _dateTimeBrokerMock.Verify(broker =>
+            broker.GetCurrentDateTimeAsync(
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        _storageBrokerMock.Verify(broker =>
+            broker.SelectShoppingListByIdAsync(
+                invalidShoppingList.Id,
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        _storageBrokerMock.Verify(broker =>
+            broker.UpdateShoppingListAsync(
+                It.IsAny<ShoppingList>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogErrorAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    expectedShoppingListValidationException))),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
 }
