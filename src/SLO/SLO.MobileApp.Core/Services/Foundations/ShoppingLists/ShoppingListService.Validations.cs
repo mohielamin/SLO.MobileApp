@@ -61,8 +61,9 @@ internal partial class ShoppingListService
             Parameter: nameof(shoppingListId)));
     }
 
-    private void ValidateShoppingListOnModify(
-        ShoppingList shoppingList)
+    private async ValueTask ValidateShoppingListOnModifyAsync(
+        ShoppingList shoppingList,
+        CancellationToken cancellationToken)
     {
         ValidateShoppingList(shoppingList);
 
@@ -90,6 +91,12 @@ internal partial class ShoppingListService
                 firstDate: shoppingList.UpdatedAt,
                 secondDate: shoppingList.CreatedAt,
                 secondDateName: nameof(ShoppingList.CreatedAt)),
+            Parameter: nameof(ShoppingList.UpdatedAt)));
+
+        Validate(
+            (Rule: await NotRecentAsync(
+                dateTime: shoppingList.UpdatedAt,
+                cancellationToken),
             Parameter: nameof(ShoppingList.UpdatedAt)));
     }
 
