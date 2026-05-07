@@ -103,6 +103,10 @@ internal partial class ShoppingListService : IShoppingListService
                     shoppingListId,
                     cancellationToken);
 
+            ValidateStorageShoppingList(
+                storageShoppingList,
+                shoppingListId);
+
             return await _storageBroker.DeleteShoppingListAsync(
                 shoppingList: storageShoppingList,
                 cancellationToken);
