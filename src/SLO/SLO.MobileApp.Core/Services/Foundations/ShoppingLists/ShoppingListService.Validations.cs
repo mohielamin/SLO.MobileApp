@@ -122,6 +122,18 @@ internal partial class ShoppingListService
         }
     }
 
+    private static void ValidateAgainstStorageShoppingList(
+        ShoppingList storageShoppingList,
+        ShoppingList inputShoppingList)
+    {
+        Validate(
+            (Rule: NotSameAs(
+                firstId: inputShoppingList.CreatedBy,
+                secondId: storageShoppingList.CreatedBy,
+                secondIdName: nameof(ShoppingList.CreatedBy)),
+            Parameter: nameof(ShoppingList.CreatedBy)));
+    }
+
     private static dynamic Invalid(Guid id) =>
         new
         {
