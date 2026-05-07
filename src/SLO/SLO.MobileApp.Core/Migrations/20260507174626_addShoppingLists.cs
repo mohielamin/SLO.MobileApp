@@ -6,20 +6,17 @@ using System;
 namespace SLO.MobileApp.Core.Migrations
 {
     /// <inheritdoc />
-    public partial class addShoppingListItems : Migration
+    public partial class addShoppingLists : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ShoppingListItems",
+                name: "ShoppingLists",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ShoppingListId = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
-                    Description = table.Column<string>(type: "TEXT", nullable: true),
-                    Quantity = table.Column<int>(type: "INTEGER", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "TEXT", nullable: false),
                     UpdatedBy = table.Column<Guid>(type: "TEXT", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
@@ -27,7 +24,7 @@ namespace SLO.MobileApp.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShoppingListItems", x => x.Id);
+                    table.PrimaryKey("PK_ShoppingLists", x => x.Id);
                 });
         }
 
@@ -35,7 +32,7 @@ namespace SLO.MobileApp.Core.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ShoppingListItems");
+                name: "ShoppingLists");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using SLO.MobileApp.Core.Models.Foundations.ShoppingLists;
+﻿using Microsoft.EntityFrameworkCore;
+using SLO.MobileApp.Core.Models.Foundations.ShoppingLists;
 using System;
 using System.Linq;
 using System.Threading;
@@ -8,6 +9,8 @@ namespace SLO.MobileApp.Core.Brokers.Storages;
 
 internal partial class StorageBroker
 {
+    public DbSet<ShoppingList> ShoppingLists { get; set; }
+
     public async ValueTask<ShoppingList> InsertShoppingListAsync(
         ShoppingList shoppingList,
         CancellationToken cancellationToken) =>
