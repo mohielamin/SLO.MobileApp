@@ -32,4 +32,11 @@ internal partial class StorageBroker
         await UpdateAsync(
             item: shoppingList,
             cancellationToken);
+
+    public async ValueTask<ShoppingList> DeleteShoppingListAsync(
+        ShoppingList shoppingList,
+        CancellationToken cancellationToken) =>
+        await DeleteAsync(
+            item: shoppingList,
+            cancellationToken);
 }
