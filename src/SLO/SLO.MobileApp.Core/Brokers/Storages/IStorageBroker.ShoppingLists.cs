@@ -1,4 +1,5 @@
 ﻿using SLO.MobileApp.Core.Models.Foundations.ShoppingLists;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,5 +9,8 @@ public partial interface IStorageBroker
 {
     ValueTask<ShoppingList> InsertShoppingListAsync(
         ShoppingList shoppingList,
+        CancellationToken cancellationToken);
+
+    ValueTask<IQueryable<ShoppingList>> SelectAllShoppingListsAsync(
         CancellationToken cancellationToken);
 }
