@@ -105,6 +105,18 @@ internal partial class ShoppingListService
                 exception: failedShoppingListStorageException,
                 cancellationToken);
         }
+        catch (Exception ex)
+        {
+            var failedShoppingListServiceException =
+                new FailedShoppingListServiceException(
+                    exceptionMessage: "Failed shopping list service error occurred, " +
+                    "please contact support.",
+                    innerException: ex);
+
+            throw await CreateAndLogServiceErrorAsync(
+                exception: failedShoppingListServiceException,
+                cancellationToken);
+        }
     }
 
     private async ValueTask<ShoppingListValidationException> CreateAndLogValidationErrorAsync(
