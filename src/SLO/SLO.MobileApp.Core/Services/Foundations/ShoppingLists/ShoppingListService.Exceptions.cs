@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using EFxceptions.Models.Exceptions;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingLists;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingLists.Exceptions;
@@ -30,6 +31,18 @@ internal partial class ShoppingListService
         {
             throw await CreateAndLogValidationErrorAsync(
                 exception: ex,
+                cancellationToken);
+        }
+        catch (DuplicateKeyException ex)
+        {
+            var alreadyExistsShoppingListException =
+                new AlreadyExistsShoppingListException(
+                    exceptionMessage: "A shopping list with same Id " +
+                    "already exists.",
+                    innerException: ex);
+
+            throw await CreateAndLogDependencyValidationErrorAsync(
+                exception: alreadyExistsShoppingListException,
                 cancellationToken);
         }
         catch (DbUpdateException ex)
@@ -85,6 +98,23 @@ internal partial class ShoppingListService
             cancellationToken);
 
         return shoppingListValidationException;
+    }
+
+    private async ValueTask<ShoppingListDependencyValidationException> CreateAndLogDependencyValidationErrorAsync(
+        Exception exception,
+        CancellationToken cancellationToken)
+    {
+        var shoppingListDependencyValidationException =
+            new ShoppingListDependencyValidationException(
+                exceptionMessage: "Shopping list dependency validation error occurred, " +
+                "please try again!",
+                innerException: exception);
+
+        await _loggingBroker.LogErrorAsync(
+            exception: shoppingListDependencyValidationException,
+            cancellationToken);
+
+        return shoppingListDependencyValidationException;
     }
 
     private async ValueTask<ShoppingListDependencyException> CreateAndLogDependencyErrorAsync(
