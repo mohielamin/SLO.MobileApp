@@ -100,6 +100,14 @@ internal partial class ShoppingListService
             Parameter: nameof(ShoppingList.UpdatedAt)));
     }
 
+    private void ValidateShoppingListOnRemoveById(
+        Guid shoppingListId)
+    {
+        Validate(
+            (Rule: Invalid(shoppingListId),
+            Parameter: nameof(shoppingListId)));
+    }
+
     private static void ValidateShoppingList(
         ShoppingList shoppingList)
     {
