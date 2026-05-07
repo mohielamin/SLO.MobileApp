@@ -1,4 +1,5 @@
 ﻿using SLO.MobileApp.Core.Models.Foundations.ShoppingLists;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,4 +18,11 @@ internal partial class StorageBroker
     public async ValueTask<IQueryable<ShoppingList>> SelectAllShoppingListsAsync(
         CancellationToken cancellationToken) =>
         await SelectAllAsync<ShoppingList>(cancellationToken);
+
+    public async ValueTask<ShoppingList> SelectShoppingListByIdAsync(
+        Guid shoppingListId,
+        CancellationToken cancellationToken) =>
+        await SelectByIdAsync<ShoppingList>(
+            cancellationToken,
+            ids: shoppingListId);
 }

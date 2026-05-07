@@ -2,6 +2,7 @@
 using SLO.MobileApp.Core.Brokers.Loggings;
 using SLO.MobileApp.Core.Brokers.Storages;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingLists;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -43,4 +44,9 @@ internal partial class ShoppingListService : IShoppingListService
         await TryCatch(cancellationToken, async () =>
         await _storageBroker.SelectAllShoppingListsAsync(
                 cancellationToken));
+
+    public async ValueTask<ShoppingList> RetrieveShoppingListByIdAsync(
+        Guid shoppingListId,
+        CancellationToken cancellationToken) =>
+        throw new NotImplementedException();
 }
