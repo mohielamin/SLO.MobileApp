@@ -63,4 +63,9 @@ internal partial class ShoppingListService : IShoppingListService
 
             return storageShoppingList;
         });
+
+    public async ValueTask<ShoppingList> ModifyShoppingListAsync(
+        ShoppingList shoppingList,
+        CancellationToken cancellationToken) =>
+        throw new NotImplementedException();
 }

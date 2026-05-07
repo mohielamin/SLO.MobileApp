@@ -25,4 +25,11 @@ internal partial class StorageBroker
         await SelectByIdAsync<ShoppingList>(
             cancellationToken,
             ids: shoppingListId);
+
+    public async ValueTask<ShoppingList> UpdateShoppingListAsync(
+        ShoppingList shoppingList,
+        CancellationToken cancellationToken) =>
+        await UpdateAsync(
+            item: shoppingList,
+            cancellationToken);
 }

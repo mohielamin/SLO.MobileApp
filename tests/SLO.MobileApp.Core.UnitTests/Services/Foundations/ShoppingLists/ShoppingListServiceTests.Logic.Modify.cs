@@ -1,0 +1,69 @@
+﻿using FluentAssertions;
+using Force.DeepCloner;
+using Moq;
+using SLO.MobileApp.Core.Models.Foundations.ShoppingLists;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace SLO.MobileApp.Core.UnitTests.Services.Foundations.ShoppingLists;
+
+public partial class ShoppingListServiceTests
+{
+    [Fact]
+    public async Task ShouldModifyShoppingListAsync()
+    {
+        // given
+        ShoppingList randomShoppingList =
+            CreateRandomShoppingList();
+
+        ShoppingList storageShoppingList =
+            randomShoppingList.DeepClone();
+
+        ShoppingList updatedShoppingList =
+            randomShoppingList;
+
+        updatedShoppingList.UpdatedAt =
+            updatedShoppingList.UpdatedAt.AddMinutes(1);
+
+        ShoppingList inputShoppingList =
+            updatedShoppingList;
+
+        ShoppingList expectedShoppingList =
+            updatedShoppingList.DeepClone();
+
+        _storageBrokerMock.Setup(broker =>
+            broker.SelectShoppingListByIdAsync(
+                inputShoppingList.Id,
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(storageShoppingList);
+
+        _storageBrokerMock.Setup(broker =>
+            broker.UpdateShoppingListAsync(
+                inputShoppingList,
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(updatedShoppingList);
+
+        // when
+        ShoppingList actualShoppingList =
+            await _shoppingListService.ModifyShoppingListAsync(
+                shoppingList: inputShoppingList,
+                cancellationToken: It.IsAny<CancellationToken>());
+
+        // then
+        actualShoppingList.Should().BeEquivalentTo(expectedShoppingList);
+
+        _storageBrokerMock.Verify(broker =>
+            broker.SelectShoppingListByIdAsync(
+                inputShoppingList.Id,
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        _storageBrokerMock.Verify(broker =>
+            broker.UpdateShoppingListAsync(
+                inputShoppingList,
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
+}
