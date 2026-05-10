@@ -4,4 +4,5 @@
   </Folder>
   <Project Path="SLO.MobileApp.Core/SLO.MobileApp.Core.csproj" Id="87720034-b2d1-4324-bff2-93ddfe2f7333" />
   <Project Path="SLO.MobileApp/SLO.MobileApp.csproj" />
+  <Project Path="SLO.MobileApp.Infra.DbBuilder/SLO.MobileApp.Infra.DbBuilder.csproj" Id="95af3029-f0cc-45ce-962c-9ddbd10ca62a" />
 </Solution>
