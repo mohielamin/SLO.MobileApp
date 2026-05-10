@@ -17,7 +17,6 @@ internal sealed partial class StorageBroker : EFxceptionsContext, IStorageBroker
     public StorageBroker(IOptions<LocalConfiguration> localConfigurationOptions)
     {
         _localConfiguration = localConfigurationOptions.Value;
-        EnsureCreated();
     }
 
     protected override void OnConfiguring(
@@ -63,30 +62,5 @@ internal sealed partial class StorageBroker : EFxceptionsContext, IStorageBroker
         await SaveChangesAsync(cancellationToken);
 
         return item;
-    }
-
-    private void EnsureCreated()
-    {
-        bool databaseFileExists =
-            File.Exists(path: _localConfiguration.DatabaseFilePath);
-
-        if (databaseFileExists)
-        {
-            EnsureMigrationApplied();
-
-            return;
-        }
-
-        Database.EnsureCreatedAsync();
-    }
-
-    private void EnsureMigrationApplied()
-    {
-        if (Database.HasPendingModelChanges() is false)
-        {
-            return;
-        }
-
-        Database.MigrateAsync();
     }
 }
