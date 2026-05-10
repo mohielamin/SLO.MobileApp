@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SLO.MobileApp.Core.Models.Configurations;
 using System;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,10 +13,9 @@ internal sealed partial class StorageBroker : EFxceptionsContext, IStorageBroker
 {
     private readonly LocalConfiguration _localConfiguration;
 
-    public StorageBroker(IOptions<LocalConfiguration> localConfigurationOptions)
-    {
+    public StorageBroker(
+        IOptions<LocalConfiguration> localConfigurationOptions) =>
         _localConfiguration = localConfigurationOptions.Value;
-    }
 
     protected override void OnConfiguring(
         DbContextOptionsBuilder dbContextOptionsBuilder)
@@ -25,7 +23,11 @@ internal sealed partial class StorageBroker : EFxceptionsContext, IStorageBroker
         string connectionString =
             $"Data Source={_localConfiguration.DatabaseFilePath}";
 
-        dbContextOptionsBuilder.UseSqlite(connectionString);
+        dbContextOptionsBuilder.UseSqlite(
+            connectionString,
+            sqliteOptionsAction =>
+            sqliteOptionsAction.MigrationsAssembly(
+                assemblyName: "SLO.MobileApp.Infra.DbBuilder"));
     }
 
     private async ValueTask<T> InsertAsync<T>(
