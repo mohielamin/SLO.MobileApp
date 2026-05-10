@@ -28,7 +28,7 @@ internal class StorageBrokerDbFactory : IDesignTimeDbContextFactory<StorageBroke
     {
         string mobileDatabaseFilePath =
             Environment.GetEnvironmentVariable(
-                variable: "MOBILE_DB_PATH");
+                variable: "MOBILE_DB_ASSET_FILE_PATH");
 
         if (string.IsNullOrWhiteSpace(mobileDatabaseFilePath))
         {
