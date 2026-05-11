@@ -22,7 +22,7 @@ internal static partial class DependencyInjection
         {
             config.DatabaseFilePath = Path.Combine(
                 appDataDirectory,
-                StorageBroker.DATABASE_DEFAULT_NAME);
+                StorageBroker.CURRENT_DATABASE_FILE_NAME);
         });
 
         serviceCollection.AddBrokers();

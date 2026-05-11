@@ -26,8 +26,8 @@ internal class StorageBrokerDbFactory : IDesignTimeDbContextFactory<StorageBroke
     private static LocalConfiguration GetLocalConfiguration()
     {
         string databaseFilePath =
-            $"../SLO.MobileApp/Resources/Raw/SloMobileAppDb.db" +
-            $"{StorageBroker.DATABASE_DEFAULT_NAME}";
+            $"../SLO.MobileApp/Resources/Raw/" +
+            $"{StorageBroker.CURRENT_DATABASE_FILE_NAME}";
 
         return new LocalConfiguration
         {
