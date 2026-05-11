@@ -122,4 +122,19 @@
     </None>
   </ItemGroup>
 
+  <Target Name="GenerateDatabaseFile"
+          BeforeTargets="BeforeBuild;DispatchToInnerBuilds">
+
+    <ItemGroup>
+      <ExistingDatabase Include="$(ProjectDir)Resources\Raw\*.db" />
+    </ItemGroup>
+
+    <Exec Command="dotnet build $(MSBuildThisFileDirectory)..\SLO.MobileApp.Infra.DbBuilder\SLO.MobileApp.Infra.DbBuilder.csproj -c $(Configuration)"
+          Condition="'@(ExistingDatabase)' == ''" />
+
+    <Exec Command="dotnet ef database update --project $(MSBuildThisFileDirectory)..\SLO.MobileApp.Infra.DbBuilder\SLO.MobileApp.Infra.DbBuilder.csproj --startup-project $(MSBuildThisFileDirectory)..\SLO.MobileApp.Infra.DbBuilder\SLO.MobileApp.Infra.DbBuilder.csproj"
+          Condition="'@(ExistingDatabase)' == ''" />
+
+  </Target>
+
 </Project>
