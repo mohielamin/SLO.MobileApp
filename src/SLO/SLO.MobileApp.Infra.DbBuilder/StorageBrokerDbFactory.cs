@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Options;
 using SLO.MobileApp.Core.Brokers.Storages;
 using SLO.MobileApp.Core.Models.Configurations;
-using System;
 using System.IO;
 
 namespace SLO.MobileApp.Infra.DbBuilder;
@@ -26,19 +25,13 @@ internal class StorageBrokerDbFactory : IDesignTimeDbContextFactory<StorageBroke
 
     private static LocalConfiguration GetLocalConfiguration()
     {
-        string mobileDatabaseFilePath =
-            Environment.GetEnvironmentVariable(
-                variable: "MOBILE_DB_ASSET_FILE_PATH");
-
-        if (string.IsNullOrWhiteSpace(mobileDatabaseFilePath))
-        {
-            mobileDatabaseFilePath =
-                   "../SLO.MobileApp/Resources/Raw/SloMobileAppDbV1.db";
-        }
+        string databaseFilePath =
+            $"../SLO.MobileApp/Resources/Raw/SloMobileAppDb.db" +
+            $"{StorageBroker.DATABASE_DEFAULT_NAME}";
 
         return new LocalConfiguration
         {
-            DatabaseFilePath = mobileDatabaseFilePath,
+            DatabaseFilePath = databaseFilePath,
         };
     }
 }

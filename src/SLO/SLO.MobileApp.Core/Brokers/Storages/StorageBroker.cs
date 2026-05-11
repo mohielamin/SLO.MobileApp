@@ -11,6 +11,7 @@ namespace SLO.MobileApp.Core.Brokers.Storages;
 
 internal sealed partial class StorageBroker : EFxceptionsContext, IStorageBroker
 {
+    internal const string DATABASE_DEFAULT_NAME = "SloMobileAppDbV1.db";
     private readonly LocalConfiguration _localConfiguration;
 
     public StorageBroker(
