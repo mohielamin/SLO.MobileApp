@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SLO.MobileApp.Core.Models.Configurations;
 using System;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,13 +11,12 @@ namespace SLO.MobileApp.Core.Brokers.Storages;
 
 internal sealed partial class StorageBroker : EFxceptionsContext, IStorageBroker
 {
+    internal const string CURRENT_DATABASE_FILE_NAME = "SloMobileAppDbV1.db";
     private readonly LocalConfiguration _localConfiguration;
 
-    public StorageBroker(IOptions<LocalConfiguration> localConfigurationOptions)
-    {
+    public StorageBroker(
+        IOptions<LocalConfiguration> localConfigurationOptions) =>
         _localConfiguration = localConfigurationOptions.Value;
-        EnsureCreated();
-    }
 
     protected override void OnConfiguring(
         DbContextOptionsBuilder dbContextOptionsBuilder)
@@ -26,7 +24,11 @@ internal sealed partial class StorageBroker : EFxceptionsContext, IStorageBroker
         string connectionString =
             $"Data Source={_localConfiguration.DatabaseFilePath}";
 
-        dbContextOptionsBuilder.UseSqlite(connectionString);
+        dbContextOptionsBuilder.UseSqlite(
+            connectionString,
+            sqliteOptionsAction =>
+            sqliteOptionsAction.MigrationsAssembly(
+                assemblyName: "SLO.MobileApp.Infra.DbBuilder"));
     }
 
     private async ValueTask<T> InsertAsync<T>(
@@ -63,30 +65,5 @@ internal sealed partial class StorageBroker : EFxceptionsContext, IStorageBroker
         await SaveChangesAsync(cancellationToken);
 
         return item;
-    }
-
-    private void EnsureCreated()
-    {
-        bool databaseFileExists =
-            File.Exists(path: _localConfiguration.DatabaseFilePath);
-
-        if (databaseFileExists)
-        {
-            EnsureMigrationApplied();
-
-            return;
-        }
-
-        Database.EnsureCreatedAsync();
-    }
-
-    private void EnsureMigrationApplied()
-    {
-        if (Database.HasPendingModelChanges() is false)
-        {
-            return;
-        }
-
-        Database.MigrateAsync();
     }
 }

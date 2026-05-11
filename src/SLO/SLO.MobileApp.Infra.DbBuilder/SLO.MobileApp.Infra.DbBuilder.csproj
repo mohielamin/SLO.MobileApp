@@ -2,30 +2,23 @@
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>diable</ImplicitUsings>
+    <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-    <PackageReference Include="EFxceptions" Version="1.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.7" />
-    <PackageReference Include="Xeption" Version="2.8.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="SLO.MobileApp.Core.UnitTests" />
-    <InternalsVisibleTo Include="SLO.MobileApp" />
-    <InternalsVisibleTo Include="SLO.MobileApp.Infra.DbBuilder" />
+    <ProjectReference Include="..\SLO.MobileApp.Core\SLO.MobileApp.Core.csproj" />
   </ItemGroup>
   
 </Project>
