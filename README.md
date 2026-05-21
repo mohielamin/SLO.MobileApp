@@ -36,6 +36,9 @@ The Below illustration reflects abstraction, structure, and UI independence.
 
 
 
-## View Models
+## References
+- [The Standard](https://github.com/hassanhabib/The-Standard)
+- [The Standard Teams](https://github.com/hassanhabib/The-Standard-Team)
 
-## Views
+## Resources
+- [The MVVM Pattern in .NET MAUI: The definitive guide to essential patterns, best practices, and techniques for cross-platform app development](https://www.packtpub.com/en-us/product/the-mvvm-pattern-in-net-maui-9781805125006)
