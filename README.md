@@ -42,3 +42,4 @@ The Below illustration reflects abstraction, structure, and UI independence.
 
 ## Resources
 - [The MVVM Pattern in .NET MAUI: The definitive guide to essential patterns, best practices, and techniques for cross-platform app development](https://www.packtpub.com/en-us/product/the-mvvm-pattern-in-net-maui-9781805125006)
+- [.NET MAUI Cookbook](https://www.packtpub.com/en-de/product/net-maui-cookbook-9781835464625?srsltid=AfmBOoo5vnPUx5RG0iZGMLUKkJm7j9eZPUWbCz67NaRKLj1hdn5ZRt6I)
