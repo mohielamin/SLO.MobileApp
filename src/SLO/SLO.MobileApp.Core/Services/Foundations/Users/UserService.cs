@@ -20,6 +20,9 @@ internal class UserService : IUserService
     }
 
     public async ValueTask<Guid> RetrieveLoggedInUserAsync(
-        CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
+        CancellationToken cancellationToken)
+    {
+        return await _userManagementBroker.GetLoggedInUserIdAsync(
+            cancellationToken);
+    }
 }
