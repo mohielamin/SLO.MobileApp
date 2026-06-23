@@ -20,6 +20,9 @@ internal class UserProcessingService : IUserProcessingService
     }
 
     public async ValueTask<Guid> RetrieveLoggedInUserAsync(
-        CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
+        CancellationToken cancellationToken)
+    {
+        return await _userService.RetrieveLoggedInUserAsync(
+            cancellationToken);
+    }
 }
