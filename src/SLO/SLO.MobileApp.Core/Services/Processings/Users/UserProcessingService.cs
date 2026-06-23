@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SLO.MobileApp.Core.Services.Processings.Users;
 
-internal class UserProcessingService : IUserProcessingService
+internal partial class UserProcessingService : IUserProcessingService
 {
     private readonly IUserService _userService;
     private readonly ILoggingBroker _loggingBroker;
@@ -20,9 +20,12 @@ internal class UserProcessingService : IUserProcessingService
     }
 
     public async ValueTask<Guid> RetrieveLoggedInUserAsync(
-        CancellationToken cancellationToken)
-    {
-        return await _userService.RetrieveLoggedInUserAsync(
-            cancellationToken);
-    }
+        CancellationToken cancellationToken) =>
+        await TryCatch(
+            cancellationToken,
+            async () =>
+            {
+                return await _userService.RetrieveLoggedInUserAsync(
+                    cancellationToken);
+            });
 }
