@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SLO.MobileApp.Core.Services.Processings.ShoppingLists;
 
-internal class ShoppingListProcessingService : IShoppingListProcessingService
+internal partial class ShoppingListProcessingService : IShoppingListProcessingService
 {
     private readonly IShoppingListService _shoppingListService;
     private readonly ILoggingBroker _loggingBroker;
@@ -24,17 +24,21 @@ internal class ShoppingListProcessingService : IShoppingListProcessingService
 
     public async ValueTask<IReadOnlyList<ShoppingList>> RetrieveAllShoppingListsByUserIdAsync(
         Guid userId,
-        CancellationToken cancellationToken)
-    {
-        IQueryable<ShoppingList> retrievedShoppingLists =
-            await _shoppingListService.RetrieveAllShoppingListsAsync(
-                cancellationToken);
+        CancellationToken cancellationToken) =>
+        await TryCatch(
+            cancellationToken,
+            async () =>
+            {
+                ValidateShoppingListOnRetrieveAllByUserId(userId);
 
+                IQueryable<ShoppingList> retrievedShoppingLists =
+                    await _shoppingListService.RetrieveAllShoppingListsAsync(
+                        cancellationToken);
 
-        return MatchingUserShoppingLists(
-            shoppingLists: retrievedShoppingLists,
-            userId);
-    }
+                return MatchingUserShoppingLists(
+                    shoppingLists: retrievedShoppingLists,
+                    userId);
+            });
 
     private IReadOnlyList<ShoppingList> MatchingUserShoppingLists(
         IQueryable<ShoppingList> shoppingLists,

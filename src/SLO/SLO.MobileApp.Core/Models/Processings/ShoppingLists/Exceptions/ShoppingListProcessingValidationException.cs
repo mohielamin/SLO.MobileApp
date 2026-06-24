@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SLO.MobileApp.Core.UnitTests.Services.Processings.ShoppingLists;
+namespace SLO.MobileApp.Core.Models.Processings.ShoppingLists.Exceptions;
 
 public class ShoppingListProcessingValidationException : Exception
 {
