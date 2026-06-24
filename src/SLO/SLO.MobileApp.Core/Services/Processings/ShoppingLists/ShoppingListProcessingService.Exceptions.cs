@@ -25,6 +25,18 @@ internal partial class ShoppingListProcessingService
                 exception: ex,
                 cancellationToken);
         }
+        catch (Exception ex)
+        {
+            var failedShoppingListProcessingServiceException =
+                new FailedShoppingListProcessingServiceException(
+                    exceptionMessage: "Failed shopping list processing service error occurred, " +
+                    "please contact support.",
+                    innerException: ex);
+
+            throw await CreateAndLogServiceErrorAsync(
+                exception: failedShoppingListProcessingServiceException,
+                cancellationToken);
+        }
     }
 
     private async ValueTask<ShoppingListProcessingValidationException> CreateAndLogValidationErrorAsync(
@@ -42,5 +54,22 @@ internal partial class ShoppingListProcessingService
             cancellationToken);
 
         return shoppingListProcessingValidationException;
+    }
+
+    private async ValueTask<ShoppingListProcessingServiceException> CreateAndLogServiceErrorAsync(
+        Exception exception,
+        CancellationToken cancellationToken)
+    {
+        var shoppingListProcessingServiceException =
+            new ShoppingListProcessingServiceException(
+                exceptionMessage: "Shopping list processing service error occurred, " +
+                "please contact support.",
+                innerException: exception);
+
+        await _loggingBroker.LogErrorAsync(
+            exception: shoppingListProcessingServiceException,
+            cancellationToken);
+
+        return shoppingListProcessingServiceException;
     }
 }
