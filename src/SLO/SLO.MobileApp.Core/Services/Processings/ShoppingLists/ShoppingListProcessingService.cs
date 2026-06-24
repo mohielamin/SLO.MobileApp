@@ -2,6 +2,7 @@
 using SLO.MobileApp.Core.Models.Foundations.ShoppingLists;
 using SLO.MobileApp.Core.Services.Foundations.ShoppingLists;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,8 +22,26 @@ internal class ShoppingListProcessingService : IShoppingListProcessingService
         _loggingBroker = loggingBroker;
     }
 
-    public async ValueTask<IQueryable<ShoppingList>> RetrieveAllShoppingListsByUserIdAsync(
+    public async ValueTask<IReadOnlyList<ShoppingList>> RetrieveAllShoppingListsByUserIdAsync(
         Guid userId,
-        CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
+        CancellationToken cancellationToken)
+    {
+        IQueryable<ShoppingList> retrievedShoppingLists =
+            await _shoppingListService.RetrieveAllShoppingListsAsync(
+                cancellationToken);
+
+
+        return MatchingUserShoppingLists(
+            shoppingLists: retrievedShoppingLists,
+            userId);
+    }
+
+    private IReadOnlyList<ShoppingList> MatchingUserShoppingLists(
+        IQueryable<ShoppingList> shoppingLists,
+        Guid userId)
+    {
+        return shoppingLists.Where(shoppingList =>
+            shoppingList.CreatedBy == userId)
+            .ToList();
+    }
 }

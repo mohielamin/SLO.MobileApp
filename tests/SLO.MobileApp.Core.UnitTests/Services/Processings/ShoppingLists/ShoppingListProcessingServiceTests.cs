@@ -29,8 +29,8 @@ public partial class ShoppingListProcessingServiceTests
     }
 
     private static IQueryable<ShoppingList> CreateRandomShoppingLists(
-        Guid user = default) =>
-        CreateShoppingListFiller()
+        Guid createdBy = default) =>
+        CreateShoppingListFiller(createdBy)
         .Create(count: Randomizers.GetRandomNumber())
         .AsQueryable();
 
@@ -49,23 +49,21 @@ public partial class ShoppingListProcessingServiceTests
     }
 
     private static Filler<ShoppingList> CreateShoppingListFiller(
-        Guid userId = default)
+        Guid createdBy = default)
     {
         var filler = new Filler<ShoppingList>();
         DateTimeOffset dateTimes = Randomizers.GetRandomDateTime();
 
-        filler.Setup()
-            .OnType<DateTimeOffset>().Use(dateTimes);
-
-        if (userId == Guid.Empty)
+        if (createdBy == Guid.Empty)
         {
-            return filler;
+            createdBy = Guid.NewGuid();
         }
 
         filler.Setup()
+            .OnType<DateTimeOffset>().Use(dateTimes)
             .OnProperty(shoppinglist =>
                 shoppinglist.CreatedBy)
-            .Use(userId);
+            .Use(createdBy);
 
         return filler;
     }

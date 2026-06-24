@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
-using Force.DeepCloner;
 using Moq;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingLists;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,7 +19,7 @@ public partial class ShoppingListProcessingServiceTests
         Guid userId = randomId;
 
         IQueryable<ShoppingList> randomShoppingLists =
-            CreateRandomShoppingLists(userId);
+            CreateRandomShoppingLists(createdBy: userId);
 
         IQueryable<ShoppingList> userShoppingLists =
             randomShoppingLists;
@@ -28,8 +28,8 @@ public partial class ShoppingListProcessingServiceTests
             CreateRandomShoppingLists(
                 existingShoppingLists: userShoppingLists);
 
-        IQueryable<ShoppingList> expectedShoppingLists =
-            retrievedShoppingLists.DeepClone();
+        IReadOnlyList<ShoppingList> expectedShoppingLists =
+            userShoppingLists.ToList();
 
         _shoppingListServiceMock.Setup(service =>
          service.RetrieveAllShoppingListsAsync(
@@ -37,7 +37,7 @@ public partial class ShoppingListProcessingServiceTests
              .ReturnsAsync(retrievedShoppingLists);
 
         // when
-        IQueryable<ShoppingList> actualShoppingLists =
+        IReadOnlyList<ShoppingList> actualShoppingLists =
             await _shoppingListProcessingService
             .RetrieveAllShoppingListsByUserIdAsync(
                 userId,
