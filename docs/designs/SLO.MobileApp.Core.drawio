@@ -163,7 +163,7 @@
         <mxCell id="-HEglLQrGmUzRdCYs9Ni-28" edge="1" parent="1" source="-HEglLQrGmUzRdCYs9Ni-29" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" target="-HEglLQrGmUzRdCYs9Ni-5" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="-HEglLQrGmUzRdCYs9Ni-29" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Shopping List Item Processing Service" vertex="1">
+        <mxCell id="-HEglLQrGmUzRdCYs9Ni-29" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f0a30a;fontColor=#000000;strokeColor=#BD7000;" value="Shopping List Item Processing Service" vertex="1">
           <mxGeometry height="60" width="120" x="-100" y="170" as="geometry" />
         </mxCell>
         <mxCell id="-HEglLQrGmUzRdCYs9Ni-30" edge="1" parent="1" source="-HEglLQrGmUzRdCYs9Ni-31" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" target="-HEglLQrGmUzRdCYs9Ni-35" value="">
@@ -202,7 +202,7 @@
         <mxCell id="-HEglLQrGmUzRdCYs9Ni-43" edge="1" parent="1" source="-HEglLQrGmUzRdCYs9Ni-41" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" target="-HEglLQrGmUzRdCYs9Ni-18" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="-HEglLQrGmUzRdCYs9Ni-41" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f0a30a;fontColor=#000000;strokeColor=#BD7000;" value="Shopping List Processing Service" vertex="1">
+        <mxCell id="-HEglLQrGmUzRdCYs9Ni-41" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#008a00;fontColor=#ffffff;strokeColor=#005700;" value="Shopping List Processing Service" vertex="1">
           <mxGeometry height="60" width="120" x="-100" y="-370" as="geometry" />
         </mxCell>
         <mxCell id="-HEglLQrGmUzRdCYs9Ni-46" edge="1" parent="1" source="-HEglLQrGmUzRdCYs9Ni-44" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" target="-HEglLQrGmUzRdCYs9Ni-29" value="">
