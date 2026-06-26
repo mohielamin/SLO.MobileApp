@@ -74,6 +74,25 @@ public partial class ShoppingListItemProcessingServiceTests
     }
 
     private static IQueryable<ShoppingListItem> CreateRandomShoppingListItems(
+        Guid shoppingListId)
+    {
+        List<ShoppingListItem> randomShoppingListItem =
+            CreateShoppingListItemFiller()
+            .Create(count: Randomizers.GetRandomNumber())
+            .ToList();
+
+        int randomCount = Randomizers.GetRandomNumber();
+
+        for (int index = 0; index < randomShoppingListItem.Count; index++)
+        {
+            randomShoppingListItem[index].ShoppingListId =
+                shoppingListId;
+        }
+
+        return randomShoppingListItem.AsQueryable();
+    }
+
+    private static IQueryable<ShoppingListItem> CreateRandomShoppingListItems(
         ShoppingListItem existsShoppingListItem)
     {
         List<ShoppingListItem> randomShoppingListItems =
@@ -105,5 +124,13 @@ public partial class ShoppingListItemProcessingServiceTests
             .OnType<DateTimeOffset>().Use(dateTimes);
 
         return filler;
+    }
+
+    private IQueryable<ShoppingListItem> GetMatchingShoppingListItems(
+        Guid shoppingListId,
+        IQueryable<ShoppingListItem> shoppingListItems)
+    {
+        return shoppingListItems.Where(shoppingListItem =>
+            shoppingListItem.ShoppingListId == shoppingListId);
     }
 }

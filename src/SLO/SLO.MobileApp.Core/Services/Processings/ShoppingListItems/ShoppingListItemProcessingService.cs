@@ -1,6 +1,7 @@
 ﻿using SLO.MobileApp.Core.Brokers.Loggings;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
 using SLO.MobileApp.Core.Services.Foundations.ShoppingListItems;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -45,6 +46,11 @@ internal partial class ShoppingListItemProcessingService : IShoppingListItemProc
                         cancellationToken),
                 };
             });
+
+    public async ValueTask<IQueryable<ShoppingListItem>> RetrieveAllShoppingListItemsByShoppingListIdAsync(
+        Guid shoppingListItemId,
+        CancellationToken cancellationToken) =>
+        throw new NotImplementedException();
 
     private async ValueTask<ShoppingListItem> RetrieveMatchingShoppingListItemAsync(
         ShoppingListItem shoppingListItem,
