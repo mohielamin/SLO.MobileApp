@@ -1,6 +1,7 @@
 ﻿using Moq;
 using SLO.MobileApp.Core.Brokers.Loggings;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
+using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems.Exceptions;
 using SLO.MobileApp.Core.Services.Foundations.ShoppingListItems;
 using SLO.MobileApp.Core.Services.Processings.ShoppingListItems;
 using SLO.MobileApp.Core.UnitTests.Helpers;
@@ -26,6 +27,25 @@ public partial class ShoppingListItemProcessingServiceTests
             new ShoppingListItemProcessingService(
                 shoppingListItemService: _shoppingListItemServiceMock.Object,
                 loggingBroker: _loggingBrokerMock.Object);
+    }
+
+    public static TheoryData<Exception> DependencyValidationExceptions()
+    {
+        var exceptionMessage = Randomizers.GetRandomString();
+        var someInnerException = new Exception(exceptionMessage);
+
+        return new TheoryData<Exception>
+        {
+            new ShoppingListItemDependencyValidationException(
+                exceptionMessage: "Shopping list item dependency validation error occurred, " +
+                "please try again!",
+                innerException: someInnerException),
+
+            new ShoppingListItemValidationException(
+                exceptionMessage: "Shopping list item validation error occurred, " +
+                "fix the errors and try again please!",
+                innerException: someInnerException),
+        };
     }
 
     private void VerifyNoOtherDependencyCalls()
