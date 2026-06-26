@@ -43,6 +43,18 @@ internal partial class ShoppingListItemProcessingService
                 exception: ex,
                 cancellationToken);
         }
+        catch (ShoppingListItemDependencyException ex)
+        {
+            throw await CreateAndLogDependencyErrorAsync(
+                exception: ex,
+                cancellationToken);
+        }
+        catch (ShoppingListItemServiceException ex)
+        {
+            throw await CreateAndLogDependencyErrorAsync(
+                exception: ex,
+                cancellationToken);
+        }
     }
 
     private async ValueTask<ShoppingListItemProcessingValidationException> CreateAndLogValidationErrorAsync(
@@ -77,5 +89,23 @@ internal partial class ShoppingListItemProcessingService
             cancellationToken);
 
         return shoppingListItemProcessingDependencyValidationException;
+    }
+
+    private async ValueTask<ShoppingListItemProcessingDependencyException> CreateAndLogDependencyErrorAsync(
+        Exception exception,
+        CancellationToken cancellationToken)
+    {
+        var shoppingListItemProcessingDependencyError =
+            new ShoppingListItemProcessingDependencyException(
+                exceptionMessage: "Shopping list item processing dependency error occurred, " +
+                "please contact support.",
+                innerException: exception);
+
+        await _loggingBroker.LogErrorAsync(
+            exception: shoppingListItemProcessingDependencyError,
+            cancellationToken);
+
+
+        return shoppingListItemProcessingDependencyError;
     }
 }
