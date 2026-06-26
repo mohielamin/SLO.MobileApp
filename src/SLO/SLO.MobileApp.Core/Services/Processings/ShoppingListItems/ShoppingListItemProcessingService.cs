@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SLO.MobileApp.Core.Services.Processings.ShoppingListItems;
 
-internal class ShoppingListItemProcessingService : IShoppingListItemProcessingService
+internal partial class ShoppingListItemProcessingService : IShoppingListItemProcessingService
 {
     private readonly IShoppingListItemService _shoppingListItemService;
     private readonly ILoggingBroker _loggingBroker;
@@ -22,24 +22,29 @@ internal class ShoppingListItemProcessingService : IShoppingListItemProcessingSe
 
     public async ValueTask<ShoppingListItem> UpsertShoppingListItemAsync(
         ShoppingListItem shoppingListItem,
-        CancellationToken cancellationToken)
-    {
-        ShoppingListItem matchingShoppingListItem =
-            await RetrieveMatchingShoppingListItemAsync(
-                shoppingListItem,
-                cancellationToken);
+        CancellationToken cancellationToken) =>
+        await TryCatch(
+            cancellationToken,
+            async () =>
+            {
+                ValidateShoppingListItem(shoppingListItem);
 
-        return matchingShoppingListItem switch
-        {
-            null => await _shoppingListItemService.AddShoppingListItemAsync(
-                shoppingListItem,
-                cancellationToken),
+                ShoppingListItem matchingShoppingListItem =
+                    await RetrieveMatchingShoppingListItemAsync(
+                        shoppingListItem,
+                        cancellationToken);
 
-            { } => await _shoppingListItemService.ModifyShoppingListItemAsync(
-                shoppingListItem,
-                cancellationToken),
-        };
-    }
+                return matchingShoppingListItem switch
+                {
+                    null => await _shoppingListItemService.AddShoppingListItemAsync(
+                        shoppingListItem,
+                        cancellationToken),
+
+                    { } => await _shoppingListItemService.ModifyShoppingListItemAsync(
+                        shoppingListItem,
+                        cancellationToken),
+                };
+            });
 
     private async ValueTask<ShoppingListItem> RetrieveMatchingShoppingListItemAsync(
         ShoppingListItem shoppingListItem,
