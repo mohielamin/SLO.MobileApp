@@ -49,8 +49,15 @@ internal partial class ShoppingListItemProcessingService : IShoppingListItemProc
 
     public async ValueTask<IQueryable<ShoppingListItem>> RetrieveAllShoppingListItemsByShoppingListIdAsync(
         Guid shoppingListItemId,
-        CancellationToken cancellationToken) =>
-        throw new NotImplementedException();
+        CancellationToken cancellationToken)
+    {
+        IQueryable<ShoppingListItem> retrievedShoppingListItems =
+            await _shoppingListItemService.RetrieveAllShoppingListItemsAsync(
+                cancellationToken);
+
+        return retrievedShoppingListItems.Where(shoppingListItem =>
+            shoppingListItem.ShoppingListId == shoppingListItemId);
+    }
 
     private async ValueTask<ShoppingListItem> RetrieveMatchingShoppingListItemAsync(
         ShoppingListItem shoppingListItem,
