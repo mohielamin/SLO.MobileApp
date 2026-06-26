@@ -27,7 +27,7 @@ internal partial class ShoppingListItemProcessingService : IShoppingListItemProc
             cancellationToken,
             async () =>
             {
-                ValidateShoppingListItem(shoppingListItem);
+                ValidateShoppingListItemOnUpsert(shoppingListItem);
 
                 ShoppingListItem matchingShoppingListItem =
                     await RetrieveMatchingShoppingListItemAsync(
