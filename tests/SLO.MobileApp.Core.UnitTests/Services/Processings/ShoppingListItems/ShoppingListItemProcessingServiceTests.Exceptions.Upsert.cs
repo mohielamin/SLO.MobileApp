@@ -119,4 +119,65 @@ public partial class ShoppingListItemProcessingServiceTests
 
         VerifyNoOtherDependencyCalls();
     }
+
+    [Fact]
+    public async Task ShouldThrowServiceExceptionOnUpsertIfServiceErrorOccursAndLogItAsync()
+    {
+        // given
+        ShoppingListItem someShoppingListItem = CreateRandomShoppingListItem();
+        string exceptionMessage = Randomizers.GetRandomString();
+        var someServiceException = new Exception(exceptionMessage);
+
+        var failedShoppingListItemProcessingServiceException =
+            new FailedShoppingListItemProcessingServiceException(
+                exceptionMessage: "Failed shopping list item processing service error occurred, " +
+                "please contact support.",
+                innerException: someServiceException);
+
+        var expectedShoppingListItemProcessingServiceException =
+            new ShoppingListItemProcessingServiceException(
+                exceptionMessage: "Shopping list item processing service error occurred, " +
+                "please contact support.",
+                innerException: failedShoppingListItemProcessingServiceException);
+
+        _shoppingListItemServiceMock.Setup(service =>
+            service.RetrieveAllShoppingListItemsAsync(
+                It.IsAny<CancellationToken>()))
+            .ThrowsAsync(someServiceException);
+
+        // when
+        ValueTask<ShoppingListItem> upsertAsyncTask =
+            _shoppingListItemProcessingService.UpsertShoppingListItemAsync(
+                shoppingListItem: someShoppingListItem,
+                It.IsAny<CancellationToken>());
+
+        // then
+        await Assert.ThrowsAsync<ShoppingListItemProcessingServiceException>(
+            upsertAsyncTask.AsTask);
+
+        _shoppingListItemServiceMock.Verify(service =>
+            service.RetrieveAllShoppingListItemsAsync(
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        _shoppingListItemServiceMock.Verify(service =>
+            service.ModifyShoppingListItemAsync(
+                It.IsAny<ShoppingListItem>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _shoppingListItemServiceMock.Verify(service =>
+            service.AddShoppingListItemAsync(
+                It.IsAny<ShoppingListItem>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogErrorAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    expectedShoppingListItemProcessingServiceException))),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
 }
