@@ -1,6 +1,7 @@
 ﻿using SLO.MobileApp.Core.Brokers.Loggings;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
 using SLO.MobileApp.Core.Services.Foundations.ShoppingListItems;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,11 +24,32 @@ internal class ShoppingListItemProcessingService : IShoppingListItemProcessingSe
         ShoppingListItem shoppingListItem,
         CancellationToken cancellationToken)
     {
-        await _shoppingListItemService.RetrieveAllShoppingListItemsAsync(
+        ShoppingListItem matchingShoppingListItem =
+            await RetrieveMatchingShoppingListItemAsync(
+                shoppingListItem,
+                cancellationToken);
+
+        return matchingShoppingListItem switch
+        {
+            null => await _shoppingListItemService.AddShoppingListItemAsync(
+                shoppingListItem,
+                cancellationToken),
+
+            { } => await _shoppingListItemService.ModifyShoppingListItemAsync(
+                shoppingListItem,
+                cancellationToken),
+        };
+    }
+
+    private async ValueTask<ShoppingListItem> RetrieveMatchingShoppingListItemAsync(
+        ShoppingListItem shoppingListItem,
+        CancellationToken cancellationToken)
+    {
+        IQueryable<ShoppingListItem> retrievedShoppingListItems =
+            await _shoppingListItemService.RetrieveAllShoppingListItemsAsync(
             cancellationToken);
 
-        return await _shoppingListItemService.AddShoppingListItemAsync(
-            shoppingListItem,
-            cancellationToken);
+        return retrievedShoppingListItems.FirstOrDefault(match =>
+            match.Id == shoppingListItem.Id);
     }
 }
