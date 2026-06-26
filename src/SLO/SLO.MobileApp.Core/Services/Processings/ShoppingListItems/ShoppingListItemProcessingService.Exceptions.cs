@@ -1,4 +1,5 @@
 ﻿using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
+using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems.Exceptions;
 using SLO.MobileApp.Core.Models.Processings.ShoppingListItems.Exceptions;
 using System;
 using System.Threading;
@@ -30,6 +31,18 @@ internal partial class ShoppingListItemProcessingService
                 exception: ex,
                 cancellationToken);
         }
+        catch (ShoppingListItemDependencyValidationException ex)
+        {
+            throw await CreateAndLogDependencyValidationErrorAsync(
+                exception: ex,
+                cancellationToken);
+        }
+        catch (ShoppingListItemValidationException ex)
+        {
+            throw await CreateAndLogDependencyValidationErrorAsync(
+                exception: ex,
+                cancellationToken);
+        }
     }
 
     private async ValueTask<ShoppingListItemProcessingValidationException> CreateAndLogValidationErrorAsync(
@@ -47,5 +60,22 @@ internal partial class ShoppingListItemProcessingService
             cancellationToken);
 
         return shoppingListItemProcessingValidationException;
+    }
+
+    private async ValueTask<ShoppingListItemProcessingDependencyValidationException> CreateAndLogDependencyValidationErrorAsync(
+        Exception exception,
+        CancellationToken cancellationToken)
+    {
+        var shoppingListItemProcessingDependencyValidationException =
+            new ShoppingListItemProcessingDependencyValidationException(
+                exceptionMessage: "Shopping list item processing dependency validation error occurred, " +
+                "please try again!",
+                innerException: exception.InnerException);
+
+        await _loggingBroker.LogErrorAsync(
+            exception: shoppingListItemProcessingDependencyValidationException,
+            cancellationToken);
+
+        return shoppingListItemProcessingDependencyValidationException;
     }
 }
