@@ -48,6 +48,25 @@ public partial class ShoppingListItemProcessingServiceTests
         };
     }
 
+    public static TheoryData<Exception> DependencyExceptions()
+    {
+        string exceptionMessage = Randomizers.GetRandomString();
+        var someInnerException = new Exception(exceptionMessage);
+
+        return new TheoryData<Exception>
+        {
+            new ShoppingListItemDependencyException(
+                exceptionMessage: "Shopping list item dependency error occurred, " +
+                "please contact support.",
+                innerException: someInnerException),
+
+            new ShoppingListItemServiceException(
+                exceptionMessage: "Shopping list item service error occurred, " +
+                "please contact support.",
+                innerException: someInnerException),
+        };
+    }
+
     private void VerifyNoOtherDependencyCalls()
     {
         _shoppingListItemServiceMock.VerifyNoOtherCalls();

@@ -64,4 +64,59 @@ public partial class ShoppingListItemProcessingServiceTests
 
         VerifyNoOtherDependencyCalls();
     }
+
+    [Theory]
+    [MemberData(nameof(DependencyExceptions))]
+    public async Task ShouldThrowDependencyExceptionOnUpsertIfDependencyErrorOccursAndLogItAsync(
+        Exception dependencyException)
+    {
+        // given
+        ShoppingListItem someShoppingListItem = CreateRandomShoppingListItem();
+
+        var expectedShoppingListItemProcessingDependencyException =
+            new ShoppingListItemProcessingDependencyException(
+                exceptionMessage: "Shopping list item processing dependency error occurred, " +
+                "please contact support.",
+                innerException: dependencyException);
+
+        _shoppingListItemServiceMock.Setup(service =>
+            service.RetrieveAllShoppingListItemsAsync(
+                It.IsAny<CancellationToken>()))
+            .ThrowsAsync(dependencyException);
+
+        // when
+        ValueTask<ShoppingListItem> upsertAsyncTask =
+            _shoppingListItemProcessingService.UpsertShoppingListItemAsync(
+                shoppingListItem: someShoppingListItem,
+                It.IsAny<CancellationToken>());
+
+        // then
+        await Assert.ThrowsAsync<ShoppingListItemProcessingDependencyException>(
+            upsertAsyncTask.AsTask);
+
+        _shoppingListItemServiceMock.Verify(service =>
+            service.RetrieveAllShoppingListItemsAsync(
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        _shoppingListItemServiceMock.Verify(service =>
+            service.ModifyShoppingListItemAsync(
+                It.IsAny<ShoppingListItem>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _shoppingListItemServiceMock.Verify(service =>
+            service.AddShoppingListItemAsync(
+                It.IsAny<ShoppingListItem>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogErrorAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    expectedShoppingListItemProcessingDependencyException))),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
 }
