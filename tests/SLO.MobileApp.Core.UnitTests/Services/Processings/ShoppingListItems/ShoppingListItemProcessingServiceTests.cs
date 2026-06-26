@@ -5,6 +5,7 @@ using SLO.MobileApp.Core.Services.Foundations.ShoppingListItems;
 using SLO.MobileApp.Core.Services.Processings.ShoppingListItems;
 using SLO.MobileApp.Core.UnitTests.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Tynamix.ObjectFiller;
 
@@ -31,6 +32,19 @@ public partial class ShoppingListItemProcessingServiceTests
     {
         _shoppingListItemServiceMock.VerifyNoOtherCalls();
         _loggingBrokerMock.VerifyNoOtherCalls();
+    }
+
+    private static IQueryable<ShoppingListItem> CreateRandomShoppingListItems(
+        ShoppingListItem existsShoppingListItem)
+    {
+        List<ShoppingListItem> randomShoppingListItems =
+            CreateShoppingListItemFiller()
+            .Create(count: Randomizers.GetRandomNumber())
+            .ToList();
+
+        randomShoppingListItems.Add(existsShoppingListItem);
+
+        return randomShoppingListItems.AsQueryable();
     }
 
     private static IQueryable<ShoppingListItem> CreateRandomShoppingListItems() =>
