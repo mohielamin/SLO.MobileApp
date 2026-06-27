@@ -23,6 +23,14 @@ internal partial class ShoppingListItemProcessingService
             (Rule: Invalid(shoppingListId), Parameter: nameof(shoppingListId)));
     }
 
+    private void ValidateShoppingListItemOnRemoveById(
+        Guid shoppingListItemId)
+    {
+        Validate(
+            (Rule: Invalid(shoppingListItemId),
+            Parameter: nameof(shoppingListItemId)));
+    }
+
     private void ValidateShoppingListItem(
         ShoppingListItem shoppingListItem)
     {

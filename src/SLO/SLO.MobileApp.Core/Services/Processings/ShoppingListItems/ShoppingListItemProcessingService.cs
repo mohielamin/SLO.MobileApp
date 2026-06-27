@@ -67,12 +67,17 @@ internal partial class ShoppingListItemProcessingService : IShoppingListItemProc
 
     public async ValueTask<ShoppingListItem> RemoveShoppingListItemByIdAsync(
         Guid shoppingListItemId,
-        CancellationToken cancellationToken)
-    {
-        return await _shoppingListItemService.RemoveShoppingListItemByIdAsync(
-            shoppingListItemId,
-            cancellationToken);
-    }
+        CancellationToken cancellationToken) =>
+        await TryCatch(
+            cancellationToken,
+            async () =>
+            {
+                ValidateShoppingListItemOnRemoveById(shoppingListItemId);
+
+                return await _shoppingListItemService.RemoveShoppingListItemByIdAsync(
+                    shoppingListItemId,
+                    cancellationToken);
+            });
 
     private async ValueTask<ShoppingListItem> RetrieveMatchingShoppingListItemAsync(
         ShoppingListItem shoppingListItem,
