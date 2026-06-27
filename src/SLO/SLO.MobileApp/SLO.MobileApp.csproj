@@ -53,9 +53,9 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.60" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.7" />
-		<PackageReference Include="Xeption" Version="2.8.0" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.80" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.9" />
+		<PackageReference Include="Xeption" Version="2.9.0" />
 	</ItemGroup>
 
   <ItemGroup>
@@ -122,18 +122,15 @@
     </None>
   </ItemGroup>
 
-  <Target Name="GenerateDatabaseFile"
-          BeforeTargets="BeforeBuild;DispatchToInnerBuilds">
+  <Target Name="GenerateDatabaseFile" BeforeTargets="BeforeBuild;DispatchToInnerBuilds">
 
     <ItemGroup>
       <ExistingDatabase Include="$(ProjectDir)Resources\Raw\*.db" />
     </ItemGroup>
 
-    <Exec Command="dotnet build $(MSBuildThisFileDirectory)..\SLO.MobileApp.Infra.DbBuilder\SLO.MobileApp.Infra.DbBuilder.csproj -c $(Configuration)"
-          Condition="'@(ExistingDatabase)' == ''" />
+    <Exec Command="dotnet build $(MSBuildThisFileDirectory)..\SLO.MobileApp.Infra.DbBuilder\SLO.MobileApp.Infra.DbBuilder.csproj -c $(Configuration)" Condition="'@(ExistingDatabase)' == ''" />
 
-    <Exec Command="dotnet ef database update --project $(MSBuildThisFileDirectory)..\SLO.MobileApp.Infra.DbBuilder\SLO.MobileApp.Infra.DbBuilder.csproj --startup-project $(MSBuildThisFileDirectory)..\SLO.MobileApp.Infra.DbBuilder\SLO.MobileApp.Infra.DbBuilder.csproj"
-          Condition="'@(ExistingDatabase)' == ''" />
+    <Exec Command="dotnet ef database update --project $(MSBuildThisFileDirectory)..\SLO.MobileApp.Infra.DbBuilder\SLO.MobileApp.Infra.DbBuilder.csproj --startup-project $(MSBuildThisFileDirectory)..\SLO.MobileApp.Infra.DbBuilder\SLO.MobileApp.Infra.DbBuilder.csproj" Condition="'@(ExistingDatabase)' == ''" />
 
   </Target>
 
