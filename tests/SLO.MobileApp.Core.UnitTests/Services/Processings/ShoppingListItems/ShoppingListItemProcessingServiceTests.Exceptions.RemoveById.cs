@@ -99,4 +99,55 @@ public partial class ShoppingListItemProcessingServiceTests
 
         VerifyNoOtherDependencyCalls();
     }
+
+    [Fact]
+    public async Task ShouldThrowServiceExceptionOnRemoveByIdIfServiceErrorOccursAndLogItAsync()
+    {
+        // given
+        Guid someShoppingListItemId = Guid.NewGuid();
+        string exceptionMessage = Randomizers.GetRandomString();
+        var someServiceException = new Exception(exceptionMessage);
+
+        var failedShoppingListItemProcessingServiceException =
+            new FailedShoppingListItemProcessingServiceException(
+                exceptionMessage: "Failed shopping list item processing service error occurred, " +
+                "please contact support.",
+                innerException: someServiceException);
+
+        var exepctedShoppingListItemProcessingServiceException =
+            new ShoppingListItemProcessingServiceException(
+                exceptionMessage: "Shopping list item processing service error occurred, " +
+                "please contact support.",
+                innerException: failedShoppingListItemProcessingServiceException);
+
+        _shoppingListItemServiceMock.Setup(service =>
+            service.RemoveShoppingListItemByIdAsync(
+                someShoppingListItemId,
+                It.IsAny<CancellationToken>()))
+            .ThrowsAsync(someServiceException);
+
+        // when
+        ValueTask<ShoppingListItem> removeByIdAsyncTask =
+            _shoppingListItemProcessingService.RemoveShoppingListItemByIdAsync(
+                someShoppingListItemId,
+                It.IsAny<CancellationToken>());
+
+        // then
+        await Assert.ThrowsAsync<ShoppingListItemProcessingServiceException>(
+            removeByIdAsyncTask.AsTask);
+
+        _shoppingListItemServiceMock.Verify(service =>
+            service.RemoveShoppingListItemByIdAsync(
+                someShoppingListItemId,
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogErrorAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    exepctedShoppingListItemProcessingServiceException))),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
 }
