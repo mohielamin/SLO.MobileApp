@@ -65,6 +65,11 @@ internal partial class ShoppingListItemProcessingService : IShoppingListItemProc
                     shoppingListItem.ShoppingListId == shoppingListId);
             });
 
+    public async ValueTask<ShoppingListItem> RemoveShoppingListItemByIdAsync(
+        Guid shoppingListItemId,
+        CancellationToken cancellationToken) =>
+        throw new NotImplementedException();
+
     private async ValueTask<ShoppingListItem> RetrieveMatchingShoppingListItemAsync(
         ShoppingListItem shoppingListItem,
         CancellationToken cancellationToken)

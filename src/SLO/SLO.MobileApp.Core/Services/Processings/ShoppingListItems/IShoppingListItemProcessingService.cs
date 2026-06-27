@@ -15,4 +15,8 @@ public interface IShoppingListItemProcessingService
     ValueTask<IQueryable<ShoppingListItem>> RetrieveAllShoppingListItemsByShoppingListIdAsync(
         Guid shoppingListId,
         CancellationToken cancellationToken);
+
+    ValueTask<ShoppingListItem> RemoveShoppingListItemByIdAsync(
+        Guid shoppingListItemId,
+        CancellationToken cancellationToken);
 }
