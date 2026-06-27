@@ -85,6 +85,18 @@ internal partial class ShoppingListItemProcessingService
                 exception: ex,
                 cancellationToken);
         }
+        catch (ShoppingListItemDependencyException ex)
+        {
+            throw await CreateAndLogDependencyErrorAsync(
+                exception: ex,
+                cancellationToken);
+        }
+        catch (ShoppingListItemServiceException ex)
+        {
+            throw await CreateAndLogDependencyErrorAsync(
+                exception: ex,
+                cancellationToken);
+        }
     }
 
     private async ValueTask<ShoppingListItemProcessingValidationException> CreateAndLogValidationErrorAsync(
