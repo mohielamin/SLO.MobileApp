@@ -16,6 +16,13 @@ internal partial class ShoppingListItemProcessingService
             Parameter: nameof(ShoppingListItem.Id)));
     }
 
+    private void ValidateShoppingListItemOnRetrieveAllByShoppingListId(
+        Guid shoppingListId)
+    {
+        Validate(
+            (Rule: Invalid(shoppingListId), Parameter: nameof(shoppingListId)));
+    }
+
     private void ValidateShoppingListItem(
         ShoppingListItem shoppingListItem)
     {

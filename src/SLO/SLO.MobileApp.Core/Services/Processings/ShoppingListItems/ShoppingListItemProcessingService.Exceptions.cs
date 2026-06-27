@@ -2,6 +2,7 @@
 using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems.Exceptions;
 using SLO.MobileApp.Core.Models.Processings.ShoppingListItems.Exceptions;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,6 +11,7 @@ namespace SLO.MobileApp.Core.Services.Processings.ShoppingListItems;
 internal partial class ShoppingListItemProcessingService
 {
     private delegate ValueTask<ShoppingListItem> ReturningShoppingListItemFunction();
+    private delegate ValueTask<IQueryable<ShoppingListItem>> ReturningShoppingListItemsFunction();
 
     private async ValueTask<ShoppingListItem> TryCatch(
         CancellationToken cancellationToken,
@@ -65,6 +67,22 @@ internal partial class ShoppingListItemProcessingService
 
             throw await CreateAndLogServiceErrorAsync(
                 exception: failedShoppingListItemProcessingServiceException,
+                cancellationToken);
+        }
+    }
+
+    private async ValueTask<IQueryable<ShoppingListItem>> TryCatch(
+        CancellationToken cancellationToken,
+        ReturningShoppingListItemsFunction returningShoppingListItemsFunction)
+    {
+        try
+        {
+            return await returningShoppingListItemsFunction();
+        }
+        catch (InvalidShoppingListItemProcessingException ex)
+        {
+            throw await CreateAndLogValidationErrorAsync(
+                exception: ex,
                 cancellationToken);
         }
     }
