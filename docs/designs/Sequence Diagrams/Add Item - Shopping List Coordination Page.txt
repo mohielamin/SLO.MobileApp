@@ -1,0 +1,94 @@
+title Add Item - Shopping List Coordination Page
+
+ actor User
+
+ participant Shopping List Page
+ 
+ participant Shopping List Coordination View Model
+ 
+ participant Navigation Broker
+ 
+  participant "Shopping List Item Orchestration Editor Page" as Shopping List Item Editor Page
+  
+  participant "Shopping List Item Editor Orchestration View Model" as Shopping List Item Editor Page View Model
+  
+ participant "Shopping List Item Editor Orchestration Service" as Shopping List Item Editor Service
+
+ 
+  participant Storage Broker
+ 
+ User->Shopping List Page:Click Add Item
+ 
+ activate Shopping List Page
+ 
+ Shopping List Page->Shopping List Coordination View Model:Add Shopping List Item Command
+ 
+
+
+  activate Shopping List Coordination View Model 
+  
+ Shopping List Coordination View Model->Navigation Broker:Navigate(Refresh Shopping Item Delegate)
+ 
+ activate Navigation Broker
+ 
+ Navigation Broker->Shopping List Item Editor Page:Initialize
+
+ activate Shopping List Item Editor Page
+
+Navigation Broker->Shopping List Item Editor Page View Model:Set Parameters(Refresh Shopping List Item Delegate) 
+
+activate Shopping List Item Editor Page View Model
+
+Shopping List Item Editor Page View Model-->Shopping List Item Editor Page:View Model Initialized
+
+Shopping List Item Editor Page->Navigation Broker:Page Initialized
+
+ Navigation Broker -->Shopping List Coordination View Model:Navigation Complete
+ 
+  deactivate Navigation Broker
+
+User->Shopping List Item Editor Page:Click Save
+
+ 
+ Shopping List Item Editor Page->Shopping List Item Editor Page View Model:Save Shopping List Item Command
+ 
+ Shopping List Item Editor Page View Model->Shopping List Item Editor Service:Add Shopping List Item
+ 
+ activate Shopping List Item Editor Service
+ 
+ Shopping List Item Editor Service->Storage Broker:Insert Shopping List Item
+ 
+ activate Storage Broker
+ 
+ Storage Broker-->Shopping List Item Editor Service:Inserted Shopping List Item
+ 
+ deactivate Storage Broker
+ 
+ Shopping List Item Editor Service-->Shopping List Item Editor Page View Model:Return added Shopping List Item
+ 
+ deactivate Shopping List Item Editor Service
+ 
+  Shopping List Item Editor Page View Model-->Shopping List Coordination View Model:Invoke(Refresh Shopping List Item Delegate)
+  
+  Shopping List Coordination View Model->Shopping List Coordination View Model:Update Shopping Items Collection
+  
+  Shopping List Coordination View Model-->Shopping List Page:Shopping List Items Collection Changed
+ 
+ Shopping List Item Editor Page View Model->Navigation Broker:GoBack()
+ 
+ activate Navigation Broker
+ 
+ Navigation Broker->Shopping List Item Editor Page:Pop
+ 
+ Navigation Broker-->Shopping List Item Editor Page View Model:Navigation Complete
+ 
+ deactivate Navigation Broker
+ 
+ deactivate Shopping List Item Editor Page
+ 
+ deactivate Shopping List Item Editor Page View Model
+ 
+  deactivate Shopping List Page 
+  
+ deactivate Shopping List Coordination View Model
+ 
