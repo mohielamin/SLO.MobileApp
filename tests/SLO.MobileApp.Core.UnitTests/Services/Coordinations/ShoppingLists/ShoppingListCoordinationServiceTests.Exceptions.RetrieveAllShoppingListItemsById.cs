@@ -55,4 +55,49 @@ public partial class ShoppingListCoordinationServiceTests
 
         VerifyNotOtherDependencyCalls();
     }
+
+    [Theory]
+    [MemberData(nameof(DependencyExceptions))]
+    public async Task ShouldThrowDependencyExceptionOnRetrieveAllShoppingListItemsByIdIfDepenencyErrorOccursAndLogItAsync(
+        Exception dependencyException)
+    {
+        // given
+        Guid someShoppingListId = Guid.NewGuid();
+
+        var expectedShoppingListCoordinationDependencyException =
+            new ShoppingListCoordinationDependencyException(
+                exceptionMessage: "Shopping list coordination dependency error occurred, " +
+                "please contact support.",
+                innerException: dependencyException);
+
+        _shoppingListItemProcessingServiceMock.Setup(service =>
+            service.RetrieveAllShoppingListItemsByShoppingListIdAsync(
+                someShoppingListId,
+                It.IsAny<CancellationToken>()))
+            .ThrowsAsync(dependencyException);
+
+        // when
+        ValueTask<IQueryable<ShoppingListItem>> retrieveAllShoppingListItemsByIdTask =
+            _shoppingListCoordinationService.RetrieveAllShoppingListItemsByIdAsync(
+                shoppingListId: someShoppingListId,
+                It.IsAny<CancellationToken>());
+
+        // then
+        await Assert.ThrowsAsync<ShoppingListCoordinationDependencyException>(
+            retrieveAllShoppingListItemsByIdTask.AsTask);
+
+        _shoppingListItemProcessingServiceMock.Verify(service =>
+            service.RetrieveAllShoppingListItemsByShoppingListIdAsync(
+                someShoppingListId,
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        _loggingBrokerMock.Verify(broker =>
+            broker.LogErrorAsync(
+                It.Is(Randomizers.SameExceptionAs(
+                    expectedShoppingListCoordinationDependencyException))),
+            Times.Once());
+
+        VerifyNotOtherDependencyCalls();
+    }
 }

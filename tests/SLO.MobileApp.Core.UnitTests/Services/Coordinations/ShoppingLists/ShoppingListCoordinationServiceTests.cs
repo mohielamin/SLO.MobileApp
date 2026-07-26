@@ -53,6 +53,23 @@ public partial class ShoppingListCoordinationServiceTests
         };
     }
 
+    public static TheoryData<Exception> DependencyExceptions()
+    {
+        string exceptionMessage = Randomizers.GetRandomString();
+        var someInnerException = new Exception(exceptionMessage);
+
+        return new TheoryData<Exception>
+        {
+            new ShoppingListItemProcessingDependencyException(
+                exceptionMessage,
+                innerException: someInnerException),
+
+            new ShoppingListItemProcessingServiceException(
+                exceptionMessage,
+                innerException: someInnerException),
+        };
+    }
+
     private static IQueryable<ShoppingListItem> CreateRandomShoppingListItems(
         Guid shoppingListId) =>
         CreateShoppingListItemFiller(shoppingListId)
