@@ -50,6 +50,18 @@ internal partial class ShoppingListCoordinationService
                 exception: ex,
                 cancellationToken);
         }
+        catch (Exception ex)
+        {
+            var failedShoppingListCoordinationServiceException =
+                new FailedShoppingListCoordinationServiceException(
+                    exceptionMessage: "Failed shopping list coordination service error occurred, " +
+                    "please contact support.",
+                    innerException: ex);
+
+            throw await CreateServiceErrorAsync(
+                exception: failedShoppingListCoordinationServiceException,
+                cancellationToken);
+        }
     }
 
     private async ValueTask<ShoppingListCoordinationValidationException> CreateValidationErrorAsync(
@@ -101,5 +113,22 @@ internal partial class ShoppingListCoordinationService
             cancellationToken);
 
         return shoppingListCoordinationDependencyException;
+    }
+
+    private async ValueTask<ShoppingListCoordinationServiceException> CreateServiceErrorAsync(
+        Exception exception,
+        CancellationToken cancellationToken)
+    {
+        var shoppingListCoordinationServiceException =
+            new ShoppingListCoordinationServiceException(
+                exceptionMessage: "Shopping list coordination service error occurred, " +
+                "please contact support.",
+                innerException: exception);
+
+        await _loggingBroker.LogErrorAsync(
+            exception: shoppingListCoordinationServiceException,
+            cancellationToken);
+
+        return shoppingListCoordinationServiceException;
     }
 }
