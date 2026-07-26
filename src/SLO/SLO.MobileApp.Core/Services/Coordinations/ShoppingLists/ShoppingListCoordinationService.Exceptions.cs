@@ -1,5 +1,6 @@
 ﻿using SLO.MobileApp.Core.Models.Coordinations.ShoppingLists.Exceptions;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
+using SLO.MobileApp.Core.Models.Processings.ShoppingListItems.Exceptions;
 using System;
 using System.Linq;
 using System.Threading;
@@ -25,6 +26,18 @@ internal partial class ShoppingListCoordinationService
                 exception: ex,
                 cancellationToken);
         }
+        catch (ShoppingListItemProcessingValidationException ex)
+        {
+            throw await CreateDependencyValidationErrorAsync(
+                exception: ex,
+                cancellationToken);
+        }
+        catch (ShoppingListItemProcessingDependencyValidationException ex)
+        {
+            throw await CreateDependencyValidationErrorAsync(
+                exception: ex,
+                cancellationToken);
+        }
     }
 
     private async ValueTask<ShoppingListCoordinationValidationException> CreateValidationErrorAsync(
@@ -42,5 +55,22 @@ internal partial class ShoppingListCoordinationService
             cancellationToken);
 
         return shoppingListCoordinationValidationException;
+    }
+
+    private async ValueTask<ShoppingListCoordinationDependencyValidationException> CreateDependencyValidationErrorAsync(
+        Exception exception,
+        CancellationToken cancellationToken)
+    {
+        var shoppingListCoordinationDependencyValidationException =
+            new ShoppingListCoordinationDependencyValidationException(
+                exceptionMessage: "Shopping list coordination dependency validation error occurred, " +
+                "please try again!",
+                innerException: exception.InnerException);
+
+        await _loggingBroker.LogErrorAsync(
+            exception: shoppingListCoordinationDependencyValidationException,
+            cancellationToken);
+
+        return shoppingListCoordinationDependencyValidationException;
     }
 }
