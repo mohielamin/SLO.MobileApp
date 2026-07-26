@@ -4,6 +4,13 @@ A simple personal shopping list organizer app.
 
 I’ll keep expanding it over time as I explore ideas and shape it into something bigger.
 
+## See it in simple action
+
+
+https://github.com/user-attachments/assets/5660b2ae-56a5-444d-a68b-5c6717f96cb7
+
+
+
 ---
 
 ### Disclaimer
