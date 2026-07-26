@@ -29,6 +29,9 @@ internal class ShoppingListCoordinationService : IShoppingListCoordinationServic
         Guid shoppingListId,
         CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await _shoppingListItemProcessingService
+            .RetrieveAllShoppingListItemsByShoppingListIdAsync(
+            shoppingListId,
+            cancellationToken);
     }
 }
