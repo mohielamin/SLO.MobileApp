@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SLO.MobileApp.Core.Services.Coordinations.ShoppingLists;
 
-internal class ShoppingListCoordinationService : IShoppingListCoordinationService
+internal partial class ShoppingListCoordinationService : IShoppingListCoordinationService
 {
     private readonly IShoppingListProcessingService _shoppingListProcessingService;
     private readonly IShoppingListItemProcessingService _shoppingListItemProcessingService;
@@ -27,11 +27,16 @@ internal class ShoppingListCoordinationService : IShoppingListCoordinationServic
 
     public async ValueTask<IQueryable<ShoppingListItem>> RetrieveAllShoppingListItemsByIdAsync(
         Guid shoppingListId,
-        CancellationToken cancellationToken)
-    {
-        return await _shoppingListItemProcessingService
-            .RetrieveAllShoppingListItemsByShoppingListIdAsync(
-            shoppingListId,
-            cancellationToken);
-    }
+        CancellationToken cancellationToken) =>
+        await TryCatch(
+            cancellationToken,
+            async () =>
+            {
+                ValidateShoppingListId(shoppingListId);
+
+                return await _shoppingListItemProcessingService
+                    .RetrieveAllShoppingListItemsByShoppingListIdAsync(
+                    shoppingListId,
+                    cancellationToken);
+            });
 }
