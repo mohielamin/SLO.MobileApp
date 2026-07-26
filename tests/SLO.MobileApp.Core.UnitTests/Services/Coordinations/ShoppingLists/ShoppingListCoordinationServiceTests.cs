@@ -1,6 +1,7 @@
 ﻿using Moq;
 using SLO.MobileApp.Core.Brokers.Loggings;
 using SLO.MobileApp.Core.Models.Foundations.ShoppingListItems;
+using SLO.MobileApp.Core.Models.Processings.ShoppingListItems.Exceptions;
 using SLO.MobileApp.Core.Services.Coordinations.ShoppingLists;
 using SLO.MobileApp.Core.Services.Processings.ShoppingListItems;
 using SLO.MobileApp.Core.Services.Processings.ShoppingLists;
@@ -33,6 +34,23 @@ public partial class ShoppingListCoordinationServiceTests
                 shoppingListProcessingService: _shoppingListProcessingServiceMock.Object,
                 shoppingListItemProcessingService: _shoppingListItemProcessingServiceMock.Object,
                 loggingBroker: _loggingBrokerMock.Object);
+    }
+
+    public static TheoryData<Exception> DependencyValidationExceptions()
+    {
+        string exceptionMessage = Randomizers.GetRandomString();
+        var someInnerException = new Exception(exceptionMessage);
+
+        return new TheoryData<Exception>
+        {
+            new ShoppingListItemProcessingValidationException(
+                exceptionMessage,
+                innerException: someInnerException),
+
+            new ShoppingListItemProcessingDependencyValidationException(
+                exceptionMessage,
+                innerException: someInnerException),
+        };
     }
 
     private static IQueryable<ShoppingListItem> CreateRandomShoppingListItems(
