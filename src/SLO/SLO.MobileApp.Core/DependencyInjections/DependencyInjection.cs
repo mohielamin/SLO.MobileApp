@@ -3,8 +3,11 @@ using SLO.MobileApp.Core.Brokers.DateTimes;
 using SLO.MobileApp.Core.Brokers.Loggings;
 using SLO.MobileApp.Core.Brokers.Storages;
 using SLO.MobileApp.Core.Models.Configurations;
+using SLO.MobileApp.Core.Services.Coordinations.ShoppingLists;
 using SLO.MobileApp.Core.Services.Foundations.ShoppingListItems;
 using SLO.MobileApp.Core.Services.Foundations.ShoppingLists;
+using SLO.MobileApp.Core.Services.Processings.ShoppingListItems;
+using SLO.MobileApp.Core.Services.Processings.ShoppingLists;
 using SLO.MobileApp.Core.ViewModels.ShoppingLists;
 using System.IO;
 
@@ -27,6 +30,9 @@ internal static partial class DependencyInjection
 
         serviceCollection.AddBrokers();
         serviceCollection.AddFoundations();
+        serviceCollection.AddProcessings();
+        serviceCollection.AddOrchestrations();
+        serviceCollection.AddCoordinations();
         serviceCollection.AddSingleton<ShoppingListViewModel>();
 
         return serviceCollection;
@@ -53,4 +59,33 @@ internal static partial class DependencyInjection
 
         return serviceCollection;
     }
+
+    private static IServiceCollection AddProcessings(
+        this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddScoped<IShoppingListProcessingService,
+            ShoppingListProcessingService>();
+
+        serviceCollection.AddScoped<IShoppingListItemProcessingService,
+            ShoppingListItemProcessingService>();
+
+        return serviceCollection;
+    }
+
+    private static IServiceCollection AddOrchestrations(
+        this IServiceCollection serviceCollection)
+    {
+        return serviceCollection;
+    }
+
+
+    private static IServiceCollection AddCoordinations(
+        this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddScoped<IShoppingListCoordinationService,
+            ShoppingListCoordinationService>();
+
+        return serviceCollection;
+    }
+
 }
