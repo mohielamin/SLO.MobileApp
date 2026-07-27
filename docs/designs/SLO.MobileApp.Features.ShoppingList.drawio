@@ -1,6 +1,6 @@
 <mxfile host="Electron" pages="3">
   <diagram name="Shopping List Processing View Model" id="EQ-BIu6Fdgb3oSid4pzF">
-    <mxGraphModel dx="1432" dy="1112" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1174" dy="934" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -119,7 +119,7 @@
         <mxCell id="Enve3bA0T9nSYSkNs2SK-18" edge="1" parent="1" source="q2rkB7n5_uR16RWoAeBF-35" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;startSize=8;endArrow=classic;endSize=8;" target="vcBYPg0hb_NMaH2CMNHN-1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="q2rkB7n5_uR16RWoAeBF-35" parent="1" style="whiteSpace=wrap;html=1;rounded=0;fillColor=#008a00;fontColor=#ffffff;strokeColor=#005700;" value="Shopping List Coordination View Model" vertex="1">
+        <mxCell id="q2rkB7n5_uR16RWoAeBF-35" parent="1" style="whiteSpace=wrap;html=1;rounded=0;fillColor=#f0a30a;fontColor=#000000;strokeColor=#BD7000;" value="Shopping List Coordination View Model" vertex="1">
           <mxGeometry height="60" width="120" x="632" y="267.5" as="geometry" />
         </mxCell>
         <mxCell id="hjUkcVJLpeCfz3iKy-ka-2" edge="1" parent="1" source="q2rkB7n5_uR16RWoAeBF-41" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;startSize=8;endArrow=classic;endSize=8;" target="hjUkcVJLpeCfz3iKy-ka-1" value="">
@@ -185,14 +185,14 @@
         <mxCell id="Enve3bA0T9nSYSkNs2SK-2" parent="1" style="whiteSpace=wrap;html=1;rounded=0;fillColor=#f0a30a;fontColor=#000000;strokeColor=#BD7000;" value="Shopping List Coordination Service" vertex="1">
           <mxGeometry height="60" width="120" x="872" y="192.5" as="geometry" />
         </mxCell>
-        <mxCell id="N71Uc9RAzPKfr2sL7zlT-10" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=12;fontFamily=Helvetica;fontColor=default;labelBackgroundColor=default;" value="&lt;span style=&quot;font-size: 16px; background-color: rgb(27, 29, 30);&quot;&gt;Remove Shopping List Item ???&lt;/span&gt;" vertex="1">
+        <mxCell id="N71Uc9RAzPKfr2sL7zlT-10" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=12;fontFamily=Helvetica;fontColor=default;labelBackgroundColor=default;" value="&lt;span style=&quot;font-size: 16px; background-color: rgb(27, 29, 30);&quot;&gt;Remove Shopping List Item&lt;/span&gt;" vertex="1">
           <mxGeometry height="30" width="315" x="1110" y="250.5" as="geometry" />
         </mxCell>
         <mxCell id="fxl7vYLo83JLXwjFVVbT-2" edge="1" parent="1" source="N71Uc9RAzPKfr2sL7zlT-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" target="fxl7vYLo83JLXwjFVVbT-1" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="N71Uc9RAzPKfr2sL7zlT-12" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=12;fontFamily=Helvetica;fontColor=default;labelBackgroundColor=default;" value="&lt;span style=&quot;font-size: 16px; background-color: rgb(27, 29, 30);&quot;&gt;Retrieve All Shopping List Items By List Id&lt;/span&gt;" vertex="1">
-          <mxGeometry height="30" width="300" x="1110" y="207.5" as="geometry" />
+        <mxCell id="N71Uc9RAzPKfr2sL7zlT-12" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=12;fontFamily=Helvetica;fontColor=default;labelBackgroundColor=default;" value="&lt;span style=&quot;font-size: 16px; background-color: rgb(27, 29, 30);&quot;&gt;Get All Shopping List Items By List Id&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="270" x="1110" y="207.5" as="geometry" />
         </mxCell>
         <mxCell id="rYxYj-EvQ4DCYn6d3NC3-3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=12;fontFamily=Helvetica;fontColor=default;labelBackgroundColor=default;" value="&lt;span style=&quot;font-size: 16px; background-color: rgb(27, 29, 30);&quot;&gt;Edit Shopping List Item&lt;/span&gt;" vertex="1">
           <mxGeometry height="30" width="330" x="1110" y="821.75" as="geometry" />
@@ -233,7 +233,7 @@
         <mxCell id="Enve3bA0T9nSYSkNs2SK-10" parent="Xfhda-uat3ioj3XCMRR4-2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=16;" value="Navigate To Shopping List Item Editor Page" vertex="1">
           <mxGeometry height="30" width="323" x="367" y="99.5" as="geometry" />
         </mxCell>
-        <mxCell id="Enve3bA0T9nSYSkNs2SK-15" parent="Xfhda-uat3ioj3XCMRR4-2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=12;fontFamily=Helvetica;fontColor=default;labelBackgroundColor=none;" value="&lt;span style=&quot;font-size: 16px;&quot;&gt;Retrieve All Shopping List Items By List Id&lt;/span&gt;" vertex="1">
+        <mxCell id="Enve3bA0T9nSYSkNs2SK-15" parent="Xfhda-uat3ioj3XCMRR4-2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=12;fontFamily=Helvetica;fontColor=default;labelBackgroundColor=none;" value="&lt;span style=&quot;font-size: 16px;&quot;&gt;Get All Shopping List Items By List Id&lt;/span&gt;" vertex="1">
           <mxGeometry height="30" width="310" x="367" y="33.81" as="geometry" />
         </mxCell>
         <mxCell id="wF2wBdPqzljhg8UlEr5T-1" parent="Xfhda-uat3ioj3XCMRR4-2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=20;fontStyle=1" value="Shopping List Page" vertex="1">
@@ -285,7 +285,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="d0ls4rTib7VSDQ8jaqke" name="Services">
-    <mxGraphModel dx="1832" dy="1112" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1991" dy="1222" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -341,30 +341,12 @@
           <mxGeometry height="60" width="120" x="280" y="10" as="geometry" />
         </mxCell>
         <mxCell id="tVtLJQUMCHW45ITo5PaK-10" edge="1" parent="1" source="tVtLJQUMCHW45ITo5PaK-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" target="-OZ5FBi_cAxsYQV8K3u2-2" value="">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="210.04" y="100.04" />
-              <mxPoint x="210.04" y="150.04" />
-            </Array>
-          </mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="tVtLJQUMCHW45ITo5PaK-11" edge="1" parent="1" source="tVtLJQUMCHW45ITo5PaK-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;" target="tVtLJQUMCHW45ITo5PaK-6">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="210.04" y="100.04" />
-              <mxPoint x="210.04" y="40.04" />
-            </Array>
-          </mxGeometry>
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="CWwSF3T-EBDECcZKuXAe-4" edge="1" parent="1" source="tVtLJQUMCHW45ITo5PaK-8" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;startSize=8;endArrow=classic;endSize=8;" target="CWwSF3T-EBDECcZKuXAe-1">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="210.04" y="100.04" />
-              <mxPoint x="210.04" y="260.04" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="tVtLJQUMCHW45ITo5PaK-8" parent="1" style="whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;labelBackgroundColor=none;fillColor=#008a00;fontColor=#ffffff;strokeColor=#005700;" value="Shopping List Coordination Service" vertex="1">
+        <mxCell id="tVtLJQUMCHW45ITo5PaK-8" parent="1" style="whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;labelBackgroundColor=none;" value="Shopping List Coordination Service" vertex="1">
           <mxGeometry height="60" width="120" x="30" y="70" as="geometry" />
         </mxCell>
         <mxCell id="nIrqQArY-4YeMh9fEBeW-3" edge="1" parent="1" source="nIrqQArY-4YeMh9fEBeW-1" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;startSize=8;endArrow=classic;endSize=8;" target="tVtLJQUMCHW45ITo5PaK-8" value="">
@@ -372,15 +354,6 @@
         </mxCell>
         <mxCell id="nIrqQArY-4YeMh9fEBeW-1" parent="1" style="whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;labelBackgroundColor=none;" value="Shopping List Coordination View Model" vertex="1">
           <mxGeometry height="60" width="120" x="-210" y="70" as="geometry" />
-        </mxCell>
-        <mxCell id="CWwSF3T-EBDECcZKuXAe-3" edge="1" parent="1" source="CWwSF3T-EBDECcZKuXAe-1" style="edgeStyle=orthogonalEdgeStyle;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=12;fontColor=default;labelBackgroundColor=default;startSize=8;endArrow=classic;endSize=8;" target="CWwSF3T-EBDECcZKuXAe-2" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="CWwSF3T-EBDECcZKuXAe-1" parent="1" style="whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fontColor=#ffffff;labelBackgroundColor=none;fillColor=#008a00;strokeColor=#005700;" value="Logging Broker" vertex="1">
-          <mxGeometry height="60" width="120" x="750" y="230" as="geometry" />
-        </mxCell>
-        <mxCell id="CWwSF3T-EBDECcZKuXAe-2" parent="1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;labelBackgroundColor=none;" value="Loggings" vertex="1">
-          <mxGeometry height="80" width="80" x="990" y="220" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
