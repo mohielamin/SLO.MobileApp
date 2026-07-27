@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SLO.MobileApp.Core.Services.Processings.ShoppingLists;
 
-internal interface IShoppingListProcessingService
+public interface IShoppingListProcessingService
 {
     ValueTask<IReadOnlyList<ShoppingList>> RetrieveAllShoppingListsByUserIdAsync(
         Guid userId,
