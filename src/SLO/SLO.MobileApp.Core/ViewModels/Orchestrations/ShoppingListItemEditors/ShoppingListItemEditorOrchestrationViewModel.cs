@@ -37,13 +37,33 @@ public partial class ShoppingListItemEditorOrchestrationViewModel : ObservableOb
     private async Task SaveAsync(
         CancellationToken cancellationToken)
     {
-        ShoppingListItem addedShoppingListItem =
-            await _shoppingListItemService.AddShoppingListItemAsync(
-                ShoppingListItem,
-                cancellationToken);
+        ShoppingListItem savedShoppingListItem =
+            ShoppingListItemMode switch
+            {
+                ShoppingListItemMode.Edit =>
+                await EditShoppingListItemAsync(cancellationToken),
 
-        await Callback(addedShoppingListItem);
+                _ => await AddShoppingListItemAsync(cancellationToken),
+            };
+
+        await Callback(savedShoppingListItem);
 
         await _navigationBroker.PopAsync(cancellationToken);
+    }
+
+    private async ValueTask<ShoppingListItem> AddShoppingListItemAsync(
+        CancellationToken cancellationToken)
+    {
+        return await _shoppingListItemService.AddShoppingListItemAsync(
+                ShoppingListItem,
+                cancellationToken);
+    }
+
+    private async ValueTask<ShoppingListItem> EditShoppingListItemAsync(
+        CancellationToken cancellationToken)
+    {
+        return await _shoppingListItemService.ModifyShoppingListItemAsync(
+            ShoppingListItem,
+            cancellationToken);
     }
 }
