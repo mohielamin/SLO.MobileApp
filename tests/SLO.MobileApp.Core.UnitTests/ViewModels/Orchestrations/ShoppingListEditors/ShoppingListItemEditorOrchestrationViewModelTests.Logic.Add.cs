@@ -20,14 +20,14 @@ public partial class ShoppingListItemEditorOrchestrationViewModelTests
 
         ShoppingListItem emptyShoppingListItem = new();
 
-        ShoppingListItem randomShoppingListItem =
-            CreateRandomShoppingListItem();
-
         ShoppingListItem inputShoppingListItem =
             emptyShoppingListItem;
 
+        ShoppingListItem randomShoppingListItem =
+            CreateRandomShoppingListItem();
+
         ShoppingListItem addedShoppingListItem =
-            inputShoppingListItem;
+            randomShoppingListItem;
 
         ShoppingListItem expectedShoppingListItem =
             addedShoppingListItem.DeepClone();

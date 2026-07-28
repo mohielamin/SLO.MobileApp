@@ -37,6 +37,13 @@ public partial class ShoppingListItemEditorOrchestrationViewModel : ObservableOb
     private async Task SaveAsync(
         CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        ShoppingListItem addedShoppingListItem =
+            await _shoppingListItemService.AddShoppingListItemAsync(
+                ShoppingListItem,
+                cancellationToken);
+
+        await Callback(addedShoppingListItem);
+
+        await _navigationBroker.PopAsync(cancellationToken);
     }
 }
