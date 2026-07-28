@@ -76,4 +76,68 @@ public partial class ShoppingListItemEditorOrchestrationViewModelTests
 
         VerifyNoOtherDependencyCalls();
     }
+
+    [Fact]
+    public async Task ShouldEditShoppingListItemAsync()
+    {
+        // given
+        ShoppingListItemMode shoppingListItemMode =
+            ShoppingListItemMode.Edit;
+
+        ShoppingListItem randomShoppingListItem =
+            CreateRandomShoppingListItem();
+
+        ShoppingListItem inputShoppingListItem =
+            randomShoppingListItem;
+
+        ShoppingListItem modifiedShoppingListItem =
+            inputShoppingListItem;
+
+        ShoppingListItem expectedShoppingListItem =
+            modifiedShoppingListItem.DeepClone();
+
+        ShoppingListItem actualShoppingListItem = null;
+
+        _shoppingListItemServiceMock.Setup(service =>
+            service.ModifyShoppingListItemAsync(
+                inputShoppingListItem,
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(modifiedShoppingListItem);
+
+        Func<ShoppingListItem, ValueTask> callback =
+            async (passedInShoppingListItem) =>
+            {
+                actualShoppingListItem = passedInShoppingListItem;
+            };
+
+        // when
+        _shoppingListItemEditorOrchestrationViewModel
+            .ShoppingListItem = inputShoppingListItem;
+
+        _shoppingListItemEditorOrchestrationViewModel
+            .ShoppingListItemMode = shoppingListItemMode;
+
+        _shoppingListItemEditorOrchestrationViewModel
+            .Callback = callback;
+
+        await _shoppingListItemEditorOrchestrationViewModel
+                .SaveCommand.ExecuteAsync(parameter: null);
+
+        // then
+        actualShoppingListItem.Should()
+            .BeEquivalentTo(expectedShoppingListItem);
+
+        _shoppingListItemServiceMock.Verify(service =>
+            service.ModifyShoppingListItemAsync(
+                inputShoppingListItem,
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        _navigationBrokerMock.Verify(broker =>
+            broker.PopAsync(
+                It.IsAny<CancellationToken>()),
+            Times.Once());
+
+        VerifyNoOtherDependencyCalls();
+    }
 }
